@@ -1,0 +1,41 @@
+.code-editor-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.code-editor {
+  counter-reset: line;
+  border: 1px solid #ced4da;
+
+  pre {
+    padding-left: 60px !important;
+  }
+
+  textarea {
+    padding-left: 60px !important;
+    outline: none;
+
+    &::selection {
+      color: white;
+      -webkit-text-fill-color: white;
+    }
+  }
+
+  .editor-line-number {
+    position: absolute;
+    left: 0px;
+    color: #cccccc;
+    text-align: right;
+    width: 40px;
+  }
+}
+
+.code-editor-disabled {
+  textarea {
+    cursor: not-allowed !important;
+  }
+}

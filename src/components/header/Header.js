@@ -2,26 +2,55 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Menu from './Menu'
 import Search from './Search'
+import { Image } from 'antd'
+import Logo from "../../images/logo.jpg"
+import { Breadcrumb, Layout, theme, Row, Col } from 'antd';
+const { Header } = Layout;
 
-const Header = () => {
+const HeaderLayout = () => {
     return (
-        <div className="header bg-light">
-            <nav className="navbar navbar-expand-lg navbar-light 
-            bg-light justify-content-between align-middle">
+        // <div className="header bg-light">
+        //     <nav className="navbar navbar-expand-lg navbar-light 
+        //     bg-light justify-content-between align-middle">
 
-                <Link to="/" className="logo">
-                    <h1 className="navbar-brand text-uppercase p-0 m-0"
-                        onClick={() => window.scrollTo({ top: 0 })}>
-                        V-Network
-                    </h1>
-                </Link>
+        //         <Link to="/" className="logo">
+        //             <h1 className="navbar-brand text-uppercase p-0 m-0"
+        //                 onClick={() => window.scrollTo({ top: 0 })}>
+        //                 <Image
+        //                     width={50}
+        //                     src={Logo}
+        //                     preview={false}
+        //                 />
+        //             </h1>
+        //         </Link>
 
-                <Search />
+        //         <Search />
 
-                <Menu />
-            </nav>
-        </div>
+        //         <Menu />
+        //     </nav>
+        // </div>
+        <Header style={{ display: "flex", justifyContent: "center" }}>
+            <Row style={{ maxWidth: "1200px", width: "100%" }} >
+                <Col xs={2} >
+                    <Link to="/" className="logo">
+                        <Image
+                            className='header-logo'
+                            width={50}
+                            src={Logo}
+                            preview={false}
+                            onClick={() => window.scrollTo({ top: 0 })}
+                        />
+                    </Link>
+                </Col>
+                <Col style={{ display: "flex", justifyContent: "center", alignItems: "center" }} xs={10} >
+                    <Search />
+                </Col>
+                <Col xs={12} >
+                    <Menu />
+                </Col>
+            </Row>
+        </Header>
     )
 }
 
-export default Header
+export default HeaderLayout
