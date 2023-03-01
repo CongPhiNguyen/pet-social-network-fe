@@ -1,23 +1,38 @@
 .supper-avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
 }
 
 .big-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .medium-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
 .small-avatar {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.user-card__name {
+  font-weight: 600;
+  color: black;
+  text-decoration: none;
+  transition: 0.2s all ease-in-out;
+}
+
+.user-card__name:hover {
+  color: #6366f1;
+}
+
+.user-card__link {
+  text-decoration: none;
 }

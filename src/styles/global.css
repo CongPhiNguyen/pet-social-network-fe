@@ -28,7 +28,7 @@ code {
 }
 
 .main {
-  max-width: 1000px;
+  /* max-width: 1000px; */
   width: 100%;
   min-height: 100vh;
   /* margin: auto; */
@@ -138,4 +138,16 @@ img {
   border-color: #9197ff;
   border-right-width: 1px;
   z-index: 1;
+}
+
+:where(.css-dev-only-do-not-override-10ed4xt).ant-layout-header {
+  background: var(--primary-color);
+}
+
+.header-logo {
+  border-radius: 8px;
+}
+
+.ant-btn-primary {
+  color: black;
 }
