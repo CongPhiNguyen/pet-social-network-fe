@@ -1,0 +1,25 @@
+.ant-layout {
+  .ant-layout-header {
+    background-color: transparent;
+  }
+
+  .ant-page-header-heading-title {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .ant-layout-sider {
+    border-right: 1px solid rgba(0,0,0,.06);
+  }
+}
+
+
+.error-banner {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.error-text {
+  text-align: center;
+}
