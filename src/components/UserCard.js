@@ -50,6 +50,11 @@ const UserCard = ({ children, user, border, handleClose, setShowFollowers, setSh
                                 ? showMsg(user)
                                 : user.fullname
                         }</span>
+                        <small style={{ opacity: 0.7 }}>
+                            {
+                                user.username
+                            }
+                        </small>
                     </div>
                 </Link>
             </div>
