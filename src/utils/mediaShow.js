@@ -1,13 +1,15 @@
+import { Image } from 'antd';
+
 export const imageShow = (src, theme) => {
-    return(
-        <img src={src} alt="images" className="img-thumbnail"
-        style={{filter: theme ? 'invert(1)' : 'invert(0)'}} />
+    return (
+        <Image src={src} alt="images"
+            style={{ filter: theme ? 'invert(1)' : 'invert(0)', width: "100%", height: "100%" }} />
     )
 }
 
 export const videoShow = (src, theme) => {
-    return(
-        <video controls src={src} alt="images" className="img-thumbnail"
-        style={{filter: theme ? 'invert(1)' : 'invert(0)'}} />
+    return (
+        <video controls src={src} alt="videos"
+            style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
     )
 }

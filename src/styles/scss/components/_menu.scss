@@ -1,0 +1,29 @@
+.ant-menu {
+  &.ant-menu-inline {
+    border-right: 0;
+
+    .ant-menu-item {
+      height: 44px;
+      line-height: 44px;
+    }
+  }
+
+  .ant-menu-item-icon {
+    line-height: 44px;
+    height: 44px;
+    margin-inline-end: 20px;
+  }
+}
+
+.ant-menu-vertical {
+  border-right: 0;
+
+  > .ant-menu-item {
+    height: 44px;
+    line-height: 44px;
+
+    .ant-menu-title-content {
+      transition: none;
+    }
+  }
+}

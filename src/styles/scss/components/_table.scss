@@ -1,0 +1,16 @@
+.ant-table-content {
+  overflow-x: auto;
+}
+
+.ant-table-content .ant-table-thead .ant-table-cell {
+  white-space: nowrap;
+  min-width: 120px;
+  max-width: 420px;
+}
+
+.ant-table-content .ant-table-tbody .ant-table-cell {
+  white-space: nowrap;
+  max-width: 420px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

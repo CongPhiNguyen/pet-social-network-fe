@@ -9,7 +9,7 @@ import Login from './pages/login'
 import Register from './pages/register'
 
 import Alert from './components/alert/Alert'
-import Header from './components/header/Header'
+import HeaderLayout from './components/header/Header'
 import StatusModal from './components/StatusModal'
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -26,6 +26,8 @@ import CallModal from './components/message/CallModal'
 import Peer from 'peerjs'
 import 'antd/dist/reset.css';
 import "./styles/app.css"
+import './styles/scss/main.scss'
+import "./styles/antd.less"
 
 function App() {
   const { auth, status, modal, call } = useSelector(state => state)
@@ -73,21 +75,19 @@ function App() {
   return (
     <Router>
       <Alert />
-
       <input type="checkbox" id="theme" />
       <div className={`App ${(status || modal) && 'mode'}`}>
         <div className="main">
-          {auth.token && <Header />}
-          {status && <StatusModal />}
+          {auth.token && <HeaderLayout />}
+          {/* {status && <StatusModal />} */}
+          <StatusModal />
           {auth.token && <SocketClient />}
           {call && <CallModal />}
 
           <Route exact path="/" component={auth.token ? Home : Login} />
           <Route exact path="/register" component={Register} />
-
           <PrivateRouter exact path="/:page" component={PageRender} />
           <PrivateRouter exact path="/:page/:id" component={PageRender} />
-
         </div>
       </div>
     </Router>
