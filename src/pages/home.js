@@ -28,9 +28,9 @@ const Home = () => {
 
     return (
         <Row className='home'>
-            <Col xs={8} >
+            <Col xs={7} >
             </Col>
-            <Col xs={8} >
+            <Col xs={10} >
                 <Status />
                 {
                     homePosts.loading
