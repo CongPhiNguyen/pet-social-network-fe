@@ -79,7 +79,8 @@ function App() {
       <div className={`App ${(status || modal) && 'mode'}`}>
         <div className="main">
           {auth.token && <HeaderLayout />}
-          {status && <StatusModal />}
+          {/* {status && <StatusModal />} */}
+          <StatusModal />
           {auth.token && <SocketClient />}
           {call && <CallModal />}
 

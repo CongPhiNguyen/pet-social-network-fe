@@ -138,3 +138,8 @@
   color: #faad14;
   display: flex;
 }
+
+.icon-notify {
+  color: #6366f1;
+  transform: translateY(-5px);
+}

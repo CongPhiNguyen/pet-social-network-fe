@@ -37,7 +37,6 @@ export const createPost = ({ content, images, auth, socket }) => async (dispatch
             content,
             image: media[0].url
         }
-
         dispatch(createNotify({ msg, auth, socket }))
 
     } catch (err) {
