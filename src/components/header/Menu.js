@@ -73,9 +73,6 @@ const Menu = () => {
             </Link>
         </div>
     );
-    useEffect(() => {
-        console.log(open);
-    }, [open])
 
     return (
         <div className='menu'>
@@ -106,7 +103,12 @@ const Menu = () => {
             <div style={{ position: "relative" }}>
                 <Link onClick={handleOpenChange} className={`nav-link`} >
                     <span className="material-icons">
-                        <Avatar src={auth.user.avatar} size={'default'} />
+                        <Avatar style={{
+                            backgroundColor: '#f56a00',
+                            verticalAlign: 'middle',
+                        }} src={auth.user.avatar === 'https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png' ? null : auth.user.avatar} size="default" >
+                            {auth.user.username[0].toUpperCase()}
+                        </Avatar>
                     </span>
                 </Link>
                 <div style={{ position: "absolute", bottom: 20, right: 15 }}>
