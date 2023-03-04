@@ -24,13 +24,14 @@ code {
 .App {
   width: 100%;
   min-height: 100vh;
-  background: white;
+  background: #f0f2f5;
 }
 
 .main {
   /* max-width: 1000px; */
   width: 100%;
   min-height: 100vh;
+
   /* margin: auto; */
 }
 
@@ -125,19 +126,27 @@ img {
 }
 
 .ant-btn-primary {
-  background-color: var(--primary-color) !important;
+  background-color: var(--primary-color);
+  color: white !important;
+}
+.ant-btn-primary.ant-btn-dangerous {
+  color: white;
 }
 
+:where(.css-dev-only-do-not-override-10ed4xt).ant-btn-primary:not(
+    :disabled
+  ):hover {
+  background-color: #6366f1;
+}
+:where(.css-dev-only-do-not-override-10ed4xt).ant-btn-primary:not(
+    :disabled
+  ):hover {
+  background-color: #6365f1d8;
+}
 :where(.css-dev-only-do-not-override-10ed4xt).ant-checkbox-checked
   .ant-checkbox-inner {
   background-color: var(--primary-color) !important;
   border-color: var(--primary-color) !important;
-}
-
-.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
-  border-color: #9197ff;
-  border-right-width: 1px;
-  z-index: 1;
 }
 
 :where(.css-dev-only-do-not-override-10ed4xt).ant-layout-header {
@@ -150,4 +159,25 @@ img {
 
 .ant-btn-primary {
   color: black;
+}
+
+:where(.css-dev-only-do-not-override-10ed4xt).ant-modal-root .ant-modal-wrap {
+  z-index: 99999;
+}
+
+:where(.css-dev-only-do-not-override-10ed4xt).ant-modal-root .ant-modal-mask {
+  z-index: 10000;
+}
+
+:where(.css-dev-only-do-not-override-10ed4xt).ant-message {
+  z-index: 100003;
+}
+
+:where(.css-dev-only-do-not-override-10ed4xt).ant-image-preview-root
+  .ant-image-preview-mask {
+  z-index: 100001;
+}
+:where(.css-dev-only-do-not-override-10ed4xt).ant-image-preview-root
+  .ant-image-preview-wrap {
+  z-index: 100002;
 }

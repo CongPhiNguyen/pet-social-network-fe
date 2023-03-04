@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Tooltip, Badge, Popover } from 'antd'
@@ -11,6 +11,7 @@ import {
 import { Avatar } from 'antd';
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 import { logout } from "../../redux/actions/authAction"
+import NotifyModal from '../NotifyModal'
 const navLinks = [
     {
         label: 'Home',
@@ -31,6 +32,7 @@ const navLinks = [
 
 const Menu = () => {
     const [open, setOpen] = useState(false);
+    const [open1, setOpen1] = useState(false);
     const { auth, theme, notify } = useSelector(state => state)
     const dispatch = useDispatch()
     const { pathname } = useLocation()
@@ -48,6 +50,9 @@ const Menu = () => {
 
     const handleOpenChange = (newOpen) => {
         setOpen(newOpen);
+    };
+    const handleOpenChange1 = (newOpen) => {
+        setOpen1(newOpen);
     };
 
     const content = (
@@ -68,6 +73,7 @@ const Menu = () => {
             </Link>
         </div>
     );
+
     return (
         <div className='menu'>
             {
@@ -81,22 +87,37 @@ const Menu = () => {
                     </Link>
                 ))
             }
-            <Link className={`nav-link`} >
-                <span className="material-icons">
-                    <Tooltip placement="bottom" title={'Notification'} arrow={mergedArrow}>
-                        <Badge count={99}>
+            <div style={{ position: "relative" }}>
+                <Link onClick={handleOpenChange1} className={`nav-link`} >
+                    <span className="material-icons">
+                        <Badge count={notify.data.length}>
                             <BellFilled className='icon' />
                         </Badge>
-                    </Tooltip>
-                </span>
-            </Link>
-            <Link onClick={handleOpenChange} className={`nav-link`} >
-                <span className="material-icons">
-                    <Popover onOpenChange={handleOpenChange} placement="bottomRight" content={content} trigger="click" open={open}>
-                        <Avatar src={auth.user.avatar} size={'default'} />
+                    </span>
+                </Link>
+                <div style={{ position: "absolute", bottom: 20, right: 15 }}>
+                    <Popover className='popover-notify' onOpenChange={handleOpenChange1} placement='bottomRight' content={<NotifyModal />} trigger="click" open={open1}>
                     </Popover>
-                </span>
-            </Link>
+                </div>
+            </div>
+            <div style={{ position: "relative" }}>
+                <Link onClick={handleOpenChange} className={`nav-link`} >
+                    <span className="material-icons">
+                        <Avatar style={{
+                            backgroundColor: '#f56a00',
+                            verticalAlign: 'middle',
+                        }} src={auth.user.avatar === 'https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png' ? null : auth.user.avatar} size="default" >
+                            {auth.user.username[0].toUpperCase()}
+                        </Avatar>
+                    </span>
+                </Link>
+                <div style={{ position: "absolute", bottom: 20, right: 15 }}>
+                    <Popover onOpenChange={handleOpenChange} placement="bottomRight" content={content} trigger="click" open={open}>
+                    </Popover>
+                </div>
+            </div>
+
+
         </div>
 
     )
