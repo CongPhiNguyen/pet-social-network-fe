@@ -4,7 +4,7 @@ import { Menu, Card, Row, Col } from "antd"
 import PageHeader from "../common/PageHeader"
 import PageSection from "../common/PageSection"
 import "./setting.scss"
-import TwoFactor from "./TwoFactor"
+import TwoFactor from "./TwoFactorAuthen/TwoFactor"
 
 function getItem(label, key, icon, children, type) {
   return {

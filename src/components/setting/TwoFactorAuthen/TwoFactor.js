@@ -1,17 +1,27 @@
+import { Button, Typography, Modal } from "antd"
 import React, { useState } from "react"
+import { useSelector } from "react-redux"
 import { useHistory } from "react-router"
-
+import axios from "axios"
+import TwoFactorConfigModal from "./TwoFactorConfigModal"
 export default function TwoFactor() {
   const [secret, setSecret] = useState({
     otpauth_url: "",
     base32: ""
   })
-  const [openModal, setOpenModal] = useState(false)
+  const [isOpenModal, setIsOpenModal] = useState(false)
   const navigate = useHistory()
   // const store = useStore()
   // const user = store.authUser
-  const user = {}
-  const generateQrCode = async ({ user_id, email }) => {
+  const user = useSelector((state) => state.auth.user)
+  const generateQrCode = async ({ userId, email }) => {
+    const response = await axios.post("api/auth/otp/generate", {
+      userId,
+      email
+    })
+    console.log(response)
+    setSecret(response.data)
+    setIsOpenModal(true)
     // try {
     //   store.setRequestLoading(true);
     //   const response = await authApi.post<{
@@ -44,44 +54,61 @@ export default function TwoFactor() {
     //   });
     // }
   }
+  const disableTwoFactorAuth = (userId) => {}
   return (
     <div>
       <section className="bg-ct-blue-600  min-h-screen pt-10">
         <div className="max-w-4xl p-12 mx-auto bg-ct-dark-100 rounded-md h-[20rem] flex gap-20 justify-center items-start">
           <div className="flex-grow-2">
-            <h1 className="text-2xl font-semibold">Profile Page</h1>
-            <div className="mt-8">
-              <p className="mb-4">ID: {user?.id}</p>
-              <p className="mb-4">Name: {user?.name}</p>
-              <p className="mb-4">Email: {user?.email}</p>
+            <Typography.Title level={3}>Profile Info</Typography.Title>
+            <div>
+              <p>
+                ID: <i>{user?._id}</i>
+              </p>
+              <p>
+                Name: <i>{user?.fullname}</i>
+              </p>
+              <p>
+                Email: <i>{user?.email}</i>
+              </p>
             </div>
           </div>
           <div>
-            <h3 className="text-2xl font-semibold">
+            <Typography.Title level={3}>
               Mobile App Authentication (2FA)
-            </h3>
+            </Typography.Title>
             <p className="mb-4">
               Secure your account with TOTP two-factor authentication.
             </p>
-            {/* {store.authUser?.otp_enabled ? (
-              <button
-                type="button"
-                className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
+            {user?.otp_enabled ? (
+              <Button
+                type="primary"
                 onClick={() => disableTwoFactorAuth(user?.id)}
               >
                 Disable 2FA
-              </button>
+              </Button>
             ) : (
-              <button
-                type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none"
+              <Button
+                type="primary"
                 onClick={() =>
-                  generateQrCode({ user_id: user?.id, email: user?.email })
+                  generateQrCode({ userId: user?._id, email: user?.email })
                 }
               >
                 Setup 2FA
-              </button>
-            )} */}
+              </Button>
+            )}
+            <Modal
+              title="Two-Factor Authentication (2FA)"
+              open={isOpenModal}
+              onOk={() => {
+                setIsOpenModal(false)
+              }}
+              onCancel={() => {
+                setIsOpenModal(false)
+              }}
+            >
+              <TwoFactorConfigModal {...secret} />
+            </Modal>
           </div>
         </div>
       </section>
