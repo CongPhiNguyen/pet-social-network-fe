@@ -80,11 +80,8 @@ export default function TwoFactor() {
             <p className="mb-4">
               Secure your account with TOTP two-factor authentication.
             </p>
-            {user?.otp_enabled ? (
-              <Button
-                type="primary"
-                onClick={() => disableTwoFactorAuth(user?.id)}
-              >
+            {user?.otpEnabled ? (
+              <Button onClick={() => disableTwoFactorAuth(user?.id)}>
                 Disable 2FA
               </Button>
             ) : (
