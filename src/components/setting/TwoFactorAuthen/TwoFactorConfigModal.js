@@ -3,21 +3,33 @@ import QRCode from "qrcode"
 import { Typography, Form, Input, Button, message } from "antd"
 import "./TwoFactorConfigModal.scss"
 import axios from "axios"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
 
 export default function TwoFactorConfigModal(props) {
   console.log(props)
+  const dispatch = useDispatch()
+  const { auth, status, modal, call } = useSelector((state) => state)
   const [qrcodeUrl, setqrCodeUrl] = useState("")
   const [errors, setErrors] = useState("")
   const [form] = Form.useForm()
   const user = useSelector((state) => state.auth.user)
   const verifyOtp = async (token) => {
     try {
-      const { data } = await axios.post("api/auth/otp/verify", {
+      const response = await axios.post("api/auth/otp/verify", {
         token,
         userId: user._id
       })
       message.success("Two-Factor Auth Enabled Successfully")
+      props.closeModal()
+      const { status, data } = response
+      console.log(data)
+      if (status === 200) {
+        dispatch({
+          type: GLOBALTYPES.AUTH,
+          payload: { ...auth, user: data.user }
+        })
+      }
     } catch (error) {
       const resMessage =
         (error.response &&

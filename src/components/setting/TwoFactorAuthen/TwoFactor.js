@@ -1,60 +1,47 @@
 import { Button, Typography, Modal } from "antd"
 import React, { useState } from "react"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router"
 import axios from "axios"
 import TwoFactorConfigModal from "./TwoFactorConfigModal"
+import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
+
 export default function TwoFactor() {
+  const dispatch = useDispatch()
+  const navigate = useHistory()
+  const user = useSelector((state) => state.auth.user)
+  const { auth, status, modal, call } = useSelector((state) => state)
+  // const store = useStore()
+  // const user = store.authUser
   const [secret, setSecret] = useState({
     otpauth_url: "",
     base32: ""
   })
   const [isOpenModal, setIsOpenModal] = useState(false)
-  const navigate = useHistory()
-  // const store = useStore()
-  // const user = store.authUser
-  const user = useSelector((state) => state.auth.user)
+
   const generateQrCode = async ({ userId, email }) => {
     const response = await axios.post("api/auth/otp/generate", {
       userId,
       email
     })
-    console.log(response)
     setSecret(response.data)
     setIsOpenModal(true)
-    // try {
-    //   store.setRequestLoading(true);
-    //   const response = await authApi.post<{
-    //     otpauth_url: string;
-    //     base32: string;
-    //   }>("/auth/otp/generate", { user_id, email });
-    //   store.setRequestLoading(false);
-    //   if (response.status === 200) {
-    //     setOpenModal(true);
-    //     console.log({
-    //       base32: response.data.base32,
-    //       otpauth_url: response.data.otpauth_url,
-    //     });
-    //     setSecret({
-    //       base32: response.data.base32,
-    //       otpauth_url: response.data.otpauth_url,
-    //     });
-    //   }
-    // } catch (error: any) {
-    //   store.setRequestLoading(false);
-    //   const resMessage =
-    //     (error.response &&
-    //       error.response.data &&
-    //       error.response.data.message) ||
-    //     error.response.data.detail ||
-    //     error.message ||
-    //     error.toString();
-    //   toast.error(resMessage, {
-    //     position: "top-right",
-    //   });
-    // }
   }
-  const disableTwoFactorAuth = (userId) => {}
+
+  const disableTwoFactorAuth = async (userId) => {
+    const response = await axios.post("api/auth/otp/disable", {
+      userId: userId
+    })
+    const { status, data } = response
+
+    if (status === 200) {
+      console.log(data)
+      dispatch({
+        type: GLOBALTYPES.AUTH,
+        payload: { ...auth, user: data.userUpdate }
+      })
+    }
+  }
   return (
     <div>
       <section className="bg-ct-blue-600  min-h-screen pt-10">
@@ -81,7 +68,7 @@ export default function TwoFactor() {
               Secure your account with TOTP two-factor authentication.
             </p>
             {user?.otpEnabled ? (
-              <Button onClick={() => disableTwoFactorAuth(user?.id)}>
+              <Button onClick={() => disableTwoFactorAuth(user?._id)}>
                 Disable 2FA
               </Button>
             ) : (
@@ -104,7 +91,12 @@ export default function TwoFactor() {
                 setIsOpenModal(false)
               }}
             >
-              <TwoFactorConfigModal {...secret} />
+              <TwoFactorConfigModal
+                {...secret}
+                closeModal={() => {
+                  setIsOpenModal(false)
+                }}
+              />
             </Modal>
           </div>
         </div>
