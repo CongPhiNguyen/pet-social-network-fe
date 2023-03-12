@@ -38,7 +38,7 @@ export default function TwoFactor() {
       console.log(data)
       dispatch({
         type: GLOBALTYPES.AUTH,
-        payload: { ...auth, user: data.userUpdate }
+        payload: { ...auth, user: data.updateUser }
       })
     }
   }

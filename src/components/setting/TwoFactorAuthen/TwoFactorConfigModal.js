@@ -23,7 +23,7 @@ export default function TwoFactorConfigModal(props) {
       message.success("Two-Factor Auth Enabled Successfully")
       props.closeModal()
       const { status, data } = response
-      console.log(data)
+      console.log("dataConfig", data.user)
       if (status === 200) {
         dispatch({
           type: GLOBALTYPES.AUTH,
