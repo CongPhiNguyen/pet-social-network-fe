@@ -1,8 +1,9 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
 import { login } from "../redux/actions/authAction"
 import { useDispatch, useSelector } from "react-redux"
 import { Col, Row } from "antd"
+import axios from "axios"
 import { Button, Form, Input, Typography } from "antd"
 import "../styles/login.css"
 const { Title } = Typography
@@ -12,14 +13,27 @@ const Login = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const [form] = Form.useForm()
+  const [userOTPEnable, setUserOTPEnable] = useState("")
 
   useEffect(() => {
     if (auth.token) history.push("/")
   }, [auth.token, history])
 
-  const onFinish = (values) => {
-    const { email, password } = values
-    dispatch(login({ email, password }))
+  const onFinish = async (values) => {
+    const { email, password, otp } = values
+    const response = await axios.get(`api/user?email=${email}`)
+    if (response?.data?.user?.otpEnabled && !values.otp) {
+      setUserOTPEnable(true)
+      return
+    } else setUserOTPEnable(false)
+    dispatch(login({ email, password, token: otp }))
+  }
+
+  const getUserWithEmail = async (email) => {
+    const response = await axios.get(`api/user?email=${email}`)
+    if (response?.data?.user?.otpEnabled) {
+      setUserOTPEnable(true)
+    } else setUserOTPEnable(false)
   }
 
   return (
@@ -65,7 +79,11 @@ const Login = () => {
                 }
               ]}
             >
-              <Input />
+              <Input
+                onBlur={(e) => {
+                  getUserWithEmail(e.target.value)
+                }}
+              />
             </Form.Item>
             <Form.Item
               label="Password"
@@ -83,6 +101,21 @@ const Login = () => {
             >
               <Input.Password />
             </Form.Item>
+            {userOTPEnable && (
+              <Form.Item
+                label="OTP"
+                name="otp"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input otp!"
+                  }
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            )}
+
             <p style={{ marginBottom: "20px" }}>
               <Link to="/register" className="forgot-password">
                 Forgot your password?
