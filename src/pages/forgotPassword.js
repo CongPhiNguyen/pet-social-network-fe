@@ -1,40 +1,26 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
+import { Col, Row, Button, Form, Input, Typography, message } from "antd"
 import { Link, useHistory } from "react-router-dom"
-import { login } from "../redux/actions/authAction"
-import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
-import { Col, Row, Button, Form, Input, Typography } from "antd"
-import "../styles/login.css"
+
 const { Title } = Typography
 
-const Login = () => {
-  const { auth } = useSelector((state) => state)
-  const dispatch = useDispatch()
+export default function ForgotPassword() {
   const history = useHistory()
   const [form] = Form.useForm()
-  const [userOTPEnable, setUserOTPEnable] = useState("")
-
-  useEffect(() => {
-    if (auth.token) history.push("/")
-  }, [auth.token, history])
-
   const onFinish = async (values) => {
-    const { email, password, otp } = values
-    const response = await axios.get(`api/user?email=${email}`)
-    if (response?.data?.user?.otpEnabled && !values.otp) {
-      setUserOTPEnable(true)
-      return
-    } else setUserOTPEnable(false)
-    dispatch(login({ email, password, token: otp }))
+    try {
+      const response = await axios.post("api/forgot-password", {
+        email: values.email,
+        token: values.token
+      })
+      const { data } = response
+      message.success("Verify user and TOTP ok")
+      history.push("/set-password")
+    } catch (err) {
+      message.error(err?.response?.data?.message)
+    }
   }
-
-  const getUserWithEmail = async (email) => {
-    const response = await axios.get(`api/user?email=${email}`)
-    if (response?.data?.user?.otpEnabled) {
-      setUserOTPEnable(true)
-    } else setUserOTPEnable(false)
-  }
-
   return (
     <>
       <Row style={{ width: "100vw" }}>
@@ -59,7 +45,7 @@ const Login = () => {
             autoComplete="off"
             size="large"
           >
-            <Title level={2}>Login to Pet Love</Title>
+            <Title level={2}>Forgot password</Title>
             <Form.Item
               label="Email address"
               name="email"
@@ -78,45 +64,24 @@ const Login = () => {
                 }
               ]}
             >
-              <Input
-                onBlur={(e) => {
-                  getUserWithEmail(e.target.value)
-                }}
-              />
+              <Input />
             </Form.Item>
+
             <Form.Item
-              label="Password"
-              name="password"
+              label="OTP"
+              name="token"
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!"
-                },
-                {
-                  min: 6,
-                  message: "Password at least 6 characters!"
+                  message: "Please input otp!"
                 }
               ]}
             >
-              <Input.Password />
+              <Input />
             </Form.Item>
-            {userOTPEnable && (
-              <Form.Item
-                label="OTP"
-                name="otp"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input otp!"
-                  }
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            )}
 
             <p style={{ marginBottom: "20px" }}>
-              <Link to="/forgot-password" className="forgot-password">
+              <Link to="/register" className="forgot-password">
                 Forgot your password?
               </Link>
             </p>
@@ -126,7 +91,7 @@ const Login = () => {
                 type="primary"
                 htmlType="submit"
               >
-                Login
+                Continue
               </Button>
             </Form.Item>
             <p style={{ textAlign: "center" }} className="my-2">
@@ -144,5 +109,3 @@ const Login = () => {
     </>
   )
 }
-
-export default Login
