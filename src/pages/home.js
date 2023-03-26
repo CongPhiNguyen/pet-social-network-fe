@@ -6,7 +6,7 @@ import RightSideBar from '../components/home/RightSideBar'
 
 import { useSelector } from 'react-redux'
 import LoadIcon from '../images/loading.gif'
-import { Row, Col } from 'antd'
+import { Row, Col, Result, Button, Card } from 'antd'
 
 let scroll = 0;
 
@@ -27,16 +27,22 @@ const Home = () => {
     }, [])
 
     return (
-        <Row className='home'>
-            <Col xs={7} >
+        <Row style={{ marginTop: "64px" }} className='home'>
+            <Col xs={8} >
             </Col>
-            <Col xs={10} >
+            <Col xs={8} >
                 <Status />
                 {
                     homePosts.loading
                         ? <img src={LoadIcon} alt="loading" className="d-block mx-auto" />
                         : (homePosts.result === 0 && homePosts.posts.length === 0)
-                            ? <h2 className="text-center">No Post</h2>
+                            ? <Card>
+                                <Result
+                                    status="404"
+                                    title="NO POST"
+                                    subTitle="You can follow someone or create new post!"
+                                />
+                            </Card>
                             : <Posts />
                 }
             </Col>
@@ -44,7 +50,6 @@ const Home = () => {
                 <RightSideBar />
             </Col>
         </Row>
-
     )
 }
 

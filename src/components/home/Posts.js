@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import PostCard from '../PostCard'
 
@@ -16,15 +16,19 @@ const Posts = () => {
 
     const handleLoadMore = async () => {
         setLoad(true)
+
         const res = await getDataAPI(`posts?limit=${homePosts.page * 9}`, auth.token)
 
         dispatch({
-            type: POST_TYPES.GET_POSTS, 
-            payload: {...res.data, page: homePosts.page + 1}
+            type: POST_TYPES.GET_POSTS,
+            payload: { ...res.data, page: homePosts.page + 1 }
         })
 
         setLoad(false)
     }
+    useEffect(() => {
+        console.log(auth)
+    }, [auth])
 
     return (
         <div className="posts">
@@ -38,9 +42,8 @@ const Posts = () => {
                 load && <img src={LoadIcon} alt="loading" className="d-block mx-auto" />
             }
 
-            
             <LoadMoreBtn result={homePosts.result} page={homePosts.page}
-            load={load} handleLoadMore={handleLoadMore} />
+                load={load} handleLoadMore={handleLoadMore} />
         </div>
     )
 }

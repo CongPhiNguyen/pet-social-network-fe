@@ -1,35 +1,75 @@
-import React, { useState } from 'react'
-import Carousel from '../../Carousel'
+import React, { useEffect, useState } from 'react'
+import { Image, Carousel } from 'antd';
 
-const CardBody = ({post, theme}) => {
+const CardBody = ({ post, theme }) => {
     const [readMore, setReadMore] = useState(false)
-
-    
+    const [visible, setVisible] = useState(false);
+    useEffect(() => {
+        console.log(post);
+    }, [post])
     return (
         <div className="card_body">
-            <div className="card_body-content" 
-            style={{
-                filter: theme ? 'invert(1)' : 'invert(0)',
-                color: theme ? 'white' : '#111',
-            }}>
+            <div className="card_body-content"
+                style={{
+                    filter: theme ? 'invert(1)' : 'invert(0)',
+                    color: theme ? 'white' : '#111',
+                }}>
                 <span>
                     {
-                        post.content.length < 60 
-                        ? post.content 
-                        : readMore ? post.content + ' ' : post.content.slice(0, 60) + '.....'
+                        post.content.length < 60
+                            ? post.content
+                            : readMore ? post.content + ' ' : post.content.slice(0, 60) + '.....'
                     }
                 </span>
                 {
                     post.content.length > 60 &&
                     <span className="readMore" onClick={() => setReadMore(!readMore)}>
-                        {readMore ? 'Hide content' : 'Read more'}
+                        {readMore ? 'Hide away' : 'See more'}
                     </span>
                 }
 
             </div>
             {
-                post.images.length > 0 && <Carousel images={post.images} id={post._id} />
+                post.images.length > 0 && (
+                    <>
+                        <Carousel autoplay dots>
+                            {
+                                post.images.map(image => (
+                                    <div style={{ display: "flex", justifyContent: "center" }}>
+                                        <Image
+                                            preview={{
+                                                visible: false,
+                                            }}
+                                            height={300} style={{ display: "flex", justifyContent: "center" }}
+                                            src={image.url}
+                                            onClick={() => setVisible(true)}
+                                        />
+                                    </div>
+                                ))
+                            }
+                        </Carousel>
+                        <div
+                            style={{
+                                display: 'none',
+                            }}
+                        >
+                            <Image.PreviewGroup
+                                preview={{
+                                    visible,
+                                    onVisibleChange: (vis) => setVisible(vis),
+                                }}
+                            >
+                                {
+                                    post.images.map(image => (
+                                        <Image src={image.url} />
+                                    ))
+                                }
+                            </Image.PreviewGroup>
+                        </div>
+                    </>
+                )
             }
+
         </div>
     )
 }

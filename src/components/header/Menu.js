@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { Tooltip, Badge, Popover } from 'antd'
+import { Tooltip, Badge, Popover, Divider } from 'antd'
 import {
     HomeFilled,
     MessageFilled,
@@ -12,6 +12,7 @@ import { Avatar } from 'antd';
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 import { logout } from "../../redux/actions/authAction"
 import NotifyModal from '../NotifyModal'
+
 const navLinks = [
     {
         label: 'Home',
@@ -30,8 +31,8 @@ const navLinks = [
     }
 ]
 
+
 const Menu = () => {
-    const [open, setOpen] = useState(false);
     const [open1, setOpen1] = useState(false);
     const { auth, theme, notify } = useSelector(state => state)
     const dispatch = useDispatch()
@@ -48,32 +49,31 @@ const Menu = () => {
         return showArrow;
     }, [showArrow, arrowAtCenter]);
 
-    const handleOpenChange = (newOpen) => {
-        setOpen(newOpen);
-    };
+
     const handleOpenChange1 = (newOpen) => {
         setOpen1(newOpen);
     };
-
     const content = (
         <div aria-labelledby="navbarDropdown">
-            <Link className="dropdown-item" to={`/profile/${auth.user._id}`}>Profile</Link>
-            <label htmlFor="theme" className="dropdown-item"
+            <Link style={{ fontWeight: "600" }} className="dropdown-item" to={`/profile/${auth.user._id}`}>Profile</Link>
+            <label style={{ fontWeight: "600" }} htmlFor="theme" className="dropdown-item"
                 onClick={() => dispatch({
                     type: GLOBALTYPES.THEME, payload: !theme
                 })}>
-
                 {theme ? 'Light mode' : 'Dark mode'}
             </label>
 
-            <div className="dropdown-divider"></div>
-            <Link className="dropdown-item" to="/"
+            <Divider style={{ margin: 0 }} />
+            <Link style={{ fontWeight: "600" }} className="dropdown-item" to="/"
                 onClick={() => dispatch(logout())}>
                 Logout
             </Link>
         </div>
     );
-
+    const [open, setOpen] = useState(false);
+    const handleOpenChange = (newOpen) => {
+        setOpen(newOpen);
+    };
     return (
         <div className='menu'>
             {
@@ -106,7 +106,7 @@ const Menu = () => {
                         <Avatar style={{
                             backgroundColor: '#f56a00',
                             verticalAlign: 'middle',
-                        }} src={auth.user.avatar === 'https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png' ? null : auth.user.avatar} size="default" >
+                        }} src={auth.user.avatar === 'https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png' ? null : auth.user.avatar} size='default' >
                             {auth.user.username[0].toUpperCase()}
                         </Avatar>
                     </span>
@@ -116,7 +116,6 @@ const Menu = () => {
                     </Popover>
                 </div>
             </div>
-
 
         </div>
 

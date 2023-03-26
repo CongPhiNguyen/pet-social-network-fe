@@ -185,3 +185,18 @@ img {
   .ant-image-preview-wrap {
   z-index: 100002;
 }
+
+:where(
+    .css-dev-only-do-not-override-10ed4xt
+  ).ant-image-preview-operations-wrapper {
+  z-index: 100002;
+}
+
+:where(.css-dev-only-do-not-override-10ed4xt).ant-carousel
+  .slick-list
+  .slick-slide
+  > div
+  > div {
+  display: flex !important;
+  justify-content: center !important;
+}

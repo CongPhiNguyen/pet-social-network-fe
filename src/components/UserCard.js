@@ -46,10 +46,11 @@ const UserCard = ({ children, user, border, handleClose, setShowFollowers, setSh
                     <Avatar style={{
                         backgroundColor: '#f56a00',
                         verticalAlign: 'middle',
-                    }} src={user.avatar === 'https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png' ? null : user.avatar} size="default" >
+                        marginRight: "5px"
+                    }} src={user.avatar === 'https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png' ? null : user.avatar} size="large" >
                         {user.username[0].toUpperCase()}
                     </Avatar>
-                    <div className="ml-1" style={{ transform: 'translateY(-2px)', opacity: 0.7 }}>
+                    <div className="ml-1" style={{ transform: 'translateY(-2px)', opacity: 0.7, display: 'flex', flexDirection: "column", justifyContent: "center", alignItems: "flex-start" }}>
                         <span className="d-block user-card__name">{
                             msg
                                 ? showMsg(user)
