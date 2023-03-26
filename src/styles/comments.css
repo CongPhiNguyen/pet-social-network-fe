@@ -13,8 +13,26 @@
   border: none;
   outline: none;
   background: #f7f7f7;
-  color: blue;
+  color: #1a1818;
   font-weight: 600;
+  transition: all 0.2s ease-in-out;
+  font-size: 1.5rem;
+}
+
+.comment_input .postBtn:hover {
+  opacity: 0.8;
+}
+
+.comment_input i {
+  font-size: 1.4rem;
+  transform: translateY(5px);
+
+  margin: 0 15px;
+  cursor: pointer;
+}
+
+.comment_input i:hover {
+  opacity: 0.8;
 }
 .comment_input .dropdown-menu {
   transform: translate3d(-120px, -200px, 0px) !important;
@@ -31,7 +49,7 @@
   border-top-left-radius: 0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
 }
 .comment_card .comment_content .readMore {
   cursor: pointer;
@@ -58,4 +76,16 @@
   width: 100%;
   border: none;
   outline: none;
+}
+
+.comment_card .comment-menu {
+  transform: translateX(47px) translateY(-22px);
+}
+
+.more-option {
+  transition: all 0.2 ease-in-out;
+}
+
+.more-option:hover {
+  opacity: 0.8;
 }
