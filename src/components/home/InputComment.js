@@ -35,7 +35,7 @@ const InputComment = ({ children, post, onReply, setOnReply }) => {
 
     return (
 
-        <form className="card-footer comment_input" onSubmit={handleSubmit} >
+        <form className="card-footer comment_input" style={{ border: 'none', borderRadius: '8px' }} onSubmit={handleSubmit} >
             {children}
             <input type="text" placeholder="..."
                 value={content} onChange={e => setContent(e.target.value)}

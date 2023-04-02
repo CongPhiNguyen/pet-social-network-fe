@@ -19,16 +19,19 @@ const PostCard = ({ post, theme }) => {
                 <CardFooter post={post} />
 
                 <Comments post={post} />
-                <InputComment post={post} >
-                    <Avatar style={{
-                        backgroundColor: '#f56a00',
-                        verticalAlign: 'middle',
-                        marginRight: "5px",
-                        marginRight: "15px"
-                    }} src={auth?.user?.avatar === 'https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png' ? null : auth?.user?.avatar} size="default" >
-                        {auth?.user?.username[0]?.toUpperCase()}
-                    </Avatar>
-                </InputComment>
+                <div style={{ borderTop: '1px solid #00000038' }}>
+                    <InputComment post={post} >
+                        <Avatar style={{
+                            backgroundColor: '#f56a00',
+                            verticalAlign: 'middle',
+                            marginRight: "5px",
+                            marginRight: "15px"
+                        }} src={auth?.user?.avatar === 'https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png' ? null : auth?.user?.avatar} size="default" >
+                            {auth?.user?.username[0]?.toUpperCase()}
+                        </Avatar>
+                    </InputComment>
+                </div>
+
             </Card>
         </>
     )

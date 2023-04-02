@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Image, Carousel } from 'antd';
+import { ImLocation2 } from 'react-icons/im'
 
 const CardBody = ({ post, theme }) => {
     const [readMore, setReadMore] = useState(false)
@@ -27,8 +28,15 @@ const CardBody = ({ post, theme }) => {
                         {readMore ? 'Hide away' : 'See more'}
                     </span>
                 }
+                <div style={{ display: 'flex', marginTop: "5px" }}>
+                    <div style={{ width: "20px" }}>
 
+                        <ImLocation2 style={{ fontSize: "1rem", color: "#0000007a", transform: 'translateY(-3px)' }}></ImLocation2>
+                    </div>
+                    <div style={{ fontWeight: "500", fontSize: ".7rem", color: "#0000007a", fontStyle: "italic" }}>{post.location}</div>
+                </div>
             </div>
+
             {
                 post.images.length > 0 && (
                     <>
