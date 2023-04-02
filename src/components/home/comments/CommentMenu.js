@@ -32,6 +32,7 @@ const CommentMenu = ({ post, comment, setOnEdit }) => {
     }
 
 
+
     return (
         <div className="menu comment-menu">
             {
@@ -40,7 +41,7 @@ const CommentMenu = ({ post, comment, setOnEdit }) => {
                     <span className="material-icons more-option" id="moreLink" data-toggle="dropdown">
                         <SlOptions />
                     </span>
-                    <div className="dropdown-menu" style={{ minWidth: " 1.5rem" }} aria-labelledby="moreLink">
+                    <div className="dropdown-menu" style={{ minWidth: " 5rem" }} aria-labelledby="moreLink">
                         {
                             post.user._id === auth.user._id
                                 ? MenuItem()

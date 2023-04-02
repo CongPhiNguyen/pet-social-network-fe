@@ -89,3 +89,17 @@
 .more-option:hover {
   opacity: 0.8;
 }
+
+.comments .readMore {
+  cursor: pointer;
+  color: #1a1818;
+  font-weight: 700;
+  margin: 5px 25px;
+  transition: 0.2s ease-in-out all;
+  word-spacing: 3;
+}
+
+.comments .readMore:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
