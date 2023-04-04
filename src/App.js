@@ -30,6 +30,7 @@ import "./styles/scss/main.scss"
 import "./styles/antd.less"
 import ForgotPassword from "./pages/forgotPassword"
 import SetPassword from "./pages/setPassword"
+import Verify from "./pages/verify"
 
 function App() {
   const { auth, status, modal, call } = useSelector((state) => state)
@@ -86,6 +87,7 @@ function App() {
 
           <Route exact path="/" component={auth.token ? Home : Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/verify/:id" component={Verify} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
           <Route exact path="/set-password" component={SetPassword} />
           <PrivateRouter exact path="/:page" component={PageRender} />

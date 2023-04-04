@@ -16,7 +16,7 @@ export default function ForgotPassword() {
       })
       const { data } = response
       message.success("Verify user and TOTP ok")
-      history.push("/set-password")
+      history.push("/set-password?")
     } catch (err) {
       message.error(err?.response?.data?.message)
     }

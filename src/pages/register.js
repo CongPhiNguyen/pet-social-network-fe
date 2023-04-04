@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react"
-import { Col, Row, Button, Form, Input, Typography, Radio } from "antd"
+import { Col, Row, Button, Form, Input, Typography, Radio, message } from "antd"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory, Link } from "react-router-dom"
-import { register } from "../redux/actions/authAction"
-
+import { registerApi } from "../api/authen"
 const { Title } = Typography
 
 const Register = () => {
@@ -39,9 +38,14 @@ const Register = () => {
   //   dispatch(login({ email, password }))
   // }
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log(values)
-    dispatch(register(values))
+    const response = await registerApi(values)
+    console.log(response)
+    const { data, status } = response
+    if (status === 400) {
+      message.error(data.msg)
+    }
   }
 
   return (
