@@ -43,6 +43,12 @@ const Register = () => {
     const response = await registerApi(values)
     console.log(response)
     const { data, status } = response
+    if (status === 200) {
+      message.success(
+        "Create account successfully. Verify email and sign in into your account"
+      )
+      history.push("/verify/" + data.user._id)
+    }
     if (status === 400) {
       message.error(data.msg)
     }

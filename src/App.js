@@ -35,6 +35,7 @@ import Verify from "./pages/verify"
 function App() {
   const { auth, status, modal, call } = useSelector((state) => state)
   const dispatch = useDispatch()
+  console.log(window.location)
 
   useEffect(() => {
     dispatch(refreshToken())
@@ -64,14 +65,14 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
-    const newPeer = new Peer(undefined, {
-      path: "/",
-      secure: true
-    })
+  // useEffect(() => {
+  //   const newPeer = new Peer(undefined, {
+  //     path: "/",
+  //     secure: true
+  //   })
 
-    dispatch({ type: GLOBALTYPES.PEER, payload: newPeer })
-  }, [dispatch])
+  //   dispatch({ type: GLOBALTYPES.PEER, payload: newPeer })
+  // }, [dispatch])
 
   return (
     <Router>
@@ -85,13 +86,13 @@ function App() {
           {auth.token && <SocketClient />}
           {call && <CallModal />}
 
-          <Route exact path="/" component={auth.token ? Home : Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/verify/:id" component={Verify} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
           <Route exact path="/set-password" component={SetPassword} />
-          <PrivateRouter exact path="/:page" component={PageRender} />
-          <PrivateRouter exact path="/:page/:id" component={PageRender} />
+          {/* <PrivateRouter exact path="/:page" component={PageRender} />
+          <PrivateRouter exact path="/:page/:id" component={PageRender} /> */}
+          {/* <Route exact path="/" component={auth.token ? Home : Login} /> */}
         </div>
       </div>
     </Router>
