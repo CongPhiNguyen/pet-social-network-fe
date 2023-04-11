@@ -4,6 +4,7 @@ import { GLOBALTYPES } from '../../redux/actions/globalTypes'
 
 import Loading from './Loading'
 import Toast from './Toast'
+import SpinAntd from './SpinAntd'
 
 const Notify = () => {
     const { alert } = useSelector(state => state)
@@ -11,8 +12,8 @@ const Notify = () => {
 
     return (
         <div>
-            {alert.loading && <Loading />}
-
+            {/* {alert.loading && <Loading />} */}
+            {alert.loading && <SpinAntd />}
             {
                 alert.error &&
                 <Toast msg={{ title: 'Error', body: alert.error }}
