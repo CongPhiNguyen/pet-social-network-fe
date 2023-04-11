@@ -9,6 +9,10 @@ import { BASE_URL } from '../../../utils/config'
 import { SlOptions } from "react-icons/sl"
 import { Dropdown } from 'antd'
 import { CopyOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Modal } from 'antd'
+import { DeleteFilled } from '@ant-design/icons'
+
+const { confirm } = Modal
 
 const CardHeader = ({ post }) => {
     const { auth, socket } = useSelector(state => state)
@@ -20,10 +24,18 @@ const CardHeader = ({ post }) => {
     }
 
     const handleDeletePost = () => {
-        if (window.confirm("Are you sure want to delete this post?")) {
-            dispatch(deletePost({ post, auth, socket }))
-            return history.push("/")
-        }
+        confirm({
+            title: 'Are you sure want to delete this post?',
+            icon: <DeleteFilled />,
+            onOk() {
+                dispatch(deletePost({ post, auth, socket }))
+                return history.push("/")
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+
     }
 
     const handleCopyLink = () => {
