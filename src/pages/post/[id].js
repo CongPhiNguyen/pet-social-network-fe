@@ -5,7 +5,6 @@ import { getPost } from '../../redux/actions/postAction'
 import LoadIcon from '../../images/loading.gif'
 import PostCard from '../../components/PostCard'
 import { Col, Row } from 'antd'
-import Spin from '../../components/alert/Spin'
 
 
 const Post = () => {
