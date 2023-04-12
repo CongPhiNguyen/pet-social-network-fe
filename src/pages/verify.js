@@ -3,10 +3,11 @@ import { Col, Row, Button, Form, Input, Typography, Radio, message } from "antd"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory, Link } from "react-router-dom"
 import { useParams } from "react-router-dom"
-import { getEmailWithIdApi } from "../api/authen"
+import { getEmailWithIdApi, sendCodeVerifyApi } from "../api/authen"
 const { Title } = Typography
 
 export default function Verify() {
+  const history = useHistory()
   const params = useParams()
   const { id } = params
   const [form] = Form.useForm()
@@ -44,9 +45,18 @@ export default function Verify() {
     const getUserWithEmail = async () => {
       const response = await getEmailWithIdApi(id)
       const { data, status } = response
+
       if (status === 200) {
         console.log(data)
         form.setFieldValue("email", data.email)
+      }
+      if (status === 404) {
+        message.error("Not found user with this email")
+        const timeoutId = setTimeout(() => {
+          history.push("/")
+        }, 2000)
+
+        return () => clearTimeout(timeoutId)
       }
     }
     getUserWithEmail()
@@ -56,6 +66,17 @@ export default function Verify() {
     console.log(value)
   }
 
+  const sendCodeVerify = async () => {
+    const response = await sendCodeVerifyApi(id)
+    const { status, data } = response
+    if (status === 200) {
+      console.log(data)
+      setCount(10)
+      setDisableCode(false)
+      setDisableSendCode(true)
+      setIsCounting(true)
+    }
+  }
   return (
     <div>
       <Row style={{ width: "100vw" }}>
@@ -111,10 +132,7 @@ export default function Verify() {
                 <Button
                   disabled={disableSendCode}
                   onClick={() => {
-                    setCount(10)
-                    setDisableCode(false)
-                    setDisableSendCode(true)
-                    setIsCounting(true)
+                    sendCodeVerify()
                   }}
                 >
                   Send code
