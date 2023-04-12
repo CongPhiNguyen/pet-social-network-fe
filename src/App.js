@@ -90,9 +90,9 @@ function App() {
           <Route exact path="/verify/:id" component={Verify} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
           <Route exact path="/set-password" component={SetPassword} />
-          {/* <PrivateRouter exact path="/:page" component={PageRender} />
-          <PrivateRouter exact path="/:page/:id" component={PageRender} /> */}
-          {/* <Route exact path="/" component={auth.token ? Home : Login} /> */}
+          <PrivateRouter exact path="/:page" component={PageRender} />
+          <PrivateRouter exact path="/:page/:id" component={PageRender} />
+          <Route exact path="/" component={auth.token ? Home : Login} />
         </div>
       </div>
     </Router>
