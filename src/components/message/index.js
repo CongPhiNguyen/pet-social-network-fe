@@ -1,5 +1,5 @@
 import React from "react"
-import LeftSide from "../../components/message/LeftSide"
+import LeftSide from "./LeftSide"
 
 const Message = () => {
   return (

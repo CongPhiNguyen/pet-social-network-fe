@@ -4,6 +4,7 @@ import NotFound from "../components/NotFound"
 import { useSelector } from "react-redux"
 import Setting from "../components/setting/Setting"
 import ForgotPassword from "../pages/forgotPassword"
+import Admin from "../pages/admin/Admin"
 
 const generatePage = (pageName) => {
   const component = () => require(`../pages/${pageName}`).default

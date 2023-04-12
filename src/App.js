@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import React, { useEffect } from "react"
 import { BrowserRouter as Router, Route } from "react-router-dom"
 
 import PageRender from "./customRouter/PageRender"
@@ -31,11 +31,11 @@ import "./styles/antd.less"
 import ForgotPassword from "./pages/forgotPassword"
 import SetPassword from "./pages/setPassword"
 import Verify from "./pages/verify"
+import Admin from "./pages/admin/Admin"
 
 function App() {
   const { auth, status, modal, call } = useSelector((state) => state)
   const dispatch = useDispatch()
-  console.log(window.location)
 
   useEffect(() => {
     dispatch(refreshToken())
@@ -75,27 +75,33 @@ function App() {
   // }, [dispatch])
 
   return (
-    <Router>
-      <Alert />
-      <input type="checkbox" id="theme" />
-      <div className={`App ${(status || modal) && "mode"}`}>
-        <div className="main">
-          {auth.token && <HeaderLayout />}
-          {/* {status && <StatusModal />} */}
-          <StatusModal />
-          {auth.token && <SocketClient />}
-          {call && <CallModal />}
-
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/verify/:id" component={Verify} />
-          <Route exact path="/forgot-password" component={ForgotPassword} />
-          <Route exact path="/set-password" component={SetPassword} />
-          <PrivateRouter exact path="/:page" component={PageRender} />
-          <PrivateRouter exact path="/:page/:id" component={PageRender} />
-          <Route exact path="/" component={auth.token ? Home : Login} />
-        </div>
+    <React.Fragment>
+      {window.location.pathname !== "/admin" && (
+        <Router>
+          <Alert />
+          <input type="checkbox" id="theme" />
+          <div className={`App ${(status || modal) && "mode"}`}>
+            <div className="main">
+              {auth.token && <HeaderLayout />}
+              {/* {status && <StatusModal />} */}
+              <StatusModal />
+              {auth.token && <SocketClient />}
+              {call && <CallModal />}
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/verify/:id" component={Verify} />
+              <Route exact path="/forgot-password" component={ForgotPassword} />
+              <Route exact path="/set-password" component={SetPassword} />
+              <PrivateRouter exact path="/:page" component={PageRender} />
+              <PrivateRouter exact path="/:page/:id" component={PageRender} />
+              <Route exact path="/" component={auth.token ? Home : Login} />
+            </div>
+          </div>
+        </Router>
+      )}
+      <div style={{ width: "100%" }}>
+        {window.location.pathname === "/admin" && <Admin />}
       </div>
-    </Router>
+    </React.Fragment>
   )
 }
 
