@@ -18,7 +18,7 @@ export const POST_TYPES = {
 }
 
 export const createPost =
-  ({ content, images, auth, socket }) =>
+  ({ content, location, images, auth, socket }) =>
   async (dispatch) => {
     let media = []
     try {
@@ -27,7 +27,7 @@ export const createPost =
 
       const res = await postDataAPI(
         "posts",
-        { content, images: media },
+        { content, location, images: media },
         auth.token
       )
 
@@ -76,7 +76,7 @@ export const getPosts = (token) => async (dispatch) => {
 }
 
 export const updatePost =
-  ({ content, images, auth, status }) =>
+  ({ content, images, auth, status, location }) =>
   async (dispatch) => {
     let media = []
     const imgNewUrl = images.filter((img) => !img.url)
@@ -97,6 +97,7 @@ export const updatePost =
         `post/${status._id}`,
         {
           content,
+          location,
           images: [...imgOldUrl, ...media]
         },
         auth.token
@@ -126,7 +127,7 @@ export const likePost =
 
       // Notify
       const msg = {
-        id: auth?.user?._id,
+        id: auth.user._id,
         text: "like your post.",
         recipients: [post.user._id],
         url: `/post/${post._id}`,
@@ -148,7 +149,7 @@ export const unLikePost =
   async (dispatch) => {
     const newPost = {
       ...post,
-      likes: post.likes.filter((like) => like._id !== auth?.user?._id)
+      likes: post.likes.filter((like) => like._id !== auth.user._id)
     }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
 
@@ -159,7 +160,7 @@ export const unLikePost =
 
       // Notify
       const msg = {
-        id: auth?.user?._id,
+        id: auth.user._id,
         text: "like your post.",
         recipients: [post.user._id],
         url: `/post/${post._id}`

@@ -1,16 +1,18 @@
-import React from "react"
-import Avatar from "../../Avatar"
+import React, { useState, useMemo, useEffect } from "react"
+import { Avatar } from "antd"
 import { Link, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import moment from "moment"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
 import { deletePost } from "../../../redux/actions/postAction"
 import { BASE_URL } from "../../../utils/config"
+import { SlOptions } from "react-icons/sl"
+import { Dropdown } from "antd"
+import { CopyOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
 
 const CardHeader = ({ post }) => {
   const { auth, socket } = useSelector((state) => state)
   const dispatch = useDispatch()
-
   const history = useHistory()
 
   const handleEditPost = () => {
@@ -28,15 +30,84 @@ const CardHeader = ({ post }) => {
     navigator.clipboard.writeText(`${BASE_URL}/post/${post._id}`)
   }
 
+  const [items, setItems] = useState([])
+  useEffect(() => {
+    if (auth.user._id === post.user._id) {
+      setItems([
+        {
+          key: "1",
+          label: (
+            <div onClick={handleEditPost}>
+              <EditOutlined
+                style={{ transform: "translateY(-4px)", marginRight: "6px" }}
+              />{" "}
+              <span style={{ fontWeight: "600" }}>Edit</span>
+            </div>
+          )
+        },
+        {
+          key: "2",
+          label: (
+            <div onClick={handleDeletePost}>
+              <DeleteOutlined
+                style={{ transform: "translateY(-4px)", marginRight: "6px" }}
+              />{" "}
+              <span style={{ fontWeight: "600" }}>Delete</span>
+            </div>
+          )
+        },
+        {
+          key: "3",
+          label: (
+            <div onClick={handleCopyLink}>
+              <CopyOutlined
+                style={{ transform: "translateY(-4px)", marginRight: "6px" }}
+              />{" "}
+              <span style={{ fontWeight: "600" }}>Copy</span>
+            </div>
+          )
+        }
+      ])
+    } else {
+      setItems([
+        {
+          key: "3",
+          label: (
+            <div onClick={handleCopyLink}>
+              <CopyOutlined
+                style={{ transform: "translateY(-4px)", marginRight: "6px" }}
+              />{" "}
+              <span style={{ fontWeight: "600" }}>Copy</span>
+            </div>
+          )
+        }
+      ])
+    }
+  }, [post.user._id, auth.user._id])
+
   return (
     <div className="card_header">
       <div className="d-flex">
-        <Avatar src={post.user.avatar} size="big-avatar" />
-
+        <Avatar
+          style={{
+            backgroundColor: "#f56a00",
+            verticalAlign: "middle",
+            marginRight: "5px"
+          }}
+          src={
+            auth?.user?.avatar ===
+            "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+              ? null
+              : auth?.user?.avatar
+          }
+          size="large"
+        >
+          {auth?.user?.username[0]?.toUpperCase()}
+        </Avatar>
         <div className="card_name">
           <h6 className="m-0">
             <Link to={`/profile/${post.user._id}`} className="text-dark">
-              {post.user.username}
+              {post.user.fullname}
             </Link>
           </h6>
           <small className="text-muted">
@@ -44,29 +115,14 @@ const CardHeader = ({ post }) => {
           </small>
         </div>
       </div>
-
       <div className="nav-item dropdown">
-        <span className="material-icons" id="moreLink" data-toggle="dropdown">
-          more_horiz
-        </span>
-
-        <div className="dropdown-menu">
-          {auth?.user?._id === post?.user?._id && (
-            <>
-              <div className="dropdown-item" onClick={handleEditPost}>
-                <span className="material-icons">create</span> Edit Post
-              </div>
-              <div className="dropdown-item" onClick={handleDeletePost}>
-                <span className="material-icons">delete_outline</span> Remove
-                Post
-              </div>
-            </>
-          )}
-
-          <div className="dropdown-item" onClick={handleCopyLink}>
-            <span className="material-icons">content_copy</span> Copy Link
-          </div>
-        </div>
+        <Dropdown
+          menu={{ items }}
+          placement="bottomRight"
+          arrow={{ pointAtCenter: true }}
+        >
+          <SlOptions />
+        </Dropdown>
       </div>
     </div>
   )

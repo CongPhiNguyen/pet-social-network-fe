@@ -17,9 +17,7 @@ const StatusModal = () => {
 
     const [content, setContent] = useState('')
     const [images, setImages] = useState([])
-    useEffect(() => {
-        console.log(images);
-    }, [images])
+
     const [stream, setStream] = useState(false)
     const videoRef = useRef()
     const refCanvas = useRef()
@@ -83,18 +81,19 @@ const StatusModal = () => {
     }
 
     const handleSubmit = () => {
-        const newContent = content + `\n\n\n` + location
+        const newContent = content
         if (images.length === 0)
             return dispatch({
                 type: GLOBALTYPES.ALERT, payload: { error: "Please add your photo." }
             })
 
         if (status.onEdit) {
-            dispatch(updatePost({ content: newContent, images, auth, status }))
+            dispatch(updatePost({ content: newContent, location, images, auth, status }))
         } else {
-            dispatch(createPost({ content: newContent, images, auth, socket }))
+            dispatch(createPost({ content: newContent, location, images, auth, socket }))
         }
 
+        setLocation('')
         setContent('')
         setImages([])
         if (tracks) tracks.stop()

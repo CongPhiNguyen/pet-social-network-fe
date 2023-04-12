@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import Avatar from "../../Avatar"
 import { Link } from "react-router-dom"
 import moment from "moment"
 
@@ -12,6 +11,7 @@ import {
   unLikeComment
 } from "../../../redux/actions/commentAction"
 import InputComment from "../InputComment"
+import { Avatar } from "antd"
 
 const CommentCard = ({ children, comment, post, commentId }) => {
   const { auth, theme } = useSelector((state) => state)
@@ -30,10 +30,10 @@ const CommentCard = ({ children, comment, post, commentId }) => {
     setContent(comment.content)
     setIsLike(false)
     setOnReply(false)
-    if (comment.likes.find((like) => like._id === auth?.user?._id)) {
+    if (comment.likes.find((like) => like._id === auth.user._id)) {
       setIsLike(true)
     }
-  }, [comment, auth?.user?._id])
+  }, [comment, auth.user._id])
 
   const handleUpdate = () => {
     if (comment.content !== content) {
@@ -74,12 +74,25 @@ const CommentCard = ({ children, comment, post, commentId }) => {
 
   return (
     <div className="comment_card mt-2" style={styleCard}>
-      <Link to={`/profile/${comment.user._id}`} className="d-flex text-dark">
-        <Avatar src={comment.user.avatar} size="small-avatar" />
-        <h6 className="mx-1">{comment.user.username}</h6>
-      </Link>
-
       <div className="comment_content">
+        <Link to={`/profile/${comment.user._id}`} className="d-flex text-dark ">
+          <Avatar
+            style={{
+              backgroundColor: "#f56a00",
+              verticalAlign: "middle",
+              marginRight: 5
+            }}
+            src={
+              comment.user.avatar ===
+              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                ? null
+                : auth?.user?.avatar
+            }
+            size="small"
+          >
+            {comment.user.username[0]?.toUpperCase()}
+          </Avatar>
+        </Link>
         <div
           className="flex-fill"
           style={{
@@ -87,6 +100,12 @@ const CommentCard = ({ children, comment, post, commentId }) => {
             color: theme ? "white" : "#111"
           }}
         >
+          <Link
+            to={`/profile/${comment.user._id}`}
+            className="d-flex text-dark "
+          >
+            <div style={{ fontWeight: "bold" }}> {comment.user.username}</div>
+          </Link>
           {onEdit ? (
             <textarea
               rows="5"

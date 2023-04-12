@@ -11,12 +11,11 @@ import {
 } from "../../../redux/actions/postAction"
 import ShareModal from "../../ShareModal"
 import { BASE_URL } from "../../../utils/config"
+import { Modal } from "antd"
 
 const CardFooter = ({ post }) => {
   const [isLike, setIsLike] = useState(false)
   const [loadLike, setLoadLike] = useState(false)
-
-  const [isShare, setIsShare] = useState(false)
 
   const { auth, theme, socket } = useSelector((state) => state)
   const dispatch = useDispatch()
@@ -26,12 +25,12 @@ const CardFooter = ({ post }) => {
 
   // Likes
   useEffect(() => {
-    if (post.likes.find((like) => like?._id === auth?.user?._id)) {
+    if (post.likes.find((like) => like._id === auth.user._id)) {
       setIsLike(true)
     } else {
       setIsLike(false)
     }
-  }, [post?.likes, auth?.user?._id])
+  }, [post.likes, auth.user._id])
 
   const handleLike = async () => {
     if (loadLike) return
@@ -47,6 +46,16 @@ const CardFooter = ({ post }) => {
     setLoadLike(true)
     await dispatch(unLikePost({ post, auth, socket }))
     setLoadLike(false)
+  }
+
+  const openModelShare = () => {
+    Modal.info({
+      title: "You can share this article with following social network",
+      content: (
+        <ShareModal url={`${BASE_URL}/post/${post._id}`} theme={theme} />
+      ),
+      onOk() {}
+    })
   }
 
   // Saved
@@ -85,16 +94,19 @@ const CardFooter = ({ post }) => {
           />
 
           <Link to={`/post/${post._id}`} className="text-dark">
-            <i className="far fa-comment" />
+            <i className="far fa-comment icon-hover" />
           </Link>
 
-          <img src={Send} alt="Send" onClick={() => setIsShare(!isShare)} />
+          <img src={Send} alt="Send" onClick={openModelShare} />
         </div>
 
         {saved ? (
-          <i className="fas fa-bookmark text-info" onClick={handleUnSavePost} />
+          <i
+            className="fas fa-bookmark text-info icon-hover"
+            onClick={handleUnSavePost}
+          />
         ) : (
-          <i className="far fa-bookmark" onClick={handleSavePost} />
+          <i className="far fa-bookmark icon-hover" onClick={handleSavePost} />
         )}
       </div>
 
@@ -107,10 +119,6 @@ const CardFooter = ({ post }) => {
           {post.comments.length} comments
         </h6>
       </div>
-
-      {isShare && (
-        <ShareModal url={`${BASE_URL}/post/${post._id}`} theme={theme} />
-      )}
     </div>
   )
 }
