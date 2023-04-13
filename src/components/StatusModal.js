@@ -83,10 +83,7 @@ const StatusModal = () => {
     const handleSubmit = () => {
         const newContent = content
         if (images.length === 0)
-            return dispatch({
-                type: GLOBALTYPES.ALERT, payload: { error: "Please add your photo." }
-            })
-
+            return message.warning("Please add your photo.")
         if (status.onEdit) {
             dispatch(updatePost({ content: newContent, location, images, auth, status }))
         } else {

@@ -6,7 +6,7 @@ import RightSideBar from '../components/home/RightSideBar'
 
 import { useSelector } from 'react-redux'
 import LoadIcon from '../images/loading.gif'
-import { Row, Col, Result, Button, Card } from 'antd'
+import { Row, Col, Result, Card } from 'antd'
 
 let scroll = 0;
 

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getPost } from '../../redux/actions/postAction'
 import LoadIcon from '../../images/loading.gif'
 import PostCard from '../../components/PostCard'
+import { Col, Row } from 'antd'
 
 
 const Post = () => {
@@ -14,27 +15,32 @@ const Post = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getPost({detailPost, id, auth}))
+        dispatch(getPost({ detailPost, id, auth }))
 
-        if(detailPost.length > 0){
+        if (detailPost.length > 0) {
             const newArr = detailPost.filter(post => post._id === id)
             setPost(newArr)
         }
-    },[detailPost, dispatch, id, auth])
+    }, [detailPost, dispatch, id, auth])
 
     return (
-        <div className="posts">
-            {
-                post.length === 0 &&
-                <img src={LoadIcon} alt="loading" className="d-block mx-auto my-4" />
-            }
-
-            {
-                post.map(item => (
-                    <PostCard key={item._id} post={item} />
-                ))
-            }
-        </div>
+        <Row style={{ marginTop: "64px" }} className='home'>
+            <Col xs={6} >
+            </Col>
+            <Col xs={12} >
+                <div style={{ paddingTop: 16 }} className="posts">
+                    {
+                        post.length === 0 &&
+                        <img src={LoadIcon} alt="loading" className="d-block mx-auto my-4" />
+                    }
+                    {
+                        post.map(item => (
+                            <PostCard key={item._id} post={item} />
+                        ))
+                    }
+                </div>
+            </Col>
+        </Row>
     )
 }
 

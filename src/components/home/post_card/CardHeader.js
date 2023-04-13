@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Avatar } from "antd"
 import { Link, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
@@ -9,6 +9,10 @@ import { BASE_URL } from "../../../utils/config"
 import { SlOptions } from "react-icons/sl"
 import { Dropdown } from "antd"
 import { CopyOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
+import { Modal } from "antd"
+import { DeleteFilled } from "@ant-design/icons"
+
+const { confirm } = Modal
 
 const CardHeader = ({ post }) => {
   const { auth, socket } = useSelector((state) => state)
@@ -19,15 +23,21 @@ const CardHeader = ({ post }) => {
     dispatch({ type: GLOBALTYPES.STATUS, payload: { ...post, onEdit: true } })
   }
 
-  const handleDeletePost = () => {
-    if (window.confirm("Are you sure want to delete this post?")) {
-      dispatch(deletePost({ post, auth, socket }))
-      return history.push("/")
-    }
-  }
-
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`${BASE_URL}/post/${post._id}`)
+  }
+  const handleDeletePost = () => {
+    confirm({
+      title: "Are you sure want to delete this post?",
+      icon: <DeleteFilled />,
+      onOk() {
+        dispatch(deletePost({ post, auth, socket }))
+        return history.push("/")
+      },
+      onCancel() {
+        console.log("Cancel")
+      }
+    })
   }
 
   const [items, setItems] = useState([])
