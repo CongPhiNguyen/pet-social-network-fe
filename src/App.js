@@ -99,7 +99,11 @@ function App() {
         </Router>
       )}
       <div style={{ width: "100%" }}>
-        {window.location.pathname === "/admin" && <Admin />}
+        {window.location.pathname === "/admin" && (
+          <Router>
+            <Admin />
+          </Router>
+        )}
       </div>
     </React.Fragment>
   )

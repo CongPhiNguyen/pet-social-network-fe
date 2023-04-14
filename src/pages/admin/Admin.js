@@ -14,12 +14,14 @@ import {
   FolderOutlined,
   FolderAddTwoTone
 } from "@ant-design/icons"
-import { Layout, Menu, Card, Typography } from "antd"
+import { Layout, Menu, Card, Typography, Button } from "antd"
 import TableUser from "./User/TableUser"
+import { useHistory } from "react-router-dom"
 
 const { Header, Sider, Content } = Layout
 
 export default function Admin() {
+  const history = useHistory()
   const [collapsed, setCollapsed] = useState(false)
   const [key, setCurrentKey] = useState("1")
 
@@ -53,6 +55,15 @@ export default function Admin() {
             }
           ]}
         />
+        <Button
+          onClick={() => {
+            console.log("hh")
+            history.push("/")
+            history.go(0)
+          }}
+        >
+          Back
+        </Button>
       </Sider>
       <Layout className="site-layout" theme="light">
         <Header
