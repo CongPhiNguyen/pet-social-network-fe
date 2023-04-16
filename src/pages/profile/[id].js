@@ -23,9 +23,8 @@ const Profile = () => {
   }, [id, auth, dispatch, profile.ids])
 
   return (
-    <div className="profile">
+    <div className="profile" style={{ marginTop: 64 }}>
       <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />
-
       {auth?.user?._id === id && (
         <div className="profile_tab">
           <button
@@ -42,7 +41,6 @@ const Profile = () => {
           </button>
         </div>
       )}
-
       {profile?.loading ? (
         <img className="d-block mx-auto" src={LoadIcon} alt="loading" />
       ) : (
