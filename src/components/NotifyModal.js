@@ -1,7 +1,7 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import NoNotice from "../images/notice.png"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import Avatar from "./Avatar"
 import moment from "moment"
 import {
@@ -13,6 +13,7 @@ import { Button, Modal } from "antd"
 import { DeleteFilled } from "@ant-design/icons"
 
 const NotifyModal = () => {
+  const history = useHistory()
   const { auth, notify } = useSelector((state) => state)
   const [modal, contextHolder] = Modal.useModal()
   const dispatch = useDispatch()
@@ -102,7 +103,13 @@ const NotifyModal = () => {
       </div>
       <hr className="my-1" />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Button onClick={() => {}}>Open in window</Button>
+        <Button
+          onClick={() => {
+            history.push("/notification")
+          }}
+        >
+          Open in window
+        </Button>
         <Button type="primary" onClick={confirm} danger>
           Delete All
         </Button>
