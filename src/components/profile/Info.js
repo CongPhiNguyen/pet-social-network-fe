@@ -4,6 +4,7 @@ import FollowBtn from "../FollowBtn"
 import { GLOBALTYPES } from "../../redux/actions/globalTypes"
 import { Row, Col } from "antd"
 import Follower from "./Follower"
+import PetProfile from "./pet/PetProfile"
 
 const Info = ({ id, auth, profile, dispatch }) => {
   const [userData, setUserData] = useState([])
@@ -70,20 +71,24 @@ const Info = ({ id, auth, profile, dispatch }) => {
                   </div>
                 </div>
               </Col>
-              <Col span={24}>
+              <Col span={12}>
                 <div style={{ marginLeft: 60 }}>
-                  <Typography style={{ fontSize: 18, width: "50%" }}>
+                  <Typography style={{ fontSize: 16 }}>
                     The greatness of a nation and its moral progress can be
                     judged by the way its animals are treated. - Mahatma Gandhi,
                     Indian Soci
                   </Typography>
+                  <div style={{ marginTop: 20 }}>
+                    <Follower id={id} />
+                  </div>
                 </div>
               </Col>
-              <Col span={24}>
-                <div style={{ marginLeft: 60, marginTop: 20 }}>
-                  <Follower id={id} />
+              <Col span={12}>
+                <div style={{ marginLeft: 60 }}>
+                  <PetProfile />
                 </div>
               </Col>
+              <Col span={24}></Col>
             </Row>
           </Card>
         </React.Fragment>

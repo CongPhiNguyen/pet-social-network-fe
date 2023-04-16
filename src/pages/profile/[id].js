@@ -41,38 +41,40 @@ const Profile = () => {
           </Card>
         </Col>
         <Col span={16}>
-          {auth?.user?._id === id && (
-            <div className="profile_tab">
-              <button
-                className={saveTab ? "" : "active"}
-                onClick={() => setSaveTab(false)}
-              >
-                Posts
-              </button>
-              <button
-                className={saveTab ? "active" : ""}
-                onClick={() => setSaveTab(true)}
-              >
-                Saved
-              </button>
-            </div>
-          )}
-          {profile?.loading ? (
-            <img className="d-block mx-auto" src={LoadIcon} alt="loading" />
-          ) : (
-            <>
-              {saveTab ? (
-                <Saved auth={auth} dispatch={dispatch} />
-              ) : (
-                <Posts
-                  auth={auth}
-                  profile={profile}
-                  dispatch={dispatch}
-                  id={id}
-                />
-              )}
-            </>
-          )}
+          <div style={{ marginLeft: 20 }}>
+            {auth?.user?._id === id && (
+              <div className="profile_tab">
+                <button
+                  className={saveTab ? "" : "active"}
+                  onClick={() => setSaveTab(false)}
+                >
+                  Posts
+                </button>
+                <button
+                  className={saveTab ? "active" : ""}
+                  onClick={() => setSaveTab(true)}
+                >
+                  Saved
+                </button>
+              </div>
+            )}
+            {profile?.loading ? (
+              <img className="d-block mx-auto" src={LoadIcon} alt="loading" />
+            ) : (
+              <>
+                {saveTab ? (
+                  <Saved auth={auth} dispatch={dispatch} />
+                ) : (
+                  <Posts
+                    auth={auth}
+                    profile={profile}
+                    dispatch={dispatch}
+                    id={id}
+                  />
+                )}
+              </>
+            )}
+          </div>
         </Col>
       </Row>
     </div>
