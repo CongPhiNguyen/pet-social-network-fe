@@ -7,7 +7,7 @@ export default function PageHeader(props) {
   const history = useHistory()
   return (
     <div style={{ marginTop: 20, marginLeft: 20, display: "flex" }}>
-      <div style={{ marginRight: 10 }}>
+      <div style={{ marginRight: 10, cursor: "pointer" }}>
         <IoChevronBackOutline
           onClick={() => {
             history.goBack()

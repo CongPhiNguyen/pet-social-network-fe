@@ -32,7 +32,8 @@ export default function Setting() {
     setCurrentSetting(val.key)
   }
   return (
-    <div className="page-container">
+    <div className="page-container" style={{ marginTop: 64 }}>
+      <div style={{ height: 10 }}></div>
       <PageHeader title={"Setting"}></PageHeader>
       <PageSection>
         <Card>

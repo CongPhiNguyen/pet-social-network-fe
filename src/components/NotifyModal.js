@@ -102,6 +102,7 @@ const NotifyModal = () => {
       </div>
       <hr className="my-1" />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Button onClick={() => {}}>Open in window</Button>
         <Button type="primary" onClick={confirm} danger>
           Delete All
         </Button>
