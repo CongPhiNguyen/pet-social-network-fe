@@ -4,6 +4,10 @@ export const getAllUserApi = () => {
   return axios.get("/get-all-user")
 }
 
+export const getUserInfoApi = (userId) => {
+  return axios.get("/get-user-info/" + userId)
+}
+
 export const getFollowersApi = (id) => {
   return axios.get(`/follower/${id}`)
 }

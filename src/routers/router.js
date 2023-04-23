@@ -2,6 +2,7 @@ import Home from "../pages/home"
 import Login from "../pages/login"
 import Profile from "../pages/profile/Profile"
 import Register from "../pages/register"
+import Setting from "../pages/setting/Setting"
 
 const mainRoute = []
 
@@ -14,7 +15,8 @@ const publicRoute = [
 // Những route dùng khi đã đăng nhập
 const protectedRoute = [
   { path: "/", name: "Home", element: <Home /> },
-  { path: "/profile/:id", name: "Profile", element: <Profile /> }
+  { path: "/profile/:id", name: "Profile", element: <Profile /> },
+  { path: "/setting", name: "Setting", element: <Setting /> }
 ]
 
 // route dùng cho mọi trường hợp

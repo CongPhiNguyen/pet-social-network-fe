@@ -32,12 +32,13 @@ const Posts = ({ auth, id, dispatch, profile }) => {
     setLoad(false)
   }
 
+  console.log("posts", posts)
+  console.log("result", result)
+
   return (
     <div>
       <PostThumb posts={posts} result={result} />
-
       {load && <img src={LoadIcon} alt="loading" className="d-block mx-auto" />}
-
       <LoadMoreBtn
         result={result}
         page={page}

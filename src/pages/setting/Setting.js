@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { SiAuth0 } from "react-icons/si"
 import { Menu, Card, Row, Col } from "antd"
-import PageHeader from "../common/PageHeader"
-import PageSection from "../common/PageSection"
+import PageHeader from "../../components/common/PageHeader"
+import PageSection from "../../components/common/PageSection"
 import "./setting.scss"
 import TwoFactor from "./TwoFactorAuthen/TwoFactor"
 
