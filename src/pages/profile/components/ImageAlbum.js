@@ -21,6 +21,22 @@ export default function ImageAlbum({ isLoading }) {
     <img className="d-block mx-auto" src={LoadIcon} alt="loading" />
   return (
     <div>
+      {auth?.user?._id === id && (
+        <div className="profile_tab">
+          <button
+            className={saveTab ? "" : "active"}
+            onClick={() => setSaveTab(false)}
+          >
+            Posts
+          </button>
+          <button
+            className={saveTab ? "active" : ""}
+            onClick={() => setSaveTab(true)}
+          >
+            Saved
+          </button>
+        </div>
+      )}
       <>
         {saveTab ? (
           <Saved auth={auth} dispatch={dispatch} />

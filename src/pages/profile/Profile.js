@@ -19,7 +19,6 @@ const Profile = () => {
     }
   }, [id, auth, dispatch, profile.ids])
 
-  console.log("auth", auth)
   return (
     <div className="profile" style={{ marginTop: 64 }}>
       <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />
@@ -34,30 +33,15 @@ const Profile = () => {
       >
         <Col span={8}>
           {!profile?.loading && (
-            <Card>
-              <Following />
-            </Card>
-          )}
-
-          <div style={{ marginLeft: 20 }}>
-            {auth?.user?._id === id && (
-              <div className="profile_tab">
-                <button
-                  className={saveTab ? "" : "active"}
-                  onClick={() => setSaveTab(false)}
-                >
-                  Posts
-                </button>
-                <button
-                  className={saveTab ? "active" : ""}
-                  onClick={() => setSaveTab(true)}
-                >
-                  Saved
-                </button>
+            <>
+              <Card>
+                <Following />
+              </Card>
+              <div style={{ marginLeft: 20 }}>
+                <ImageAlbum isLoading={profile?.loading} />
               </div>
-            )}
-            <ImageAlbum isLoading={profile?.loading} />
-          </div>
+            </>
+          )}
         </Col>
         <Col span={16}></Col>
       </Row>

@@ -1,5 +1,6 @@
 import Home from "../pages/home"
 import Login from "../pages/login"
+import PostPage from "../pages/post/PostPage"
 import Profile from "../pages/profile/Profile"
 import Register from "../pages/register"
 import Setting from "../pages/setting/Setting"
@@ -20,7 +21,7 @@ const protectedRoute = [
 ]
 
 // route dùng cho mọi trường hợp
-const commonRoute = []
+const commonRoute = [{ path: "/post/:id", name: "Post", element: <PostPage /> }]
 
 // Route dùng cho manager
 const managerRoute = []

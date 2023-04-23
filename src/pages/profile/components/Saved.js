@@ -38,6 +38,8 @@ const Saved = ({ auth, dispatch }) => {
     setLoad(false)
   }
 
+  // console.log()
+
   return (
     <div>
       <PostThumb posts={savePosts} result={result} />
