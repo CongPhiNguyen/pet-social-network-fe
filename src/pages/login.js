@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory, useNavigate } from "react-router-dom"
 import { login } from "../redux/actions/authAction"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
@@ -10,13 +10,13 @@ const { Title } = Typography
 const Login = () => {
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [form] = Form.useForm()
   const [userOTPEnable, setUserOTPEnable] = useState("")
 
   useEffect(() => {
-    if (auth.token) history.push("/")
-  }, [auth.token, history])
+    if (auth.token) navigate.to("/")
+  }, [auth.token, navigate])
 
   const onFinish = async (values) => {
     const { email, password, otp } = values

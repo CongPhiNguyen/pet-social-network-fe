@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react"
-
-import Info from "../../components/profile/Info"
-import Posts from "../../components/profile/Posts"
-import Saved from "../../components/profile/Saved"
+import Info from "./components/Info"
+import Posts from "./components/Posts"
+import Saved from "./components/Saved"
 
 import { useSelector, useDispatch } from "react-redux"
 import LoadIcon from "../../images/loading.gif"
 import { getProfileUsers } from "../../redux/actions/profileAction"
 import { useParams } from "react-router-dom"
 import { Card, Col, Row } from "antd"
-import Following from "../../components/profile/Following"
+import Following from "./components/Following"
 
 const Profile = () => {
   const { profile, auth } = useSelector((state) => state)
@@ -39,8 +38,6 @@ const Profile = () => {
           <Card>
             <Following />
           </Card>
-        </Col>
-        <Col span={16}>
           <div style={{ marginLeft: 20 }}>
             {auth?.user?._id === id && (
               <div className="profile_tab">
@@ -76,6 +73,7 @@ const Profile = () => {
             )}
           </div>
         </Col>
+        <Col span={16}></Col>
       </Row>
     </div>
   )

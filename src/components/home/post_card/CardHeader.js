@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Avatar } from "antd"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import moment from "moment"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
@@ -17,7 +17,7 @@ const { confirm } = Modal
 const CardHeader = ({ post }) => {
   const { auth, socket } = useSelector((state) => state)
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const handleEditPost = () => {
     dispatch({ type: GLOBALTYPES.STATUS, payload: { ...post, onEdit: true } })
@@ -32,7 +32,7 @@ const CardHeader = ({ post }) => {
       icon: <DeleteFilled />,
       onOk() {
         dispatch(deletePost({ post, auth, socket }))
-        return history.push("/")
+        return navigate.to("/")
       },
       onCancel() {
         console.log("Cancel")

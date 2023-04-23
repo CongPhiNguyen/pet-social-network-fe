@@ -1,7 +1,7 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import NoNotice from "../images/notice.png"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory, useNavigate } from "react-router-dom"
 import Avatar from "./Avatar"
 import moment from "moment"
 import {
@@ -13,7 +13,7 @@ import { Button, Modal } from "antd"
 import { DeleteFilled } from "@ant-design/icons"
 
 const NotifyModal = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { auth, notify } = useSelector((state) => state)
   const [modal, contextHolder] = Modal.useModal()
   const dispatch = useDispatch()
@@ -105,7 +105,7 @@ const NotifyModal = () => {
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Button
           onClick={() => {
-            history.push("/notification")
+            navigate.to("/notification")
           }}
         >
           Open in window
