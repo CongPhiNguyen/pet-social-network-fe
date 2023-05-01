@@ -105,7 +105,7 @@ const NotifyModal = () => {
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Button
           onClick={() => {
-            navigate.to("/notification")
+            navigate("/notification")
           }}
         >
           Open in window

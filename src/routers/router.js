@@ -1,5 +1,6 @@
 import Home from "../pages/home"
 import Login from "../pages/login"
+import NotificationPage from "../pages/notification/NotificationPage"
 import PostPage from "../pages/post/PostPage"
 import Profile from "../pages/profile/Profile"
 import Register from "../pages/register"
@@ -17,7 +18,8 @@ const publicRoute = [
 const protectedRoute = [
   { path: "/", name: "Home", element: <Home /> },
   { path: "/profile/:id", name: "Profile", element: <Profile /> },
-  { path: "/setting", name: "Setting", element: <Setting /> }
+  { path: "/setting", name: "Setting", element: <Setting /> },
+  { path: "/notification", name: "Notification", element: <NotificationPage /> }
 ]
 
 // route dùng cho mọi trường hợp

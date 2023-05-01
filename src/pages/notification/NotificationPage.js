@@ -6,7 +6,7 @@ import Avatar from "../../components/Avatar"
 import moment from "moment"
 import LeftNavigation from "../../components/navigation/LeftNavigation"
 
-export default function Notification() {
+export default function NotificationPage() {
   const dispatch = useDispatch()
   const { auth, notify } = useSelector((state) => state)
 
