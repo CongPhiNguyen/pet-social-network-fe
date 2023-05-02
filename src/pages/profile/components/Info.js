@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Avatar, Typography, Card, Divider, Tooltip, Button } from "antd"
+import { Avatar, Typography, Card, Divider, Tooltip, Button, Modal } from "antd"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
 import FollowBtn from "../../../components/FollowBtn"
 import { Row, Col } from "antd"
@@ -7,18 +7,28 @@ import Follower from "./Follower"
 import PetProfile from "./pet/PetProfile"
 import { getUserInfoApi } from "../../../api/user"
 import { useParams } from "react-router-dom"
+import EditProfile from "./EditProfile"
+import { useSelector } from "react-redux"
 
 const Info = ({ auth, profile, dispatch }) => {
-  const [userInfo, setUserInfo] = useState([])
   const { id } = useParams()
+  const [userInfo, setUserInfo] = useState([])
+  const currentUser = useSelector((state) => state.auth.user)
+  const [isEdit, setIsEdit] = useState(false)
+
   const getUserId = async () => {
     const response = await getUserInfoApi(id)
     const { data, status } = response
     setUserInfo(data.user)
   }
+  console.log(userInfo)
   useEffect(() => {
-    getUserId()
-  }, [id])
+    if (id === currentUser._id) {
+      setUserInfo(currentUser)
+    } else {
+      getUserId()
+    }
+  }, [id, currentUser])
   return (
     <div className="info">
       <React.Fragment>
@@ -38,6 +48,8 @@ const Info = ({ auth, profile, dispatch }) => {
                   marginLeft: 40,
                   border: "6px solid #fff",
                   width: 180,
+                  height: 180,
+                  objectFit: "cover",
                   borderRadius: "100%"
                 }}
                 src={userInfo.avatar}
@@ -51,7 +63,13 @@ const Info = ({ auth, profile, dispatch }) => {
                 </Typography.Title>
                 <div>
                   {userInfo?._id === auth?.user?._id ? (
-                    <Button onClick={() => {}}>Edit Profile</Button>
+                    <Button
+                      onClick={() => {
+                        setIsEdit(true)
+                      }}
+                    >
+                      Edit Profile
+                    </Button>
                   ) : (
                     <FollowBtn userInfo={userInfo} />
                   )}
@@ -61,9 +79,7 @@ const Info = ({ auth, profile, dispatch }) => {
             <Col span={12}>
               <div style={{ marginLeft: 60 }}>
                 <Typography style={{ fontSize: 16 }}>
-                  The greatness of a nation and its moral progress can be judged
-                  by the way its animals are treated. - Mahatma Gandhi, Indian
-                  Soci
+                  {userInfo.story}
                 </Typography>
                 <div style={{ marginTop: 20 }}>
                   <Follower id={id} />
@@ -78,6 +94,7 @@ const Info = ({ auth, profile, dispatch }) => {
             <Col span={24}></Col>
           </Row>
         </Card>
+        <EditProfile isEdit={isEdit} setIsEdit={setIsEdit} />
       </React.Fragment>
     </div>
   )

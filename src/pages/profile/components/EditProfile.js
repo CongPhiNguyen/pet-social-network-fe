@@ -1,174 +1,215 @@
 import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { checkImage } from "../../utils/imageUpload"
-import { GLOBALTYPES } from "../../redux/actions/globalTypes"
-import { updateProfileUser } from "../../redux/actions/profileAction"
-
-const EditProfile = ({ setOnEdit }) => {
-  const initState = {
-    fullname: "",
-    mobile: "",
-    address: "",
-    website: "",
-    story: "",
-    gender: ""
-  }
-  const [userData, setUserData] = useState(initState)
-  const { fullname, mobile, address, website, story, gender } = userData
-
-  const [avatar, setAvatar] = useState("")
-
-  const { auth, theme } = useSelector((state) => state)
+import { checkImage } from "../../../utils/imageUpload"
+import { Form, Input, Radio, Select, Modal, Button, message } from "antd"
+import { AiFillCamera } from "react-icons/ai"
+import { updateProfileApi, uploadImageApi } from "../../../api/user"
+import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
+const EditProfile = ({ isEdit, setIsEdit }) => {
   const dispatch = useDispatch()
+  const userInfo = useSelector((state) => state.auth.user)
+  const auth = useSelector((state) => state.auth)
+  const [form] = Form.useForm()
+  const [avatar, setAvatar] = useState("")
+  const [showConfirmCloseEditModel, setShowConfirmCloseEditModal] =
+    useState(false)
+  const [isSendingEditInfo, setIsSendingEditInfo] = useState(false)
+
+  console.log(userInfo)
 
   useEffect(() => {
-    setUserData(auth.user)
-  }, [auth.user])
+    form.setFieldsValue({ ...userInfo })
+  }, [])
 
   const changeAvatar = (e) => {
     const file = e.target.files[0]
-
     const err = checkImage(file)
-    if (err)
-      return dispatch({
-        type: GLOBALTYPES.ALERT,
-        payload: { error: err }
+    if (!err) setAvatar(file)
+  }
+
+  const editProfile = async (value) => {
+    // console.log(value)
+    let profileInfo = value
+    setIsSendingEditInfo(true)
+    if (avatar !== "") {
+      // Upload avatar
+      const formData = new FormData()
+      formData.append("file", avatar)
+      formData.append("upload_preset", "qqqhcaa3")
+      formData.append("cloud_name", "databaseimg")
+      const response = await uploadImageApi(formData)
+      let avatarUrl = response.data.url
+      profileInfo = {
+        ...value,
+        avatar: avatarUrl
+      }
+    }
+
+    const response2 = await updateProfileApi(userInfo._id, profileInfo)
+    const { data, status } = response2
+    if (status === 200) {
+      message.success("Update profile user ok!")
+      // Cập nhật redux ở đây
+      dispatch({
+        type: GLOBALTYPES.AUTH,
+        payload: {
+          ...auth,
+          user: {
+            ...auth.user,
+            ...data.updateVal
+          }
+        }
       })
-
-    setAvatar(file)
-  }
-
-  const handleInput = (e) => {
-    const { name, value } = e.target
-    setUserData({ ...userData, [name]: value })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(updateProfileUser({ userData, avatar, auth }))
+    } else {
+      message.error("Đã có lỗi xảy ra")
+    }
+    setIsEdit(false)
+    setIsSendingEditInfo(false)
   }
 
   return (
-    <div className="edit_profile">
-      <button
-        className="btn btn-danger btn_close"
-        onClick={() => setOnEdit(false)}
+    <div>
+      <Modal
+        title="Basic Modal"
+        open={showConfirmCloseEditModel}
+        onOk={() => {
+          setShowConfirmCloseEditModal(false)
+          setIsEdit(false)
+        }}
+        onCancel={() => {
+          setShowConfirmCloseEditModal(false)
+        }}
+        width={400}
+        maskClosable={false}
+        style={{ top: 20 }}
       >
-        Close
-      </button>
-
-      <form onSubmit={handleSubmit}>
-        <div className="info_avatar">
-          <img
-            src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar}
-            alt="avatar"
-            style={{ filter: theme ? "invert(1)" : "invert(0)" }}
-          />
-          <span>
-            <i className="fas fa-camera" />
-            <p>Change</p>
-            <input
-              type="file"
-              name="file"
-              id="file_up"
-              accept="image/*"
-              onChange={changeAvatar}
-            />
-          </span>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="fullname">Full Name</label>
-          <div className="position-relative">
-            <input
-              type="text"
-              className="form-control"
-              id="fullname"
-              name="fullname"
-              value={fullname}
-              onChange={handleInput}
-            />
-            <small
-              className="text-danger position-absolute"
-              style={{
-                top: "50%",
-                right: "5px",
-                transform: "translateY(-50%)"
-              }}
+        Do you want to discard change ?
+      </Modal>
+      <Modal
+        title="Change user profile"
+        open={isEdit}
+        maskClosable={false}
+        onOk={() => {
+          setIsEdit(false)
+        }}
+        onCancel={() => {
+          setIsEdit(false)
+        }}
+        footer={
+          <div>
+            <Button onClick={() => setShowConfirmCloseEditModal(true)}>
+              Close
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => form.submit()}
+              loading={isSendingEditInfo}
             >
-              {fullname.length}/25
-            </small>
+              OK
+            </Button>
           </div>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="mobile">Mobile</label>
-          <input
-            type="text"
-            name="mobile"
-            value={mobile}
-            className="form-control"
-            onChange={handleInput}
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="address">Address</label>
-          <input
-            type="text"
-            name="address"
-            value={address}
-            className="form-control"
-            onChange={handleInput}
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="website">Website</label>
-          <input
-            type="text"
-            name="website"
-            value={website}
-            className="form-control"
-            onChange={handleInput}
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="story">Story</label>
-          <textarea
-            name="story"
-            value={story}
-            cols="30"
-            rows="4"
-            className="form-control"
-            onChange={handleInput}
-          />
-
-          <small className="text-danger d-block text-right">
-            {story.length}/200
-          </small>
-        </div>
-
-        <label htmlFor="gender">Gender</label>
-        <div className="input-group-prepend px-0 mb-4">
-          <select
-            name="gender"
-            id="gender"
-            value={gender}
-            className="custom-select text-capitalize"
-            onChange={handleInput}
+        }
+      >
+        <Form
+          form={form}
+          labelCol={{
+            span: 4
+          }}
+          onFinish={(value) => editProfile(value)}
+        >
+          {/* Change avatar */}
+          <div
+            style={{
+              width: 150,
+              height: 150,
+              overflow: "hidden",
+              borderRadius: "50%",
+              position: "relative",
+              margin: "15px auto",
+              border: "1px solid #ddd",
+              cursor: "pointer",
+              textAlign: "center",
+              marginBottom: 20
+            }}
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
+            <img
+              src={avatar ? URL.createObjectURL(avatar) : userInfo.avatar}
+              alt="avatar"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+            <div>
+              <span
+                style={{
+                  textAlign: "center",
+                  position: "absolute",
+                  bottom: -10,
+                  left: 50,
+                  color: "#fff"
+                }}
+              >
+                <label htmlFor="file_up">
+                  <AiFillCamera size={20} color="#fff" />
+                  <p>Change</p>
+                </label>
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  name="file"
+                  id="file_up"
+                  accept="image/*"
+                  onChange={changeAvatar}
+                />
+              </span>
+            </div>
+          </div>
 
-        <button className="btn btn-info w-100" type="submit">
-          Save
-        </button>
-      </form>
+          <Form.Item
+            style={{ marginBottom: 10, marginTop: 30 }}
+            label="Email"
+            name="email"
+          >
+            <Input readOnly disabled />
+          </Form.Item>
+          <Form.Item
+            label="Username"
+            name="username"
+            style={{ marginBottom: 10 }}
+          >
+            <Input readOnly disabled />
+          </Form.Item>
+          <Form.Item
+            label="Full name"
+            name="fullname"
+            rules={[
+              { required: true, message: "Please input your Full name!" }
+            ]}
+            style={{ marginBottom: 10 }}
+          >
+            <Input showCount />
+          </Form.Item>
+          <Form.Item
+            label="Story"
+            name="story"
+            rules={[{ required: true, message: "Please input your story!" }]}
+            style={{ marginBottom: 10 }}
+          >
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item
+            label="Gender"
+            name="gender"
+            rules={[{ required: true, message: "Please input your gender!" }]}
+            style={{ marginBottom: 10 }}
+          >
+            <Radio.Group>
+              <Radio value={"male"}>Male</Radio>
+              <Radio value={"female"}>Female</Radio>
+              <Radio value={"other"}>Other</Radio>
+            </Radio.Group>
+            {/* <Input readOnly /> */}
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   )
 }

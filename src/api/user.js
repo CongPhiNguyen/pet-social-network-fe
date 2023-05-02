@@ -15,3 +15,14 @@ export const getFollowersApi = (id) => {
 export const getFollowingApi = (id) => {
   return axios.get(`/following/${id}`)
 }
+
+export const uploadImageApi = (formData) => {
+  return axios.post(
+    "https://api.cloudinary.com/v1_1/databaseimg/image/upload",
+    formData
+  )
+}
+
+export const updateProfileApi = (userId, userData) => {
+  return axios.post("/user/" + userId, userData)
+}

@@ -21,8 +21,8 @@ export default function PetProfile() {
   ])
   return (
     <div style={{ display: "flex", justifyContent: "flex-start", gap: 40 }}>
-      {pets.map((val) => (
-        <PetCard {...val} />
+      {pets.map((val, index) => (
+        <PetCard {...val} key={index} />
       ))}
     </div>
   )

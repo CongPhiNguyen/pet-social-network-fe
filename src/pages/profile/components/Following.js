@@ -18,7 +18,7 @@ export default function Following() {
     const response = await getFollowingApi(id)
     setIsLoading(false)
     const { data, status } = response
-    if (status == 200) setFollowings(data.following)
+    if (status === 200) setFollowings(data.following)
   }
 
   useEffect(() => {
@@ -59,15 +59,14 @@ export default function Following() {
           <p>This user don't follow any user</p>
         )}
         {followings &&
-          followings.map((val) => (
-            <Avatar.Group>
+          followings.map((val, index) => (
+            <Avatar.Group key={index}>
               <Tooltip title={val.fullname} placement="top">
                 <Avatar
                   src={val.avatar}
                   size={60}
                   onClick={() => {
                     navigate("/profile/" + val._id)
-                    console.log(val._id)
                   }}
                 />
               </Tooltip>
@@ -90,8 +89,8 @@ export default function Following() {
         onCancel={handleCancel}
         footer={null}
       >
-        {followings.map((user) => (
-          <UserCard key={user?._id} user={user}>
+        {followings.map((user, index) => (
+          <UserCard key={index} user={user}>
             {auth?.user?._id !== user?._id && <FollowBtn user={user} />}
           </UserCard>
         ))}
