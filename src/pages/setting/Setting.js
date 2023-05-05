@@ -28,7 +28,6 @@ const items = [
 export default function Setting() {
   const [currentSetting, setCurrentSetting] = useState("")
   const onClick = (val) => {
-    console.log(val)
     setCurrentSetting(val.key)
   }
   return (

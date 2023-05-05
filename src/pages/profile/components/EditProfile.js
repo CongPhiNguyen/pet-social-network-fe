@@ -15,8 +15,6 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
     useState(false)
   const [isSendingEditInfo, setIsSendingEditInfo] = useState(false)
 
-  console.log(userInfo)
-
   useEffect(() => {
     form.setFieldsValue({ ...userInfo })
   }, [])
@@ -28,7 +26,9 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
   }
 
   const editProfile = async (value) => {
-    // console.log(value)
+    // Validate các value ở đây
+    console.log("value 32", value)
+    return
     let profileInfo = value
     setIsSendingEditInfo(true)
     if (avatar !== "") {

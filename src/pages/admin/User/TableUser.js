@@ -7,7 +7,6 @@ export default function TableUser() {
   const getAllUser = async () => {
     const response = await getAllUserApi()
     const { data, status } = response
-    console.log(data, status)
     setUserList(data)
   }
   useEffect(() => {

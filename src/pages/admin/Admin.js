@@ -57,7 +57,6 @@ export default function Admin() {
         />
         <Button
           onClick={() => {
-            console.log("hh")
             history.push("/")
             history.go(0)
           }}

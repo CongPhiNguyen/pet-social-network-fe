@@ -60,7 +60,6 @@ export default function Follower() {
                   size={60}
                   onClick={() => {
                     navigate("/profile/" + val._id)
-                    console.log(val._id)
                   }}
                 />
               </Tooltip>

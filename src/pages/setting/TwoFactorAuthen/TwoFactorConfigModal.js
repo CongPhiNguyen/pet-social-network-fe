@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
 
 export default function TwoFactorConfigModal(props) {
-  console.log(props)
   const dispatch = useDispatch()
   const { auth, status, modal, call } = useSelector((state) => state)
   const [qrcodeUrl, setqrCodeUrl] = useState("")
@@ -23,7 +22,6 @@ export default function TwoFactorConfigModal(props) {
       message.success("Two-Factor Auth Enabled Successfully")
       props.closeModal()
       const { status, data } = response
-      console.log("dataConfig", data.user)
       if (status === 200) {
         dispatch({
           type: GLOBALTYPES.AUTH,
@@ -47,7 +45,6 @@ export default function TwoFactorConfigModal(props) {
   }
 
   const onFinish = (values) => {
-    console.log(values)
     verifyOtp(values.token)
   }
 

@@ -9,6 +9,7 @@ import { getUserInfoApi } from "../../../api/user"
 import { useParams } from "react-router-dom"
 import EditProfile from "./EditProfile"
 import { useSelector } from "react-redux"
+import "./scss/Info.scss"
 
 const Info = ({ auth, profile, dispatch }) => {
   const { id } = useParams()
@@ -21,7 +22,6 @@ const Info = ({ auth, profile, dispatch }) => {
     const { data, status } = response
     setUserInfo(data.user)
   }
-  console.log(userInfo)
   useEffect(() => {
     if (id === currentUser._id) {
       setUserInfo(currentUser)
@@ -34,7 +34,7 @@ const Info = ({ auth, profile, dispatch }) => {
       <React.Fragment>
         <Card>
           <Row>
-            <Col span={24}>
+            <Col xs={24}>
               <div>
                 <img
                   src="https://kienthucbonphuong.com/images/202006/pet-la-gi/pet-la-gi.jpg"
@@ -42,6 +42,8 @@ const Info = ({ auth, profile, dispatch }) => {
                   style={{ objectFit: "cover", width: "100%", height: 200 }}
                 />
               </div>
+            </Col>
+            <Col xs={24} md={12} xl={12}>
               <img
                 style={{
                   marginTop: -80,
@@ -55,8 +57,6 @@ const Info = ({ auth, profile, dispatch }) => {
                 src={userInfo.avatar}
                 alt=""
               ></img>
-            </Col>
-            <Col span={24}>
               <div style={{ marginLeft: 60, marginTop: 20, marginBottom: 10 }}>
                 <Typography.Title level={2}>
                   {userInfo.fullname} (@{userInfo?.username})
@@ -75,8 +75,6 @@ const Info = ({ auth, profile, dispatch }) => {
                   )}
                 </div>
               </div>
-            </Col>
-            <Col span={12}>
               <div style={{ marginLeft: 60 }}>
                 <Typography style={{ fontSize: 16 }}>
                   {userInfo.story}
@@ -86,12 +84,11 @@ const Info = ({ auth, profile, dispatch }) => {
                 </div>
               </div>
             </Col>
-            <Col span={12}>
-              <div style={{ marginLeft: 60 }}>
+            <Col xs={24} md={12} xl={12}>
+              <div className="pet-profile-container">
                 <PetProfile />
               </div>
             </Col>
-            <Col span={24}></Col>
           </Row>
         </Card>
         <EditProfile isEdit={isEdit} setIsEdit={setIsEdit} />

@@ -32,9 +32,6 @@ const Posts = ({ auth, id, dispatch, profile }) => {
     setLoad(false)
   }
 
-  console.log("posts", posts)
-  console.log("result", result)
-
   return (
     <div>
       <PostThumb posts={posts} result={result} />

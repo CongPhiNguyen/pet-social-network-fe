@@ -39,9 +39,7 @@ const Register = () => {
   // }
 
   const onFinish = async (values) => {
-    console.log(values)
     const response = await registerApi(values)
-    console.log(response)
     const { data, status } = response
     if (status === 200) {
       message.success(

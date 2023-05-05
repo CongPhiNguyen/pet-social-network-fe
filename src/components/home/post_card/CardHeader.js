@@ -34,9 +34,7 @@ const CardHeader = ({ post }) => {
         dispatch(deletePost({ post, auth, socket }))
         return navigate.to("/")
       },
-      onCancel() {
-        console.log("Cancel")
-      }
+      onCancel() {}
     })
   }
 
