@@ -1,3 +1,7 @@
 @import "./base";
 @import "./components";
 @import "./utils";
+
+.ant-picker-dropdown {
+  z-index: 1056;
+}

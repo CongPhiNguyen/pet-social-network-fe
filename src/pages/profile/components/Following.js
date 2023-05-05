@@ -18,6 +18,7 @@ export default function Following() {
     const response = await getFollowingApi(id)
     setIsLoading(false)
     const { data, status } = response
+    console.log("response", response)
     if (status === 200) setFollowings(data.following)
   }
 

@@ -1,5 +1,8 @@
 import React, { useState } from "react"
 import PetCard from "./PetCard"
+import { Button } from "antd"
+import { AiOutlinePlusCircle } from "react-icons/ai"
+import PetModalAdd from "./PetModalAdd"
 
 export default function PetProfile() {
   const [pets, setPets] = useState([
@@ -19,11 +22,34 @@ export default function PetProfile() {
       description: "Dúi"
     }
   ])
+
+  const [isAddPet, setIsAddPet] = useState(false)
+
   return (
-    <div style={{ display: "flex", justifyContent: "flex-start", gap: 40 }}>
-      {pets.map((val, index) => (
-        <PetCard {...val} key={index} />
-      ))}
+    <div>
+      <div style={{ display: "flex", justifyContent: "flex-start", gap: 40 }}>
+        {pets.slice(0, 2).map((val, index) => (
+          <PetCard {...val} key={index} />
+        ))}
+        <Button
+          style={{ width: 80, height: 80 }}
+          icon={<AiOutlinePlusCircle size={30} color="#b3e0dc" />}
+          onClick={() => {
+            setIsAddPet(true)
+          }}
+        />
+      </div>
+      <PetModalAdd isAddPet={isAddPet} setIsAddPet={setIsAddPet} />
+      <p
+        style={{
+          textAlign: "center",
+          color: "teal",
+          fontWeight: 600,
+          cursor: "pointer"
+        }}
+      >
+        Xem toàn bộ thú cưng
+      </p>
     </div>
   )
 }

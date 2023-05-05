@@ -27,8 +27,18 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
 
   const editProfile = async (value) => {
     // Validate các value ở đây
-    console.log("value 32", value)
-    return
+    if (value?.fullname?.length <= 6 || value?.fullname?.length >= 200) {
+      message.error(
+        "Full name must have more than 6 characters and less than 200 characters"
+      )
+      return
+    }
+    if (value?.story?.length <= 6 || value?.story?.length >= 200) {
+      message.error(
+        "Story must have more than 6 characters and less than 200 characters"
+      )
+      return
+    }
     let profileInfo = value
     setIsSendingEditInfo(true)
     if (avatar !== "") {
@@ -70,7 +80,7 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
   return (
     <div>
       <Modal
-        title="Basic Modal"
+        title="Confirm modal"
         open={showConfirmCloseEditModel}
         onOk={() => {
           setShowConfirmCloseEditModal(false)
