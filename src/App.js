@@ -65,14 +65,14 @@ function App() {
     }
   }, [])
 
-  // useEffect(() => {
-  //   const newPeer = new Peer(undefined, {
-  //     path: "/",
-  //     secure: true
-  //   })
+  useEffect(() => {
+    const newPeer = new Peer(undefined, {
+      path: "/",
+      secure: true
+    })
 
-  //   dispatch({ type: GLOBALTYPES.PEER, payload: newPeer })
-  // }, [dispatch])
+    dispatch({ type: GLOBALTYPES.PEER, payload: newPeer })
+  }, [dispatch])
 
   return (
     <React.Fragment>

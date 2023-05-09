@@ -174,7 +174,7 @@ const Register = () => {
               <Input.Password />
             </Form.Item>
             <Form.Item name="gender">
-              <Radio.Group onChange={() => {}}>
+              <Radio.Group onChange={() => { }}>
                 <Radio value={"male"}>Male</Radio>
                 <Radio value={"female"}>Female</Radio>
                 <Radio value={"other"}>Other</Radio>
@@ -192,7 +192,7 @@ const Register = () => {
                 type="primary"
                 htmlType="submit"
               >
-                Login
+                Register
               </Button>
             </Form.Item>
             <p style={{ textAlign: "center" }} className="my-2">

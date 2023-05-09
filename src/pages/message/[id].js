@@ -16,7 +16,7 @@ const Conversation = () => {
         </Card>
       </Col>
       <Col style={{ height: 'calc(100vh - 192px)' }} span={12}>
-        <Card style={{ height: "100%", display: "flex", justifyContent: "center" }}>
+        <Card className="right-side" style={{ height: "100%", display: "flex", justifyContent: "center", width: "100%" }}>
           {id !== "bot" ? <RightSide /> : <BotMessage />}
         </Card>
       </Col>

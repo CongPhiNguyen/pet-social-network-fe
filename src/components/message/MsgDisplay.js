@@ -3,31 +3,41 @@ import Avatar from "../Avatar"
 import { imageShow, videoShow } from "../../utils/mediaShow"
 import { useSelector, useDispatch } from "react-redux"
 import { deleteMessages } from "../../redux/actions/messageAction"
+import { Modal } from 'antd'
 import Times from "./Times"
-
+import { ExclamationCircleFilled } from '@ant-design/icons';
+const { confirm } = Modal;
 const MsgDisplay = ({ user, msg, theme, data }) => {
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
 
   const handleDeleteMessages = () => {
     if (!data) return
+    confirm({
+      icon: <ExclamationCircleFilled />,
+      title: 'Do you want to delete this message?',
+      onOk() {
+        dispatch(deleteMessages({ msg, data, auth }));
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
 
-    if (window.confirm("Do you want to delete?")) {
-      dispatch(deleteMessages({ msg, data, auth }))
-    }
   }
 
   return (
     <>
-      <div className="chat_title">
+      {/* <div className="chat_title">
         <Avatar src={user.avatar} size="small-avatar" />
         <span>{user.username}</span>
-      </div>
+      </div> */}
 
       <div className="you_content">
         {user?._id === auth?.user?._id && (
           <i
-            className="fas fa-trash text-danger"
+            style={{ transform: 'translate(-6px,-10px)' }}
+            className="fas fa-trash"
             onClick={handleDeleteMessages}
           />
         )}
@@ -68,8 +78,8 @@ const MsgDisplay = ({ user, msg, theme, data }) => {
                   ? "videocam_off"
                   : "phone_disabled"
                 : msg.call.video
-                ? "video_camera_front"
-                : "call"}
+                  ? "video_camera_front"
+                  : "call"}
             </span>
 
             <div className="text-left">
