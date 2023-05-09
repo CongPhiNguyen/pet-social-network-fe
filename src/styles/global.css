@@ -29,13 +29,16 @@ html {
   width: 100%;
   min-height: 100vh;
   background: #f0f2f5;
+  height: calc(100vh - 64px);
+
+  overflow-y: hidden;
 }
 
 .main {
   /* max-width: 1000px; */
   width: 100%;
   min-height: 100vh;
-
+  overflow-x: hidden;
   /* margin: auto; */
 }
 
@@ -108,7 +111,8 @@ img {
   }
 
   .message {
-    height: calc(100vh - 100px);
+    overflow-y: hidden;
+    height: calc(100vh);
   }
   .right_mess,
   .left_mess {
@@ -199,4 +203,26 @@ img {
   > div {
   display: flex !important;
   justify-content: center !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #6365f18d;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #6365f1bf;
 }
