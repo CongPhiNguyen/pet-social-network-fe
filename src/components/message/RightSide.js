@@ -14,6 +14,11 @@ import {
   deleteConversation
 } from "../../redux/actions/messageAction"
 import LoadIcon from "../../images/loading.gif"
+import { Button } from "antd"
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Modal } from 'antd'
+
+const { confirm } = Modal;
 
 const RightSide = () => {
   const { auth, message, theme, socket, peer } = useSelector((state) => state)
@@ -147,10 +152,18 @@ const RightSide = () => {
   }, [isLoadMore])
 
   const handleDeleteConversation = () => {
-    if (window.confirm("Do you want to delete?")) {
-      dispatch(deleteConversation({ auth, id }))
-      return history.push("/message")
-    }
+    confirm({
+      icon: <ExclamationCircleFilled />,
+      title: 'Do you want to this conversation?',
+      onOk() {
+        dispatch(deleteConversation({ auth, id }))
+        return history.push("/message")
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+
   }
 
   // Call
@@ -165,6 +178,7 @@ const RightSide = () => {
       fullname,
       video
     }
+
     dispatch({ type: GLOBALTYPES.CALL, payload: msg })
   }
 
@@ -179,6 +193,7 @@ const RightSide = () => {
       fullname,
       video
     }
+    console.log({ peer })
 
     if (peer.open) msg.peerId = peer._id
 
@@ -282,7 +297,7 @@ const RightSide = () => {
         <Icons setContent={setText} content={text} theme={theme} />
 
         <div className="file_upload">
-          <i className="fas fa-image text-danger" />
+          <i style={{ fontSize: "1.3rem", transform: 'translateY(+3px)' }} className="fas fa-image " />
           <input
             type="file"
             name="file"
@@ -293,13 +308,9 @@ const RightSide = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="material-icons"
-          disabled={text || media.length > 0 ? false : true}
-        >
-          near_me
-        </button>
+        <Button style={{ background: "#6366f1" }} disabled={text || media.length > 0 ? false : true} type="primary"
+          htmlType="submit">Send</Button>
+
       </form>
     </>
   )

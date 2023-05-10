@@ -6,6 +6,37 @@ import "./styles/antd.less"
 import CustomRouters from "./routers"
 
 function App() {
+  // const { auth, status, modal, call } = useSelector((state) => state)
+  // const dispatch = useDispatch()
+
+  // useEffect(() => {
+  //   dispatch(refreshToken())
+
+  //   const socket = io()
+  //   dispatch({ type: GLOBALTYPES.SOCKET, payload: socket })
+  //   return () => socket.close()
+  // }, [dispatch])
+
+  // useEffect(() => {
+  //   if (auth.token) {
+  //     dispatch(getPosts(auth.token))
+  //     dispatch(getSuggestions(auth.token))
+  //     dispatch(getNotifies(auth.token))
+  //   }
+  // }, [dispatch, auth.token])
+
+  // useEffect(() => {
+  //   if (!("Notification" in window)) {
+  //     alert("This browser does not support desktop notification")
+  //   } else if (Notification.permission === "granted") {
+  //   } else if (Notification.permission !== "denied") {
+  //     Notification.requestPermission().then(function (permission) {
+  //       if (permission === "granted") {
+  //       }
+  //     })
+  //   }
+  // }, [])
+
   // useEffect(() => {
   //   const newPeer = new Peer(undefined, {
   //     path: "/",

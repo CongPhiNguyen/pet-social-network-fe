@@ -6,6 +6,10 @@ import { GLOBALTYPES } from "../../redux/actions/globalTypes"
 import { Link, useHistory, useParams } from "react-router-dom"
 import { MESS_TYPES, getConversations } from "../../redux/actions/messageAction"
 import BotCard from "./BotCard"
+import { Typography, Input, Modal, Button, message as mese, List, Avatar, Result, Badge } from 'antd';
+import { MessageFilled } from '@ant-design/icons';
+const { Title } = Typography;
+const { Search } = Input
 
 const LeftSide = () => {
   const { auth, message, online } = useSelector((state) => state)
@@ -21,17 +25,15 @@ const LeftSide = () => {
   const [page, setPage] = useState(0)
 
   const handleSearch = async (e) => {
-    e.preventDefault()
     if (!search) return setSearchUsers([])
 
     try {
       const res = await getDataAPI(`search?username=${search}`, auth.token)
+      console.log(res.data.users)
       setSearchUsers(res.data.users)
+      setOpen(true)
     } catch (err) {
-      dispatch({
-        type: GLOBALTYPES.ALERT,
-        payload: { error: err.response.data.msg }
-      })
+      mese.error(err.response.data.msg)
     }
   }
 
@@ -43,6 +45,7 @@ const LeftSide = () => {
       payload: { ...user, text: "", media: [] }
     })
     dispatch({ type: MESS_TYPES.CHECK_ONLINE_OFFLINE, payload: online })
+    setOpen(false)
     return history.push(`/message/${user._id}`)
   }
 
@@ -85,58 +88,82 @@ const LeftSide = () => {
     }
   }, [online, message.firstLoad, dispatch])
 
+  const [open, setOpen] = useState(false);
+  const handleCancel = () => {
+    setOpen(false);
+  };
   return (
     <>
-      <form className="message_header" onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={search}
-          placeholder="Enter to Search..."
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      <Modal
+        open={open}
+        title="List user"
+        onCancel={handleCancel}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Cancel
+          </Button>,
+        ]}
+      >
+        {
+          searchUsers.length === 0 ? <Result
+            status="404"
+            title="User not found!"
+          /> : (
+            <List
+              className="demo-loadmore-list"
+              itemLayout="horizontal"
+              dataSource={searchUsers}
+              renderItem={(user) => (
+                <List.Item
+                  actions={[<Button
+                    type="primary"
+                    onClick={() => handleAddUser(user)}
+                    icon={<MessageFilled style={{ transform: 'translateY(-3px)' }} />}
+                  />]}
+                >
+                  <List.Item.Meta
+                    avatar={
+                      <Badge status="success" dot={isActive(user)}>
+                        <Avatar src={user.avatar} />
+                      </Badge>
+                    }
+                    title={user.fullname}
+                    description={user.username}
+                  />
+                </List.Item>
+              )}
+            />
+          )
+        }
 
-        <button type="submit" style={{ display: "none" }}>
-          Search
-        </button>
-      </form>
+      </Modal >
+      <Title level={2}>Messager</Title>
+      <Search style={{ marginBottom: "16px" }} onChange={(e) => setSearch(e.target.value)} onSearch={handleSearch} size="large" placeholder="Enter name to search" allowClear />
 
       <div className="message_chat_list">
-        {searchUsers.length !== 0 ? (
-          <>
-            {searchUsers.map((user) => (
-              <div
-                key={user._id}
-                className={`message_user ${isActive(user)}`}
-                onClick={() => handleAddUser(user)}
-              >
-                <UserCard user={user} />
-              </div>
-            ))}
-          </>
-        ) : (
-          <>
-            {message.users.map((user) => (
-              <div
-                key={user._id}
-                className={`message_user ${isActive(user)}`}
-                onClick={() => handleAddUser(user)}
-              >
-                <UserCard user={user} msg={true}>
-                  {user.online ? (
-                    <i className="fas fa-circle text-success" />
-                  ) : (
-                    auth.user.following.find(
-                      (item) => item._id === user._id
-                    ) && <i className="fas fa-circle" />
-                  )}
-                </UserCard>
-              </div>
-            ))}
-          </>
-        )}
-        <Link to={`/message/bot`}>
+        <>
+          {message.users.map((user) => (
+            <div
+              key={user._id}
+              className={`message_user ${isActive(user)}`}
+              onClick={() => handleAddUser(user)}
+            >
+              <UserCard user={user} msg={true}>
+                {user.online ? (
+                  <i className="fas fa-circle text-success" />
+                ) : (
+                  auth.user.following.find(
+                    (item) => item._id === user._id
+                  ) && <i className="fas fa-circle" />
+                )}
+              </UserCard>
+            </div>
+          ))}
+        </>
+
+        {/* <Link to={`/message/bot`}>
           <BotCard />
-        </Link>
+        </Link> */}
         <button ref={pageEnd} style={{ opacity: 0 }}>
           Load More
         </button>
