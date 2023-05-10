@@ -71,7 +71,7 @@ const Info = ({ auth, profile, dispatch }) => {
                       Edit Profile
                     </Button>
                   ) : (
-                    <FollowBtn userInfo={userInfo} />
+                    <FollowBtn user={userInfo} />
                   )}
                 </div>
               </div>

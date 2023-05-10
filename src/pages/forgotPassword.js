@@ -1,12 +1,12 @@
 import React from "react"
 import { Col, Row, Button, Form, Input, Typography, message } from "antd"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory, useNavigate } from "react-router-dom"
 import axios from "axios"
 
 const { Title } = Typography
 
 export default function ForgotPassword() {
-  const history = useHistory()
+  const history = useNavigate()
   const [form] = Form.useForm()
   const onFinish = async (values) => {
     try {
@@ -16,7 +16,7 @@ export default function ForgotPassword() {
       })
       const { data } = response
       message.success("Verify user and TOTP ok")
-      history.push("/set-password?")
+      history("/set-password?")
     } catch (err) {
       message.error(err?.response?.data?.message)
     }

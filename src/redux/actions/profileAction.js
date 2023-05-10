@@ -89,8 +89,8 @@ export const follow =
   async (dispatch) => {
     let newUser
 
-    if (users.every((item) => item._id !== user._id)) {
-      newUser = { ...user, followers: [...user.followers, auth.user] }
+    if (users.every((item) => item?._id !== user?._id)) {
+      newUser = { ...user, followers: [...user?.followers, auth.user] }
     } else {
       users.forEach((item) => {
         if (item._id === user._id) {

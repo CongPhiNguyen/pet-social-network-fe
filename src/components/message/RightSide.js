@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import UserCard from "../UserCard"
 import { useSelector, useDispatch } from "react-redux"
-import { useParams, useHistory } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import MsgDisplay from "./MsgDisplay"
 import Icons from "../Icons"
 import { GLOBALTYPES } from "../../redux/actions/globalTypes"
@@ -15,10 +15,10 @@ import {
 } from "../../redux/actions/messageAction"
 import LoadIcon from "../../images/loading.gif"
 import { Button } from "antd"
-import { ExclamationCircleFilled } from '@ant-design/icons';
-import { Modal } from 'antd'
+import { ExclamationCircleFilled } from "@ant-design/icons"
+import { Modal } from "antd"
 
-const { confirm } = Modal;
+const { confirm } = Modal
 
 const RightSide = () => {
   const { auth, message, theme, socket, peer } = useSelector((state) => state)
@@ -38,7 +38,7 @@ const RightSide = () => {
   const [page, setPage] = useState(0)
   const [isLoadMore, setIsLoadMore] = useState(0)
 
-  const history = useHistory()
+  const history = useNavigate()
 
   useEffect(() => {
     const newData = message.data.find((item) => item._id === id)
@@ -154,16 +154,15 @@ const RightSide = () => {
   const handleDeleteConversation = () => {
     confirm({
       icon: <ExclamationCircleFilled />,
-      title: 'Do you want to this conversation?',
+      title: "Do you want to this conversation?",
       onOk() {
         dispatch(deleteConversation({ auth, id }))
-        return history.push("/message")
+        return history("/message")
       },
       onCancel() {
-        console.log('Cancel');
-      },
-    });
-
+        console.log("Cancel")
+      }
+    })
   }
 
   // Call
@@ -297,7 +296,10 @@ const RightSide = () => {
         <Icons setContent={setText} content={text} theme={theme} />
 
         <div className="file_upload">
-          <i style={{ fontSize: "1.3rem", transform: 'translateY(+3px)' }} className="fas fa-image " />
+          <i
+            style={{ fontSize: "1.3rem", transform: "translateY(+3px)" }}
+            className="fas fa-image "
+          />
           <input
             type="file"
             name="file"
@@ -308,9 +310,14 @@ const RightSide = () => {
           />
         </div>
 
-        <Button style={{ background: "#6366f1" }} disabled={text || media.length > 0 ? false : true} type="primary"
-          htmlType="submit">Send</Button>
-
+        <Button
+          style={{ background: "#6366f1" }}
+          disabled={text || media.length > 0 ? false : true}
+          type="primary"
+          htmlType="submit"
+        >
+          Send
+        </Button>
       </form>
     </>
   )

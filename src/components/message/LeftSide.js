@@ -3,12 +3,22 @@ import UserCard from "../UserCard"
 import { useSelector, useDispatch } from "react-redux"
 import { getDataAPI } from "../../utils/fetchData"
 import { GLOBALTYPES } from "../../redux/actions/globalTypes"
-import { Link, useHistory, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { MESS_TYPES, getConversations } from "../../redux/actions/messageAction"
 import BotCard from "./BotCard"
-import { Typography, Input, Modal, Button, message as mese, List, Avatar, Result, Badge } from 'antd';
-import { MessageFilled } from '@ant-design/icons';
-const { Title } = Typography;
+import {
+  Typography,
+  Input,
+  Modal,
+  Button,
+  message as mese,
+  List,
+  Avatar,
+  Result,
+  Badge
+} from "antd"
+import { MessageFilled } from "@ant-design/icons"
+const { Title } = Typography
 const { Search } = Input
 
 const LeftSide = () => {
@@ -18,7 +28,7 @@ const LeftSide = () => {
   const [search, setSearch] = useState("")
   const [searchUsers, setSearchUsers] = useState([])
 
-  const history = useHistory()
+  const history = useNavigate()
   const { id } = useParams()
 
   const pageEnd = useRef()
@@ -46,7 +56,7 @@ const LeftSide = () => {
     })
     dispatch({ type: MESS_TYPES.CHECK_ONLINE_OFFLINE, payload: online })
     setOpen(false)
-    return history.push(`/message/${user._id}`)
+    return history(`/message/${user._id}`)
   }
 
   const isActive = (user) => {
@@ -88,10 +98,10 @@ const LeftSide = () => {
     }
   }, [online, message.firstLoad, dispatch])
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   const handleCancel = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
   return (
     <>
       <Modal
@@ -101,44 +111,53 @@ const LeftSide = () => {
         footer={[
           <Button key="back" onClick={handleCancel}>
             Cancel
-          </Button>,
+          </Button>
         ]}
       >
-        {
-          searchUsers.length === 0 ? <Result
-            status="404"
-            title="User not found!"
-          /> : (
-            <List
-              className="demo-loadmore-list"
-              itemLayout="horizontal"
-              dataSource={searchUsers}
-              renderItem={(user) => (
-                <List.Item
-                  actions={[<Button
+        {searchUsers.length === 0 ? (
+          <Result status="404" title="User not found!" />
+        ) : (
+          <List
+            className="demo-loadmore-list"
+            itemLayout="horizontal"
+            dataSource={searchUsers}
+            renderItem={(user) => (
+              <List.Item
+                actions={[
+                  <Button
                     type="primary"
                     onClick={() => handleAddUser(user)}
-                    icon={<MessageFilled style={{ transform: 'translateY(-3px)' }} />}
-                  />]}
-                >
-                  <List.Item.Meta
-                    avatar={
-                      <Badge status="success" dot={isActive(user)}>
-                        <Avatar src={user.avatar} />
-                      </Badge>
+                    icon={
+                      <MessageFilled
+                        style={{ transform: "translateY(-3px)" }}
+                      />
                     }
-                    title={user.fullname}
-                    description={user.username}
                   />
-                </List.Item>
-              )}
-            />
-          )
-        }
-
-      </Modal >
+                ]}
+              >
+                <List.Item.Meta
+                  avatar={
+                    <Badge status="success" dot={isActive(user)}>
+                      <Avatar src={user.avatar} />
+                    </Badge>
+                  }
+                  title={user.fullname}
+                  description={user.username}
+                />
+              </List.Item>
+            )}
+          />
+        )}
+      </Modal>
       <Title level={2}>Messager</Title>
-      <Search style={{ marginBottom: "16px" }} onChange={(e) => setSearch(e.target.value)} onSearch={handleSearch} size="large" placeholder="Enter name to search" allowClear />
+      <Search
+        style={{ marginBottom: "16px" }}
+        onChange={(e) => setSearch(e.target.value)}
+        onSearch={handleSearch}
+        size="large"
+        placeholder="Enter name to search"
+        allowClear
+      />
 
       <div className="message_chat_list">
         <>
@@ -152,9 +171,9 @@ const LeftSide = () => {
                 {user.online ? (
                   <i className="fas fa-circle text-success" />
                 ) : (
-                  auth.user.following.find(
-                    (item) => item._id === user._id
-                  ) && <i className="fas fa-circle" />
+                  auth.user.following.find((item) => item._id === user._id) && (
+                    <i className="fas fa-circle" />
+                  )
                 )}
               </UserCard>
             </div>

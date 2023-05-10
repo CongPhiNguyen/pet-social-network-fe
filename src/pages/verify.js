@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { Col, Row, Button, Form, Input, Typography, Radio, message } from "antd"
 import { useSelector, useDispatch } from "react-redux"
-import { useHistory, Link } from "react-router-dom"
+import { useHistory, Link, useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { getEmailWithIdApi, sendCodeVerifyApi } from "../api/authen"
 const { Title } = Typography
 
 export default function Verify() {
-  const history = useHistory()
+  const history = useNavigate()
   const params = useParams()
   const { id } = params
   const [form] = Form.useForm()
@@ -51,7 +51,7 @@ export default function Verify() {
       if (status === 404) {
         message.error("Not found user with this email")
         const timeoutId = setTimeout(() => {
-          history.push("/")
+          history("/")
         }, 2000)
 
         return () => clearTimeout(timeoutId)

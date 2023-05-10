@@ -16,12 +16,12 @@ import {
 } from "@ant-design/icons"
 import { Layout, Menu, Card, Typography, Button } from "antd"
 import TableUser from "./User/TableUser"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const { Header, Sider, Content } = Layout
 
 export default function Admin() {
-  const history = useHistory()
+  const history = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
   const [key, setCurrentKey] = useState("1")
 
