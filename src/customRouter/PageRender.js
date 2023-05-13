@@ -5,6 +5,9 @@ import { useSelector } from "react-redux"
 import Setting from "../components/setting/Setting"
 import ForgotPassword from "../pages/forgotPassword"
 import Admin from "../pages/admin/Admin"
+import FindPet from "../pages/find-pet/FindPet"
+import AdoptPet from "../pages/adopt-pet/AdoptPet"
+import Notification from "../pages/notification/Notification"
 
 const generatePage = (pageName) => {
   const component = () => require(`../pages/${pageName}`).default
@@ -13,6 +16,9 @@ const generatePage = (pageName) => {
   } catch (err) {
     if (pageName === "setting") return <Setting />
     else if (pageName === "forgot-password") return <ForgotPassword />
+    else if (pageName === "find-pet") return <FindPet />
+    else if (pageName === "adopt-pet") return <AdoptPet />
+    else if (pageName === "notification") return <Notification />
     return <NotFound />
   }
 }

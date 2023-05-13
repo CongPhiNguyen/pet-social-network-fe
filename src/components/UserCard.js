@@ -53,7 +53,7 @@ const UserCard = ({
       <div>
         <Link
           style={{ textDecoration: "none" }}
-          to={`/profile/${user._id}`}
+          to={`/profile/${user?._id}`}
           onClick={handleCloseAll}
           className="d-flex align-items-center user-card__link"
         >

@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import axios from "axios"
 import "./Chat.css"
+import { message } from "antd"
 export default function ChatBot() {
   const [userMessage, setUserMessage] = useState("")
   const [botMessage, setBotMessage] = useState([])
@@ -19,7 +20,6 @@ export default function ChatBot() {
           message: userMessage
         }
       )
-      console.log(response)
       // Add the user's message to the chat
       setBotMessage((prevBotMessage) => [
         ...prevBotMessage,
@@ -33,7 +33,7 @@ export default function ChatBot() {
       ])
       setUserMessage("")
     } catch (error) {
-      console.log(error)
+      message.error(error)
     }
   }
 

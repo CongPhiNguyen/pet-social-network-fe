@@ -17,7 +17,6 @@ export default function Verify() {
   const [isCounting, setIsCounting] = useState(false)
   const [timer, setTimer] = useState(null)
 
-  console.log("ok")
   useEffect(() => {
     let timer
     if (isCounting) {
@@ -47,13 +46,12 @@ export default function Verify() {
       const { data, status } = response
 
       if (status === 200) {
-        console.log(data)
         form.setFieldValue("email", data.email)
       }
       if (status === 404) {
         message.error("Not found user with this email")
         const timeoutId = setTimeout(() => {
-          history.push("/")
+          history("/")
         }, 2000)
 
         return () => clearTimeout(timeoutId)
@@ -62,15 +60,12 @@ export default function Verify() {
     getUserWithEmail()
   }, [])
 
-  const onFinish = (value) => {
-    console.log(value)
-  }
+  const onFinish = (value) => {}
 
   const sendCodeVerify = async () => {
     const response = await sendCodeVerifyApi(id)
     const { status, data } = response
     if (status === 200) {
-      console.log(data)
       setCount(10)
       setDisableCode(false)
       setDisableSendCode(true)

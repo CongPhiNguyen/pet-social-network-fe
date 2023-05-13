@@ -17,7 +17,7 @@ const { confirm } = Modal
 const CardHeader = ({ post }) => {
   const { auth, socket } = useSelector((state) => state)
   const dispatch = useDispatch()
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   const handleEditPost = () => {
     dispatch({ type: GLOBALTYPES.STATUS, payload: { ...post, onEdit: true } })
@@ -32,11 +32,9 @@ const CardHeader = ({ post }) => {
       icon: <DeleteFilled />,
       onOk() {
         dispatch(deletePost({ post, auth, socket }))
-        return history.push("/")
+        return navigate("/")
       },
-      onCancel() {
-        console.log("Cancel")
-      }
+      onCancel() {}
     })
   }
 

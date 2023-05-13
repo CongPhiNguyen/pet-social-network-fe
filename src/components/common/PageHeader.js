@@ -7,7 +7,7 @@ export default function PageHeader(props) {
   const navigate = useNavigate()
   return (
     <div style={{ marginTop: 20, marginLeft: 20, display: "flex" }}>
-      <div style={{ marginRight: 10 }}>
+      <div style={{ marginRight: 10, cursor: "pointer" }}>
         <IoChevronBackOutline
           onClick={() => {
             navigate(-1)

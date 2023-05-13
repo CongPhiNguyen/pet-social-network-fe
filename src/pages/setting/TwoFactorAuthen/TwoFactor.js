@@ -35,7 +35,6 @@ export default function TwoFactor() {
     const { status, data } = response
 
     if (status === 200) {
-      console.log(data)
       dispatch({
         type: GLOBALTYPES.AUTH,
         payload: { ...auth, user: data.updateUser }

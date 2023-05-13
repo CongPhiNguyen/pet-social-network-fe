@@ -6,6 +6,8 @@ export const API_ENDPOINT =
 const instance = axios.create({
   baseURL: API_ENDPOINT,
   validateStatus: (status) => status >= 200 && status < 600
+  // withCredentials: true
 })
 
+instance.defaults.headers.common["Content-Type"] = "application/json"
 export default instance

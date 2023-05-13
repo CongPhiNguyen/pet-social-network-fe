@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { Col, Row, Button, Form, Input, Typography, Radio, message } from "antd"
 import { useSelector, useDispatch } from "react-redux"
+<<<<<<< HEAD
 import { Link, useNavigate } from "react-router-dom"
+=======
+import { useHistory, Link, useNavigate } from "react-router-dom"
+>>>>>>> dev
 import { registerApi } from "../api/authen"
 const { Title } = Typography
 
@@ -39,9 +43,7 @@ const Register = () => {
   // }
 
   const onFinish = async (values) => {
-    console.log(values)
     const response = await registerApi(values)
-    console.log(response)
     const { data, status } = response
     if (status === 200) {
       message.success(
@@ -174,7 +176,7 @@ const Register = () => {
               <Input.Password />
             </Form.Item>
             <Form.Item name="gender">
-              <Radio.Group onChange={() => {}}>
+              <Radio.Group onChange={() => { }}>
                 <Radio value={"male"}>Male</Radio>
                 <Radio value={"female"}>Female</Radio>
                 <Radio value={"other"}>Other</Radio>
@@ -192,7 +194,7 @@ const Register = () => {
                 type="primary"
                 htmlType="submit"
               >
-                Login
+                Register
               </Button>
             </Form.Item>
             <p style={{ textAlign: "center" }} className="my-2">

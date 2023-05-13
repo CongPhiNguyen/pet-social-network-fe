@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { SiAuth0 } from "react-icons/si"
 import { Menu, Card, Row, Col } from "antd"
-import PageHeader from "../common/PageHeader"
-import PageSection from "../common/PageSection"
+import PageHeader from "../../components/common/PageHeader"
+import PageSection from "../../components/common/PageSection"
 import "./setting.scss"
 import TwoFactor from "./TwoFactorAuthen/TwoFactor"
 
@@ -28,11 +28,11 @@ const items = [
 export default function Setting() {
   const [currentSetting, setCurrentSetting] = useState("")
   const onClick = (val) => {
-    console.log(val)
     setCurrentSetting(val.key)
   }
   return (
-    <div className="page-container">
+    <div className="page-container" style={{ marginTop: 64 }}>
+      <div style={{ height: 10 }}></div>
       <PageHeader title={"Setting"}></PageHeader>
       <PageSection>
         <Card>

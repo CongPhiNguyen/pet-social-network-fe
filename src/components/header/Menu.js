@@ -73,8 +73,15 @@ const Menu = () => {
       >
         {theme ? "Light mode" : "Dark mode"}
       </label>
-
+      <Link
+        style={{ fontWeight: "600" }}
+        className="dropdown-item"
+        to="/setting"
+      >
+        Setting
+      </Link>
       <Divider style={{ margin: 0 }} />
+
       <Link
         style={{ fontWeight: "600" }}
         className="dropdown-item"
