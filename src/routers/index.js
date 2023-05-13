@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import {
   BrowserRouter,
@@ -6,7 +6,9 @@ import {
   Route,
   Router,
   Routes,
-  useLocation
+  useLocation,
+  useNavigate,
+  useRoutes
 } from "react-router-dom"
 import routes from "./router"
 import { useSelector } from "react-redux"
@@ -25,7 +27,12 @@ const CustomRouters = () => {
   const { auth, status, modal, call } = useSelector((state) => state)
   const role = useSelector((state) => state.auth?.user?.role)
   const dispatch = useDispatch()
-  const isAdminRoute = window.location.pathname.indexOf("/admin") === 0
+  const location = useLocation()
+  const [isAdminRoute, setIsAdminRoute] = useState(false)
+
+  useEffect(() => {
+    setIsAdminRoute(location.pathname.startsWith("/admin"))
+  }, [location])
 
   useEffect(() => {
     dispatch(refreshToken())
@@ -65,39 +72,16 @@ const CustomRouters = () => {
   //       console.log("err", err)
   //     })
   // }, [dispatch])
+  console.log(auth.token, auth.role)
   return (
-    <React.Suspense>
-      <BrowserRouter>
-        {/* đã đăng nhập */}
-        {auth.token && !isAdminRoute && <SocketClient />}
-        {auth.token && !isAdminRoute && <HeaderLayout />}
-        {call && !isAdminRoute && <CallModal />}
-        <Routes>
-          {!auth.token &&
-            routes.publicRoute.map((route, index) => {
-              return (
-                route.element && (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={route.element}
-                  />
-                )
-              )
-            })}
-          {auth.token &&
-            routes.protectedRoute.map((route, index) => {
-              return (
-                route.element && (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={route.element}
-                  />
-                )
-              )
-            })}
-          {routes.commonRoute.map((route, index) => {
+    <>
+      {/* đã đăng nhập */}
+      {auth.token && !isAdminRoute && <SocketClient />}
+      {auth.token && !isAdminRoute && <HeaderLayout />}
+      {call && !isAdminRoute && <CallModal />}
+      <Routes>
+        {!auth.token &&
+          routes.publicRoute.map((route, index) => {
             return (
               route.element && (
                 <Route
@@ -108,10 +92,46 @@ const CustomRouters = () => {
               )
             )
           })}
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
-    </React.Suspense>
+        {auth.token &&
+          routes.protectedRoute.map((route, index) => {
+            return (
+              route.element && (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={route.element}
+                />
+              )
+            )
+          })}
+        {routes.commonRoute.map((route, index) => {
+          return (
+            route.element && (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+              />
+            )
+          )
+        })}
+        {auth.token &&
+          role === "admin" &&
+          routes.adminRoute.map((route, index) => {
+            return (
+              route.element && (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={route.element}
+                />
+              )
+            )
+          })}
+
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   )
 }
 

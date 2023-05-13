@@ -32,6 +32,7 @@ const navLinks = [
 ]
 
 const Menu = () => {
+  const role = useSelector((state) => state.auth?.user?.role)
   const [open1, setOpen1] = useState(false)
   const { auth, theme, notify } = useSelector((state) => state)
   const dispatch = useDispatch()
@@ -40,6 +41,7 @@ const Menu = () => {
     if (pn === pathname) return "active"
     return ""
   }
+
   const [showArrow, setShowArrow] = useState(true)
   const [arrowAtCenter, setArrowAtCenter] = useState(false)
 
@@ -80,6 +82,16 @@ const Menu = () => {
       >
         Setting
       </Link>
+      {role === "admin" && (
+        <Link
+          style={{ fontWeight: "600" }}
+          className="dropdown-item"
+          to="/admin"
+        >
+          Admin
+        </Link>
+      )}
+
       <Divider style={{ margin: 0 }} />
 
       <Link

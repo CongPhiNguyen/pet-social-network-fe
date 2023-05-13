@@ -4,7 +4,7 @@ import "./styles/app.css"
 import "./styles/scss/main.scss"
 import "./styles/antd.less"
 import CustomRouters from "./routers"
-
+import { BrowserRouter } from "react-router-dom"
 function App() {
   // const { auth, status, modal, call } = useSelector((state) => state)
   // const dispatch = useDispatch()
@@ -48,7 +48,12 @@ function App() {
 
   return (
     <React.Fragment>
-      <CustomRouters />
+      <React.Suspense>
+        <BrowserRouter>
+          <CustomRouters />
+        </BrowserRouter>
+      </React.Suspense>
+
       {/* {window.location.pathname !== "/admin" && (
         <Router>
           <Alert />

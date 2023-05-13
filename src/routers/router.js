@@ -1,3 +1,4 @@
+import Admin from "../pages/admin/Admin"
 import Home from "../pages/home"
 import Login from "../pages/login"
 import Message from "../pages/message"
@@ -34,7 +35,7 @@ const protectedRoute = [
 const commonRoute = [{ path: "/post/:id", name: "Post", element: <PostPage /> }]
 
 // Route dùng cho admin
-const adminRoute = []
+const adminRoute = [{ path: "/admin", name: "Manage", element: <Admin /> }]
 
 const routes = {
   publicRoute,

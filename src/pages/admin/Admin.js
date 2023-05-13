@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom"
 const { Header, Sider, Content } = Layout
 
 export default function Admin() {
-  const history = useNavigate()
+  const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
   const [key, setCurrentKey] = useState("1")
 
@@ -57,8 +57,7 @@ export default function Admin() {
         />
         <Button
           onClick={() => {
-            history.push("/")
-            history.go(0)
+            navigate(-1)
           }}
         >
           Back
