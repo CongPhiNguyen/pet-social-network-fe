@@ -33,14 +33,14 @@ const protectedRoute = [
 // route dùng cho mọi trường hợp
 const commonRoute = [{ path: "/post/:id", name: "Post", element: <PostPage /> }]
 
-// Route dùng cho manager
-const managerRoute = []
+// Route dùng cho admin
+const adminRoute = []
 
 const routes = {
   publicRoute,
   commonRoute,
   protectedRoute,
-  managerRoute,
+  adminRoute,
   mainRoute
 }
 

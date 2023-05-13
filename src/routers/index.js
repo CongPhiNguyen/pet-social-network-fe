@@ -1,6 +1,13 @@
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom"
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Router,
+  Routes,
+  useLocation
+} from "react-router-dom"
 import routes from "./router"
 import { useSelector } from "react-redux"
 import io from "socket.io-client"
@@ -12,10 +19,13 @@ import { getNotifies } from "../redux/actions/notifyAction"
 import SocketClient from "../SocketClient"
 import CallModal from "../components/message/CallModal"
 import HeaderLayout from "../components/header/Header"
+import NotFoundPage from "../pages/notFound"
 // import { setCurrentUserInfo, handleLogin } from "../features/authen/authenSlice"
 const CustomRouters = () => {
   const { auth, status, modal, call } = useSelector((state) => state)
+  const role = useSelector((state) => state.auth?.user?.role)
   const dispatch = useDispatch()
+  const isAdminRoute = window.location.pathname.indexOf("/admin") === 0
 
   useEffect(() => {
     dispatch(refreshToken())
@@ -59,8 +69,9 @@ const CustomRouters = () => {
     <React.Suspense>
       <BrowserRouter>
         {/* đã đăng nhập */}
-        {auth.token && <SocketClient />}
-        {auth.token && <HeaderLayout />}
+        {auth.token && !isAdminRoute && <SocketClient />}
+        {auth.token && !isAdminRoute && <HeaderLayout />}
+        {call && !isAdminRoute && <CallModal />}
         <Routes>
           {!auth.token &&
             routes.publicRoute.map((route, index) => {
@@ -74,8 +85,6 @@ const CustomRouters = () => {
                 )
               )
             })}
-
-          {call && <CallModal />}
           {auth.token &&
             routes.protectedRoute.map((route, index) => {
               return (
@@ -99,6 +108,7 @@ const CustomRouters = () => {
               )
             )
           })}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </React.Suspense>
