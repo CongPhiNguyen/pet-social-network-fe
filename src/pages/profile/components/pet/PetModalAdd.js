@@ -5,7 +5,8 @@ import {
   Radio,
   DatePicker,
   Button,
-  InputNumber
+  InputNumber,
+  message
 } from "antd"
 import React, { useState } from "react"
 import { AiFillCamera } from "react-icons/ai"
@@ -27,10 +28,9 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
   }
 
   const addPet = async (value) => {
-    console.log(value)
-    console.log(value.dateOfBirth.toDate())
     let avatarUrl = avatar
     if (avatarUrl !== "") {
+      message.info("Uploading image")
       // Upload avatar
       const formData = new FormData()
       formData.append("file", avatar)
@@ -38,7 +38,9 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
       formData.append("cloud_name", "databaseimg")
       const response = await uploadImageApi(formData)
       avatarUrl = response.data.url
+      message.success("Upload image success")
     }
+
     const sendData = {
       ...value,
       image: avatarUrl,
@@ -47,7 +49,16 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
     }
 
     const response = await addPetApi(sendData)
-    console.log(response)
+    const { data, status } = response
+    if (status === 200) {
+      setIsAddPet(false)
+      form.resetFields()
+      message.success("Add pet infomation ok!")
+    } else {
+      setAvatar("")
+      setIsAddPet(false)
+      message.error("Some errors happened. Wait and try again")
+    }
 
     console.log(sendData)
   }
