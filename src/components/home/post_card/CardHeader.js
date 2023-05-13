@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Avatar } from "antd"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import moment from "moment"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
@@ -17,7 +17,7 @@ const { confirm } = Modal
 const CardHeader = ({ post }) => {
   const { auth, socket } = useSelector((state) => state)
   const dispatch = useDispatch()
-  const history = useHistory()
+  const history = useNavigate()
 
   const handleEditPost = () => {
     dispatch({ type: GLOBALTYPES.STATUS, payload: { ...post, onEdit: true } })

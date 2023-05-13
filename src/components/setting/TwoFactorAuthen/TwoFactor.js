@@ -1,14 +1,14 @@
 import { Button, Typography, Modal } from "antd"
 import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { useHistory } from "react-router"
+import { useNavigate } from "react-router"
 import axios from "axios"
 import TwoFactorConfigModal from "./TwoFactorConfigModal"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
 
 export default function TwoFactor() {
   const dispatch = useDispatch()
-  const navigate = useHistory()
+  const navigate = useNavigate()
   const user = useSelector((state) => state.auth.user)
   const { auth, status, modal, call } = useSelector((state) => state)
   // const store = useStore()

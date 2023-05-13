@@ -3,7 +3,7 @@ import UserCard from "../UserCard"
 import { useSelector, useDispatch } from "react-redux"
 import { getDataAPI } from "../../utils/fetchData"
 import { GLOBALTYPES } from "../../redux/actions/globalTypes"
-import { Link, useHistory, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { MESS_TYPES, getConversations } from "../../redux/actions/messageAction"
 import BotCard from "./BotCard"
 
@@ -14,7 +14,7 @@ const LeftSide = () => {
   const [search, setSearch] = useState("")
   const [searchUsers, setSearchUsers] = useState([])
 
-  const history = useHistory()
+  const history = useNavigate()
   const { id } = useParams()
 
   const pageEnd = useRef()

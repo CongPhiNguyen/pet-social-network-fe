@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { Col, Row, Button, Form, Input, Typography, Radio, message } from "antd"
 import { useSelector, useDispatch } from "react-redux"
-import { useHistory, Link } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { getEmailWithIdApi, sendCodeVerifyApi } from "../api/authen"
 const { Title } = Typography
 
 export default function Verify() {
-  const history = useHistory()
+  const history = useNavigate()
   const params = useParams()
   const { id } = params
   const [form] = Form.useForm()
