@@ -72,7 +72,6 @@ const CustomRouters = () => {
   //       console.log("err", err)
   //     })
   // }, [dispatch])
-  console.log(auth.token, auth.role)
   return (
     <>
       {/* đã đăng nhập */}
