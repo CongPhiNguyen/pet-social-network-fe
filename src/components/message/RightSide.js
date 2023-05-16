@@ -14,7 +14,7 @@ import {
   deleteConversation
 } from "../../redux/actions/messageAction"
 import LoadIcon from "../../images/loading.gif"
-import { Button } from "antd"
+import { Button, Spin } from "antd"
 import { ExclamationCircleFilled } from "@ant-design/icons"
 import { Modal } from "antd"
 
@@ -259,8 +259,8 @@ const RightSide = () => {
           ))}
 
           {loadMedia && (
-            <div className="chat_row you_message">
-              <img src={LoadIcon} alt="loading" />
+            <div style={{ display: "flex", justifyContent: "end" }}>
+              <Spin></Spin>
             </div>
           )}
         </div>

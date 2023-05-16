@@ -9,13 +9,13 @@ const Conversation = () => {
   const param = useParams()
   const { id } = param
   return (
-    <Row gutter={[24, 0]} style={{ marginTop: 128, overflow: "hidden" }} >
-      <Col style={{ height: 'calc(100vh - 192px)' }} span={6} offset={3}>
+    <Row gutter={[24, 0]} style={{ marginTop: 96, overflow: "hidden" }} >
+      <Col style={{ height: 'calc(100vh - 124px)' }} span={6} offset={2}>
         <Card style={{ height: "100%", overflowY: "scroll" }}>
           <LeftSide />
         </Card>
       </Col>
-      <Col style={{ height: 'calc(100vh - 192px)' }} span={12}>
+      <Col style={{ height: 'calc(100vh - 124px)' }} span={14}>
         <Card className="right-side" style={{ height: "100%", display: "flex", justifyContent: "center", width: "100%" }}>
           {id !== "bot" ? <RightSide /> : <BotMessage />}
         </Card>
