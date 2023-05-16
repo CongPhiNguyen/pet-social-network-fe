@@ -22,6 +22,7 @@ import SocketClient from "../SocketClient"
 import CallModal from "../components/message/CallModal"
 import HeaderLayout from "../components/header/Header"
 import NotFoundPage from "../pages/notFound"
+import Peer from "peerjs"
 // import { setCurrentUserInfo, handleLogin } from "../features/authen/authenSlice"
 const CustomRouters = () => {
   const { auth, status, modal, call } = useSelector((state) => state)
@@ -60,6 +61,16 @@ const CustomRouters = () => {
       })
     }
   }, [])
+
+  useEffect(() => {
+    const newPeer = new Peer(undefined, {
+      path: "/",
+
+      secure: true
+    })
+
+    dispatch({ type: GLOBALTYPES.PEER, payload: newPeer })
+  }, [dispatch])
   // useEffect(() => {
   //   axios.get(URL.URL_REFRESH)
   //     .then((data) => {

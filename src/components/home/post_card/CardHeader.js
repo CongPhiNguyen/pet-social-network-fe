@@ -103,14 +103,14 @@ const CardHeader = ({ post }) => {
             marginRight: "5px"
           }}
           src={
-            auth?.user?.avatar ===
+            post?.user?.avatar ===
             "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
               ? null
-              : auth?.user?.avatar
+              : post?.user?.avatar
           }
           size="large"
         >
-          {auth?.user?.username[0]?.toUpperCase()}
+          {post?.user?.username[0]?.toUpperCase()}
         </Avatar>
         <div className="card_name">
           <h6 className="m-0">
