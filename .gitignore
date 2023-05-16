@@ -1,7 +1,5 @@
 node_modules
-<<<<<<< HEAD
 .eslintcache
 .estlintcache
-=======
 .eslintcache
->>>>>>> phuoc-fe
+build
