@@ -23,6 +23,7 @@ import CallModal from "../components/message/CallModal"
 import HeaderLayout from "../components/header/Header"
 import NotFoundPage from "../pages/notFound"
 import Peer from "peerjs"
+import ChatGpt from "../pages/chatGpt"
 // import { setCurrentUserInfo, handleLogin } from "../features/authen/authenSlice"
 const CustomRouters = () => {
   const { auth, status, modal, call } = useSelector((state) => state)
@@ -88,6 +89,7 @@ const CustomRouters = () => {
       {/* đã đăng nhập */}
       {auth.token && !isAdminRoute && <SocketClient />}
       {auth.token && !isAdminRoute && <HeaderLayout />}
+      {auth.token && !isAdminRoute && <ChatGpt />}
       {call && !isAdminRoute && <CallModal />}
       <Routes>
         {!auth.token &&
