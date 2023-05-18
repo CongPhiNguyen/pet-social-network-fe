@@ -5,6 +5,7 @@ import ChatGPTIcon from '../../assets/images/chatgpt.png'
 import './index.scss'
 import axios from 'axios'
 import { EventSourcePolyfill } from 'event-source-polyfill'
+import { useSelector } from 'react-redux'
 
 
 const Gpt = () => {
@@ -13,6 +14,7 @@ const Gpt = () => {
     const [inputValue, setInputValue] = useState('')
     const [isReplying, setIsReplying] = useState(false)
     const suggestedMessages = ["Thú cưng là gì?", "Có bao nhiêu loại thú cưng?"]
+    const { auth } = useSelector((state) => state)
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value)
@@ -36,23 +38,60 @@ const Gpt = () => {
         setIsReplying(true)
 
         setInputValue('')
+        const sse = new EventSourcePolyfill(
+            `http://localhost:5000/api/gpt?message=${inputValue}`,
+            {
+                headers: { Authorization: auth.token }
+            }
+        )
 
+        sse.onmessage = (event) => {
+            newReplyMessage.content += event.data
+            setMessages([...messages, newMessage, newReplyMessage])
+        }
 
-        await axios.post(`http://localhost:5000/api/gpt`, { message: inputValue })
-            .then(res => {
-                const newReplyMessage = {
-                    content: res.data.reply,
-                    role: 'assistant'
-                }
-                setMessages([...messages, newMessage, newReplyMessage])
-                setIsReplying(false)
-            })
-            .catch(err => {
-                setIsReplying(false)
-                message.error(err.message)
-            })
-
+        sse.onerror = (event) => {
+            setIsReplying(false)
+            sse.close()
+        }
     }
+
+    // const handleSendMessage = async () => {
+    //     if (inputValue === "") {
+    //         message.warning("Please input something")
+
+    //         return
+    //     }
+    //     const newMessage = {
+    //         content: inputValue,
+    //         role: 'user',
+    //     }
+    //     const newReplyMessage = {
+    //         content: '',
+    //         role: 'assistant'
+    //     }
+    //     setMessages([...messages, newMessage, newReplyMessage])
+    //     setIsReplying(true)
+
+    //     setInputValue('')
+
+
+    //     await axios.post(`http://localhost:5000/api/gpt`, { message: inputValue })
+    //         .then(res => {
+    //             const newReplyMessage = {
+    //                 content: res.data.reply,
+    //                 role: 'assistant'
+    //             }
+    //             setMessages([...messages, newMessage, newReplyMessage])
+    //             setIsReplying(false)
+    //         })
+    //         .catch(err => {
+    //             setIsReplying(false)
+    //             message.error(err.message)
+    //         })
+
+    // }
+
 
     const handleKeyDown = (e) => {
         if (e.keyCode === 13 && !e.shiftKey) {
@@ -75,20 +114,23 @@ const Gpt = () => {
 
         setInputValue('')
 
+        const sse = new EventSourcePolyfill(
+            `http://localhost:5000/api/gpt?message=${suggestedMessage}`,
+            {
+                headers: { Authorization: `auth.token` }
+            }
+        )
 
-        await axios.post(`http://localhost:5000/api/gpt`, { message: suggestedMessage })
-            .then(res => {
-                const newReplyMessage = {
-                    content: res.data.reply,
-                    role: 'assistant'
-                }
-                setMessages([...messages, newMessage, newReplyMessage])
-                setIsReplying(false)
-            })
-            .catch(err => {
-                setIsReplying(false)
-                message.error(err.message)
-            })
+        sse.onmessage = (event) => {
+            newReplyMessage.content += event.data
+            setMessages([...messages, newMessage, newReplyMessage])
+        }
+
+        sse.onerror = (event) => {
+            message.error(event.statusText)
+            setIsReplying(false)
+            sse.close()
+        }
     }
 
 
