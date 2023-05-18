@@ -19,6 +19,11 @@ const Gpt = () => {
     }
 
     const handleSendMessage = async () => {
+        if (inputValue === "") {
+            message.warning("Please input something")
+
+            return
+        }
         const newMessage = {
             content: inputValue,
             role: 'user',
