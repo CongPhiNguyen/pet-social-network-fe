@@ -45,7 +45,7 @@ export default function Follower() {
           setOpenFollowerModel(true)
         }}
       >
-        Follower:
+        Follower ({followers.length}):
       </Typography>
       <div>
         {followers && followers.length === 0 && (
