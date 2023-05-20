@@ -28,9 +28,9 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
   }
 
   const addPet = async (value) => {
-    message.info("Update pet image")
     let avatarUrl = avatar
     if (avatarUrl !== "") {
+      message.info("Uploading image")
       // Upload avatar
       const formData = new FormData()
       formData.append("file", avatar)
@@ -39,7 +39,9 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
       const response = await uploadImageApi(formData)
       console.log(response)
       avatarUrl = response.data.url
+      message.success("Upload image success")
     }
+
     const sendData = {
       ...value,
       image: avatarUrl,
@@ -48,10 +50,18 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
     }
 
     const response = await addPetApi(sendData)
-    const { status, data } = response
+    const { data, status } = response
     if (status === 200) {
-      message.success("Add pet ok")
+      setIsAddPet(false)
+      form.resetFields()
+      message.success("Add pet infomation ok!")
+    } else {
+      setAvatar("")
+      setIsAddPet(false)
+      message.error("Some errors happened. Wait and try again")
     }
+
+    console.log(sendData)
   }
 
   return (
