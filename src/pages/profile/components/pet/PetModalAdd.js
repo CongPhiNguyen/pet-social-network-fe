@@ -37,7 +37,6 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
       formData.append("upload_preset", "qqqhcaa3")
       formData.append("cloud_name", "databaseimg")
       const response = await uploadImageApi(formData)
-      console.log(response)
       avatarUrl = response.data.url
       message.success("Upload image success")
     }
@@ -60,8 +59,6 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
       setIsAddPet(false)
       message.error("Some errors happened. Wait and try again")
     }
-
-    console.log(sendData)
   }
 
   return (

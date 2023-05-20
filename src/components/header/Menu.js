@@ -23,12 +23,12 @@ const navLinks = [
     label: "Message",
     icon: <MessageFilled />,
     path: "/message"
-  },
-  {
-    label: "Discover",
-    icon: <StarFilled />,
-    path: "/discover"
   }
+  // {
+  //   label: "Discover",
+  //   icon: <StarFilled />,
+  //   path: "/discover"
+  // }
 ]
 
 const Menu = () => {

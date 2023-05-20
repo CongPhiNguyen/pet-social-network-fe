@@ -12,12 +12,9 @@ import { AiFillDelete } from "react-icons/ai"
 const StatusModal = () => {
   const { auth, theme, status, socket } = useSelector((state) => state)
   const dispatch = useDispatch()
-
   const [location, setLocation] = useState("")
-
   const [content, setContent] = useState("")
   const [images, setImages] = useState([])
-
   const [stream, setStream] = useState(false)
   const videoRef = useRef()
   const refCanvas = useRef()

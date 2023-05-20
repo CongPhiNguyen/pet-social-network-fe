@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { GLOBALTYPES } from "../../redux/actions/globalTypes"
 import { Avatar } from "antd"
 import { Card } from "antd"
+import StatusModal from "../StatusModal"
 
 const Status = () => {
   const { auth } = useSelector((state) => state)
@@ -32,12 +33,12 @@ const Status = () => {
           className="statusBtn flex-fill"
           onClick={() => {
             dispatch({ type: GLOBALTYPES.STATUS, payload: true })
-            console.log("Ủa alo")
           }}
         >
           {auth.user.fullname}, what are you thinking?
         </button>
       </div>
+      <StatusModal />
     </Card>
   )
 }
