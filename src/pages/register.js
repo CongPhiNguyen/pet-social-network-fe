@@ -1,33 +1,19 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import { Col, Row, Button, Form, Input, Typography, Radio, message } from "antd"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { registerApi } from "../api/authen"
 const { Title } = Typography
 
 const Register = () => {
-  const initialState = {
-    fullname: "",
-    username: "",
-    email: "",
-    password: "",
-    cf_password: "",
-    gender: "male"
-  }
-
-  const { auth, alert } = useSelector((state) => state)
-  const dispatch = useDispatch()
+  const { auth } = useSelector((state) => state)
   const navigate = useNavigate()
-  const [userData, setUserData] = useState(initialState)
-  const { fullname, username, email, password, cf_password } = userData
-  const [typePass, setTypePass] = useState(false)
-  const [typeCfPass, setTypeCfPass] = useState(false)
   const [form] = Form.useForm()
 
   // Init
   useEffect(() => {
     form.setFieldValue("gender", "male")
-  }, [])
+  }, [form])
 
   useEffect(() => {
     if (auth.token) navigate("/")

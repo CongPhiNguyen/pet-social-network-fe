@@ -108,8 +108,6 @@ const Menu = () => {
       </Link>
     </div>
   )
-
-  console.log("Kia", open1)
   return (
     <div className="menu">
       {navLinks.map((link, index) => (

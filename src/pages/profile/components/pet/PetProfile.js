@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import PetCard from "./PetCard"
-import { Button } from "antd"
+import { Button, Row, Col } from "antd"
 import { AiOutlinePlusCircle } from "react-icons/ai"
 import PetModalAdd from "./PetModalAdd"
 import { getPetApiByUserId } from "../../../../api/pet"
@@ -24,22 +24,32 @@ export default function PetProfile() {
 
   useEffect(() => {
     getPetList()
+    // eslint-disable-next-line
   }, [userInfo._id])
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "flex-start", gap: 40 }}>
+      <Row>
         {pets.slice(0, 2).map((val, index) => (
-          <PetCard {...val} key={index} />
+          <Col xs={12} sm={6}>
+            <div style={{ textAlign: "center" }}>
+              <PetCard {...val} key={index} isShowDelete={true} />
+            </div>
+          </Col>
         ))}
-        <Button
-          style={{ width: 80, height: 80 }}
-          icon={<AiOutlinePlusCircle size={30} color="#b3e0dc" />}
-          onClick={() => {
-            setIsAddPet(true)
-          }}
-        />
-      </div>
+        <Col xs={12} sm={6}>
+          <div style={{ textAlign: "center" }}>
+            <Button
+              style={{ width: 80, height: 80 }}
+              icon={<AiOutlinePlusCircle size={30} color="#b3e0dc" />}
+              onClick={() => {
+                setIsAddPet(true)
+              }}
+            />
+          </div>
+        </Col>
+      </Row>
+
       <PetModalAdd isAddPet={isAddPet} setIsAddPet={setIsAddPet} />
 
       <p

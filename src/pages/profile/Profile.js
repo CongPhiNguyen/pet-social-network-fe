@@ -37,9 +37,9 @@ const Profile = () => {
               <Card>
                 <Following />
               </Card>
-              <div style={{ marginLeft: 20 }}>
+              {/* <div style={{ marginLeft: 20 }}>
                 <ImageAlbum isLoading={profile?.loading} />
-              </div>
+              </div> */}
             </>
           )}
         </Col>
