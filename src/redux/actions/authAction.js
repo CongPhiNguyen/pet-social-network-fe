@@ -5,6 +5,7 @@ import { message } from "antd"
 export const login = (data) => async (dispatch) => {
   try {
     dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
+    console.log(data)
     const res = await postDataAPI("login", data)
     dispatch({
       type: GLOBALTYPES.AUTH,

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { GLOBALTYPES } from '../../redux/actions/globalTypes'
 import SpinAntd from './Spin'
 import Toast from './Toast'
+import { message } from 'antd'
 
 const Notify = () => {
     const { alert } = useSelector(state => state)
@@ -14,17 +15,17 @@ const Notify = () => {
             {alert.loading && <SpinAntd />}
 
             {
-                alert.error &&
-                <Toast msg={{ title: 'Error', body: alert.error }}
-                    handleShow={() => dispatch({ type: GLOBALTYPES.ALERT, payload: {} })}
-                    bgColor="bg-danger" />
+                alert.error && message.error(alert.error)
+                // <Toast msg={{ title: 'Error', body: alert.error }}
+                //     handleShow={() => dispatch({ type: GLOBALTYPES.ALERT, payload: {} })}
+                //     bgColor="bg-danger" />
             }
 
             {
-                alert.success &&
-                <Toast msg={{ title: 'Success', body: alert.success }}
-                    handleShow={() => dispatch({ type: GLOBALTYPES.ALERT, payload: {} })}
-                    bgColor="bg-success" />
+                alert.success && message.success(alert.success)
+                // <Toast msg={{ title: 'Success', body: alert.success }}
+                //     handleShow={() => dispatch({ type: GLOBALTYPES.ALERT, payload: {} })}
+                //     bgColor="bg-success" />
             }
         </div>
     )

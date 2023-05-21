@@ -35,7 +35,8 @@ const StatusModal = () => {
       return newImages.push(file)
     })
 
-    if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
+    // if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
+    if (err) message.error(err)
     setImages([...images, ...newImages])
   }
 
@@ -159,7 +160,7 @@ const StatusModal = () => {
             }}
             src={
               auth?.user?.avatar ===
-              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                 ? null
                 : auth?.user?.avatar
             }
