@@ -1,45 +1,57 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import PetCard from "./PetCard"
-import { Button } from "antd"
+import { Button, Row, Col } from "antd"
 import { AiOutlinePlusCircle } from "react-icons/ai"
 import PetModalAdd from "./PetModalAdd"
+import { getPetApiByUserId } from "../../../../api/pet"
+import { useSelector } from "react-redux"
+import PetModalShowAll from "./PetModalShowAll"
 
 export default function PetProfile() {
-  const [pets, setPets] = useState([
-    {
-      img: "https://meonhapkhau.com/wp-content/uploads/2021/10/Gia-cho-Golden-bao-nhieu-mua-cho-golden-o-dau.jpg",
-      name: "Donny",
-      description: "Dog Golden"
-    },
-    {
-      img: "https://pethouse.com.vn/wp-content/uploads/2022/12/Ngoai-hinh-husky-768x1024-1-600x800.jpg",
-      name: "Tommy",
-      description: "Husky"
-    },
-    {
-      img: "https://nld.mediacdn.vn/2020/2/29/dui-dog-1582946893091786108496.jpg",
-      name: "Dúi",
-      description: "Dúi"
-    }
-  ])
-
+  const userInfo = useSelector((state) => state.auth.user)
+  const [pets, setPets] = useState([])
   const [isAddPet, setIsAddPet] = useState(false)
+  const [isShowAllPet, setIsShowAllPet] = useState(false)
+
+  const getPetList = async () => {
+    const response = await getPetApiByUserId(userInfo._id)
+    const { data, status } = response
+    if (status === 200) {
+      setPets(data.listPet)
+    }
+    console.log(response)
+  }
+
+  useEffect(() => {
+    getPetList()
+    // eslint-disable-next-line
+  }, [userInfo._id])
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "flex-start", gap: 40 }}>
+      <Row>
         {pets.slice(0, 2).map((val, index) => (
-          <PetCard {...val} key={index} />
+          <Col xs={12} sm={6}>
+            <div style={{ textAlign: "center" }}>
+              <PetCard {...val} key={index} isShowDelete={true} />
+            </div>
+          </Col>
         ))}
-        <Button
-          style={{ width: 80, height: 80 }}
-          icon={<AiOutlinePlusCircle size={30} color="#b3e0dc" />}
-          onClick={() => {
-            setIsAddPet(true)
-          }}
-        />
-      </div>
+        <Col xs={12} sm={6}>
+          <div style={{ textAlign: "center" }}>
+            <Button
+              style={{ width: 80, height: 80 }}
+              icon={<AiOutlinePlusCircle size={30} color="#b3e0dc" />}
+              onClick={() => {
+                setIsAddPet(true)
+              }}
+            />
+          </div>
+        </Col>
+      </Row>
+
       <PetModalAdd isAddPet={isAddPet} setIsAddPet={setIsAddPet} />
+
       <p
         style={{
           textAlign: "center",
@@ -47,9 +59,18 @@ export default function PetProfile() {
           fontWeight: 600,
           cursor: "pointer"
         }}
+        onClick={() => {
+          setIsShowAllPet(true)
+        }}
       >
         Xem toàn bộ thú cưng
       </p>
+      <PetModalShowAll
+        isShowAllPet={isShowAllPet}
+        setIsShowAllPet={setIsShowAllPet}
+        userInfo={userInfo}
+        petList={pets}
+      />
     </div>
   )
 }

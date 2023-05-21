@@ -23,28 +23,27 @@ const navLinks = [
     label: "Message",
     icon: <MessageFilled />,
     path: "/message"
-  },
-  {
-    label: "Discover",
-    icon: <StarFilled />,
-    path: "/discover"
   }
+  // {
+  //   label: "Discover",
+  //   icon: <StarFilled />,
+  //   path: "/discover"
+  // }
 ]
 
 const Menu = () => {
-  const role = useSelector((state) => state.auth?.user?.role)
-  const [open1, setOpen1] = useState(false)
-  const { auth, theme, notify } = useSelector((state) => state)
   const dispatch = useDispatch()
   const { pathname } = useLocation()
+  const role = useSelector((state) => state.auth?.user?.role)
+  const [open, setOpen] = useState(false)
+  const [open1, setOpen1] = useState(false)
+  const { auth, theme, notify } = useSelector((state) => state)
+  const [showArrow, setShowArrow] = useState(true)
+  const [arrowAtCenter, setArrowAtCenter] = useState(false)
   const isActive = (pn) => {
     if (pn === pathname) return "active"
     return ""
   }
-
-  const [showArrow, setShowArrow] = useState(true)
-  const [arrowAtCenter, setArrowAtCenter] = useState(false)
-
   const mergedArrow = useMemo(() => {
     if (arrowAtCenter) return { arrowPointAtCenter: true }
     return showArrow
@@ -53,6 +52,11 @@ const Menu = () => {
   const handleOpenChange1 = (newOpen) => {
     setOpen1(newOpen)
   }
+
+  const handleOpenChange = (newOpen) => {
+    setOpen(newOpen)
+  }
+
   const content = (
     <div aria-labelledby="navbarDropdown">
       <Link
@@ -104,10 +108,6 @@ const Menu = () => {
       </Link>
     </div>
   )
-  const [open, setOpen] = useState(false)
-  const handleOpenChange = (newOpen) => {
-    setOpen(newOpen)
-  }
   return (
     <div className="menu">
       {navLinks.map((link, index) => (
@@ -123,7 +123,14 @@ const Menu = () => {
           </span>
         </Link>
       ))}
-      <div style={{ position: "relative" }}>
+      <Popover
+        className="popover-notify"
+        onOpenChange={handleOpenChange1}
+        placement="bottomRight"
+        content={<NotifyModal />}
+        trigger="click"
+        open={open1}
+      >
         <Link onClick={handleOpenChange1} className={`nav-link`}>
           <span className="material-icons">
             <Badge count={notify.data.length}>
@@ -131,18 +138,14 @@ const Menu = () => {
             </Badge>
           </span>
         </Link>
-        <div style={{ position: "absolute", bottom: 20, right: 15 }}>
-          <Popover
-            className="popover-notify"
-            onOpenChange={handleOpenChange1}
-            placement="bottomRight"
-            content={<NotifyModal />}
-            trigger="click"
-            open={open1}
-          ></Popover>
-        </div>
-      </div>
-      <div style={{ position: "relative" }}>
+      </Popover>
+      <Popover
+        onOpenChange={handleOpenChange}
+        placement="bottomRight"
+        content={content}
+        trigger="click"
+        open={open}
+      >
         <Link onClick={handleOpenChange} className={`nav-link`}>
           <span className="material-icons">
             <Avatar
@@ -162,16 +165,7 @@ const Menu = () => {
             </Avatar>
           </span>
         </Link>
-        <div style={{ position: "absolute", bottom: 20, right: 15 }}>
-          <Popover
-            onOpenChange={handleOpenChange}
-            placement="bottomRight"
-            content={content}
-            trigger="click"
-            open={open}
-          ></Popover>
-        </div>
-      </div>
+      </Popover>
     </div>
   )
 }

@@ -40,7 +40,7 @@ const CardHeader = ({ post }) => {
 
   const [items, setItems] = useState([])
   useEffect(() => {
-    if (auth.user._id === post.user._id) {
+    if (auth?.user?._id === post?.user?._id) {
       setItems([
         {
           key: "1",
@@ -91,7 +91,7 @@ const CardHeader = ({ post }) => {
         }
       ])
     }
-  }, [post.user._id, auth.user._id])
+  }, [post?.user?._id, auth?.user?._id])
 
   return (
     <div className="card_header">
@@ -114,12 +114,12 @@ const CardHeader = ({ post }) => {
         </Avatar>
         <div className="card_name">
           <h6 className="m-0">
-            <Link to={`/profile/${post.user._id}`} className="text-dark">
-              {post.user.fullname}
+            <Link to={`/profile/${post?.user?._id}`} className="text-dark">
+              {post?.user?.fullname}
             </Link>
           </h6>
           <small className="text-muted">
-            {moment(post.createdAt).fromNow()}
+            {moment(post?.createdAt).fromNow()}
           </small>
         </div>
       </div>

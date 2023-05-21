@@ -5,13 +5,15 @@ import { getProfileUsers } from "../../redux/actions/profileAction"
 import { useParams } from "react-router-dom"
 import { Card, Col, Row } from "antd"
 import Following from "./components/Following"
-import ImageAlbum from "./components/ImageAlbum"
+import { getPostByUserIdApi } from "../../api/post"
+import PostCard from "../../components/PostCard"
 
 const Profile = () => {
   const { profile, auth } = useSelector((state) => state)
   const dispatch = useDispatch()
   const { id } = useParams()
-  const [saveTab, setSaveTab] = useState(false)
+
+  const [postList, setPostList] = useState([])
 
   useEffect(() => {
     if (profile.ids.every((item) => item !== id)) {
@@ -19,10 +21,24 @@ const Profile = () => {
     }
   }, [id, auth, dispatch, profile.ids])
 
+  const getUserPost = async (userId) => {
+    const response = await getPostByUserIdApi(userId)
+    const { data, status } = response
+    if (status === 200) {
+      setPostList(data.postList)
+    }
+  }
+
+  useEffect(() => {
+    getUserPost(id)
+  }, [])
+
+  console.log("postList", postList)
+
   return (
     <div className="profile" style={{ marginTop: 64 }}>
       <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />
-      <Row
+      <div
         style={{
           width: "100%",
           maxWidth: 1200,
@@ -31,20 +47,21 @@ const Profile = () => {
           padding: "0px 10px"
         }}
       >
-        <Col span={8}>
-          {!profile?.loading && (
-            <>
+        <Row gutter={[16, 16]}>
+          <Col span={8}>
+            {!profile?.loading && (
               <Card>
                 <Following />
               </Card>
-              <div style={{ marginLeft: 20 }}>
-                <ImageAlbum isLoading={profile?.loading} />
-              </div>
-            </>
-          )}
-        </Col>
-        <Col span={16}></Col>
-      </Row>
+            )}
+          </Col>
+          <Col span={16}>
+            {postList.map((val, index) => {
+              return <PostCard key={index} post={val} />
+            })}
+          </Col>
+        </Row>
+      </div>
     </div>
   )
 }

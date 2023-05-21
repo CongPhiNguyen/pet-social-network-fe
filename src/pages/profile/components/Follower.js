@@ -45,21 +45,21 @@ export default function Follower() {
           setOpenFollowerModel(true)
         }}
       >
-        Follower:
+        Follower ({followers.length}):
       </Typography>
       <div>
         {followers && followers.length === 0 && (
           <p>This user don't have any follower</p>
         )}
         {followers &&
-          followers.map((val) => (
-            <Avatar.Group>
-              <Tooltip title={val.fullname} placement="top">
+          followers.map((val, index) => (
+            <Avatar.Group key={index}>
+              <Tooltip title={val?.fullname} placement="top">
                 <Avatar
-                  src={val.avatar}
+                  src={val?.avatar}
                   size={60}
                   onClick={() => {
-                    navigate("/profile/" + val._id)
+                    navigate("/profile/" + val?._id)
                   }}
                 />
               </Tooltip>
