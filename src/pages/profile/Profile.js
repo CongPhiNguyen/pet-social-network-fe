@@ -38,7 +38,7 @@ const Profile = () => {
   return (
     <div className="profile" style={{ marginTop: 64 }}>
       <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />
-      <Row
+      <div
         style={{
           width: "100%",
           maxWidth: 1200,
@@ -47,19 +47,21 @@ const Profile = () => {
           padding: "0px 10px"
         }}
       >
-        <Col span={8}>
-          {!profile?.loading && (
-            <Card>
-              <Following />
-            </Card>
-          )}
-        </Col>
-        <Col span={16}>
-          {postList.map((val, index) => {
-            return <PostCard key={index} post={val} />
-          })}
-        </Col>
-      </Row>
+        <Row gutter={[16, 16]}>
+          <Col span={8}>
+            {!profile?.loading && (
+              <Card>
+                <Following />
+              </Card>
+            )}
+          </Col>
+          <Col span={16}>
+            {postList.map((val, index) => {
+              return <PostCard key={index} post={val} />
+            })}
+          </Col>
+        </Row>
+      </div>
     </div>
   )
 }
