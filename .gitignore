@@ -3,3 +3,4 @@ node_modules
 .estlintcache
 .eslintcache
 build
+.env
