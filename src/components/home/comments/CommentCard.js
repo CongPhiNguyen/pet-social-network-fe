@@ -75,7 +75,10 @@ const CommentCard = ({ children, comment, post, commentId }) => {
   return (
     <div className="comment_card mt-2" style={styleCard}>
       <div className="comment_content">
-        <Link to={`/profile/${comment.user._id}`} className="d-flex text-dark ">
+        <Link
+          to={`/profile/${comment?.user?._id}`}
+          className="d-flex text-dark "
+        >
           <Avatar
             style={{
               backgroundColor: "#f56a00",
@@ -83,14 +86,14 @@ const CommentCard = ({ children, comment, post, commentId }) => {
               marginRight: 5
             }}
             src={
-              comment.user.avatar ===
+              comment?.user?.avatar ===
               "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                 ? null
                 : auth?.user?.avatar
             }
             size="small"
           >
-            {comment.user.username[0]?.toUpperCase()}
+            {comment?.user?.username[0]?.toUpperCase()}
           </Avatar>
         </Link>
         <div
@@ -101,32 +104,32 @@ const CommentCard = ({ children, comment, post, commentId }) => {
           }}
         >
           <Link
-            to={`/profile/${comment.user._id}`}
+            to={`/profile/${comment?.user?._id}`}
             className="d-flex text-dark "
           >
-            <div style={{ fontWeight: "bold" }}> {comment.user.username}</div>
+            <div style={{ fontWeight: "bold" }}> {comment?.user?.username}</div>
           </Link>
           {onEdit ? (
             <textarea
               rows="5"
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => setContent(e?.target?.value)}
             />
           ) : (
             <div>
-              {comment.tag && comment.tag._id !== comment.user._id && (
+              {comment?.tag && comment?.tag?._id !== comment?.user?._id && (
                 <Link to={`/profile/${comment.tag._id}`} className="mr-1">
-                  @{comment.tag.username}
+                  @{comment?.tag?.username}
                 </Link>
               )}
               <span>
-                {content.length < 100
+                {content?.length < 100
                   ? content
                   : readMore
                   ? content + " "
                   : content.slice(0, 100) + "...."}
               </span>
-              {content.length > 100 && (
+              {content?.length > 100 && (
                 <span
                   className="readMore"
                   onClick={() => setReadMore(!readMore)}

@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import QRCode from "qrcode"
-import { Typography, Form, Input, Button, message } from "antd"
+import { Form, Input, Button, message } from "antd"
 import "./TwoFactorConfigModal.scss"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
@@ -8,10 +8,8 @@ import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
 
 export default function TwoFactorConfigModal(props) {
   const dispatch = useDispatch()
-  const { auth, status, modal, call } = useSelector((state) => state)
+  const { auth } = useSelector((state) => state)
   const [qrcodeUrl, setqrCodeUrl] = useState("")
-  const [errors, setErrors] = useState("")
-  const [form] = Form.useForm()
   const user = useSelector((state) => state.auth.user)
   const verifyOtp = async (token) => {
     try {
@@ -40,10 +38,6 @@ export default function TwoFactorConfigModal(props) {
     }
   }
 
-  const onSubmitHandler = (values) => {
-    // verifyOtp(values.token)
-  }
-
   const onFinish = (values) => {
     verifyOtp(values.token)
   }
@@ -52,9 +46,7 @@ export default function TwoFactorConfigModal(props) {
     try {
       QRCode.toDataURL(props.otpauth_url).then(setqrCodeUrl)
     } catch (err) {}
-  }, [])
-
-  const handleSubmit = () => {}
+  }, [props.otpauth_url])
 
   return (
     <div>
