@@ -1,13 +1,13 @@
 import axios from "../service/axios"
-
+const API_ENDPOINT = process.env.BE_URL || "http://localhost:5000/api/"
 export const registerApi = (data) => {
-  return axios.post("/register", data)
+  return axios.post(`${API_ENDPOINT}/register`, data)
 }
 
 export const getEmailWithIdApi = (userId) => {
-  return axios.get(`/user/${userId}/email`)
+  return axios.get(`${API_ENDPOINT}/user/${userId}/email`)
 }
 
 export const sendCodeVerifyApi = (userId) => {
-  return axios.post(`/user/${userId}/send-email`)
+  return axios.post(`${API_ENDPOINT}/user/${userId}/send-email`)
 }

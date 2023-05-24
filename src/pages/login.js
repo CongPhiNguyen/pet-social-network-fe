@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { Col, Row, Button, Form, Input, Typography } from "antd"
 import "../styles/login.css"
+import { getUserWithEmailApi } from "../api/user"
 const { Title } = Typography
 
 const Login = () => {
@@ -20,7 +21,7 @@ const Login = () => {
 
   const onFinish = async (values) => {
     const { email, password, otp } = values
-    const response = await axios.get(`api/user?email=${email}`)
+    const response = await getUserWithEmailApi(email)
     if (response?.data?.user?.otpEnabled && !values.otp) {
       setUserOTPEnable(true)
       return
@@ -29,7 +30,7 @@ const Login = () => {
   }
 
   const getUserWithEmail = async (email) => {
-    const response = await axios.get(`api/user?email=${email}`)
+    const response = await getUserWithEmailApi(email)
     if (response?.data?.user?.otpEnabled) {
       setUserOTPEnable(true)
     } else setUserOTPEnable(false)

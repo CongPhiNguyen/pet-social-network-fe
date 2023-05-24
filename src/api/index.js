@@ -1,9 +1,9 @@
 import axios from "axios"
 
-const BASE_URL = "https://pet-social-be.onrender.com/api/"
+const API_ENDPOINT = process.env.BE_URL || "http://localhost:5000/api/"
 
 export const baseApi = axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_ENDPOINT,
   withCredentials: true
 })
 

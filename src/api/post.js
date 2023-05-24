@@ -1,5 +1,7 @@
 import axios from "../service/axios"
 
+const API_ENDPOINT = process.env.BE_URL || "http://localhost:5000/api/"
+
 export const getPostByUserIdApi = (userId) => {
-  return axios.get("/post/list/" + userId)
+  return axios.get(`${API_ENDPOINT}/post/list/` + userId)
 }
