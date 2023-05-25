@@ -1,6 +1,6 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import routes from "./router"
 import { useSelector } from "react-redux"
 import io from "socket.io-client"
@@ -12,10 +12,21 @@ import { getNotifies } from "../redux/actions/notifyAction"
 import SocketClient from "../SocketClient"
 import CallModal from "../components/message/CallModal"
 import HeaderLayout from "../components/header/Header"
+import NotFoundPage from "../pages/notFound"
+import Peer from "peerjs"
+import ChatGpt from "../pages/chatGpt"
+import StatusModal from "../components/StatusModal"
 // import { setCurrentUserInfo, handleLogin } from "../features/authen/authenSlice"
 const CustomRouters = () => {
-  const { auth, status, modal, call } = useSelector((state) => state)
+  const { auth, call } = useSelector((state) => state)
+  const role = useSelector((state) => state.auth?.user?.role)
   const dispatch = useDispatch()
+  const location = useLocation()
+  const [isAdminRoute, setIsAdminRoute] = useState(false)
+
+  useEffect(() => {
+    setIsAdminRoute(location.pathname.startsWith("/admin"))
+  }, [location])
 
   useEffect(() => {
     dispatch(refreshToken())
@@ -43,6 +54,16 @@ const CustomRouters = () => {
       })
     }
   }, [])
+
+  useEffect(() => {
+    const newPeer = new Peer(undefined, {
+      path: "/",
+
+      secure: true
+    })
+
+    dispatch({ type: GLOBALTYPES.PEER, payload: newPeer })
+  }, [dispatch])
   // useEffect(() => {
   //   axios.get(URL.URL_REFRESH)
   //     .then((data) => {
@@ -56,39 +77,16 @@ const CustomRouters = () => {
   //     })
   // }, [dispatch])
   return (
-    <React.Suspense>
-      <BrowserRouter>
-        {/* đã đăng nhập */}
-        {auth.token && <SocketClient />}
-        {auth.token && <HeaderLayout />}
-        <Routes>
-          {!auth.token &&
-            routes.publicRoute.map((route, index) => {
-              return (
-                route.element && (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={route.element}
-                  />
-                )
-              )
-            })}
-
-          {call && <CallModal />}
-          {auth.token &&
-            routes.protectedRoute.map((route, index) => {
-              return (
-                route.element && (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={route.element}
-                  />
-                )
-              )
-            })}
-          {routes.commonRoute.map((route, index) => {
+    <>
+      {/* đã đăng nhập */}
+      {auth.token && !isAdminRoute && <SocketClient />}
+      {auth.token && !isAdminRoute && <HeaderLayout />}
+      {auth.token && !isAdminRoute && <ChatGpt />}
+      <StatusModal></StatusModal>
+      {call && !isAdminRoute && <CallModal />}
+      <Routes>
+        {!auth.token &&
+          routes.publicRoute.map((route, index) => {
             return (
               route.element && (
                 <Route
@@ -99,9 +97,46 @@ const CustomRouters = () => {
               )
             )
           })}
-        </Routes>
-      </BrowserRouter>
-    </React.Suspense>
+        {auth.token &&
+          routes.protectedRoute.map((route, index) => {
+            return (
+              route.element && (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={route.element}
+                />
+              )
+            )
+          })}
+        {routes.commonRoute.map((route, index) => {
+          return (
+            route.element && (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+              />
+            )
+          )
+        })}
+        {auth.token &&
+          role === "admin" &&
+          routes.adminRoute.map((route, index) => {
+            return (
+              route.element && (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={route.element}
+                />
+              )
+            )
+          })}
+
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   )
 }
 

@@ -6,6 +6,9 @@ import { deleteMessages } from "../../redux/actions/messageAction"
 import { Modal } from 'antd'
 import Times from "./Times"
 import { ExclamationCircleFilled } from '@ant-design/icons';
+import { IoCall } from 'react-icons/io5'
+import { FaVideo } from 'react-icons/fa'
+
 const { confirm } = Modal;
 const MsgDisplay = ({ user, msg, theme, data }) => {
   const { auth } = useSelector((state) => state)
@@ -75,11 +78,11 @@ const MsgDisplay = ({ user, msg, theme, data }) => {
             >
               {msg.call.times === 0
                 ? msg.call.video
-                  ? "videocam_off"
-                  : "phone_disabled"
+                  ? <FaVideo style={{ margin: '0 10px 5px 5px' }}></FaVideo>
+                  : <IoCall style={{ margin: '0 10px 5px 5px' }}></IoCall>
                 : msg.call.video
-                  ? "video_camera_front"
-                  : "call"}
+                  ? <FaVideo style={{ margin: '0 10px 5px 5px' }}></FaVideo>
+                  : <IoCall style={{ margin: '0 10px 5px 5px' }}></IoCall>}
             </span>
 
             <div className="text-left">

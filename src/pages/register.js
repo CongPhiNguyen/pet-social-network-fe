@@ -1,36 +1,22 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import { Col, Row, Button, Form, Input, Typography, Radio, message } from "antd"
-import { useSelector, useDispatch } from "react-redux"
-import { useHistory, Link, useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
 import { registerApi } from "../api/authen"
 const { Title } = Typography
 
 const Register = () => {
-  const initialState = {
-    fullname: "",
-    username: "",
-    email: "",
-    password: "",
-    cf_password: "",
-    gender: "male"
-  }
-
-  const { auth, alert } = useSelector((state) => state)
-  const dispatch = useDispatch()
+  const { auth } = useSelector((state) => state)
   const navigate = useNavigate()
-  const [userData, setUserData] = useState(initialState)
-  const { fullname, username, email, password, cf_password } = userData
-  const [typePass, setTypePass] = useState(false)
-  const [typeCfPass, setTypeCfPass] = useState(false)
   const [form] = Form.useForm()
 
   // Init
   useEffect(() => {
     form.setFieldValue("gender", "male")
-  }, [])
+  }, [form])
 
   useEffect(() => {
-    if (auth.token) navigate.to("/")
+    if (auth.token) navigate("/")
   }, [auth.token, navigate])
 
   // const onFinish = (values) => {
@@ -45,7 +31,7 @@ const Register = () => {
       message.success(
         "Create account successfully. Verify email and sign in into your account"
       )
-      navigate.to("/verify/" + data.user._id)
+      navigate("/verify/" + data.user._id)
     }
     if (status === 400) {
       message.error(data.msg)
@@ -172,7 +158,7 @@ const Register = () => {
               <Input.Password />
             </Form.Item>
             <Form.Item name="gender">
-              <Radio.Group onChange={() => { }}>
+              <Radio.Group onChange={() => {}}>
                 <Radio value={"male"}>Male</Radio>
                 <Radio value={"female"}>Female</Radio>
                 <Radio value={"other"}>Other</Radio>

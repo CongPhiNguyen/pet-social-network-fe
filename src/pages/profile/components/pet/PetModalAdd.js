@@ -59,8 +59,6 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
       setIsAddPet(false)
       message.error("Some errors happened. Wait and try again")
     }
-
-    console.log(sendData)
   }
 
   return (

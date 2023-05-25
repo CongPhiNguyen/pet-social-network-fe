@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Avatar } from "antd"
-import { Link, useHistory, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import moment from "moment"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
@@ -32,7 +32,7 @@ const CardHeader = ({ post }) => {
       icon: <DeleteFilled />,
       onOk() {
         dispatch(deletePost({ post, auth, socket }))
-        return navigate.to("/")
+        return navigate("/")
       },
       onCancel() {}
     })
@@ -40,7 +40,7 @@ const CardHeader = ({ post }) => {
 
   const [items, setItems] = useState([])
   useEffect(() => {
-    if (auth.user._id === post.user._id) {
+    if (auth?.user?._id === post?.user?._id) {
       setItems([
         {
           key: "1",
@@ -91,7 +91,7 @@ const CardHeader = ({ post }) => {
         }
       ])
     }
-  }, [post.user._id, auth.user._id])
+  }, [post?.user?._id, auth?.user?._id])
 
   return (
     <div className="card_header">
@@ -103,23 +103,23 @@ const CardHeader = ({ post }) => {
             marginRight: "5px"
           }}
           src={
-            auth?.user?.avatar ===
+            post?.user?.avatar ===
             "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
               ? null
-              : auth?.user?.avatar
+              : post?.user?.avatar
           }
           size="large"
         >
-          {auth?.user?.username[0]?.toUpperCase()}
+          {post?.user?.username[0]?.toUpperCase()}
         </Avatar>
         <div className="card_name">
           <h6 className="m-0">
-            <Link to={`/profile/${post.user._id}`} className="text-dark">
-              {post.user.fullname}
+            <Link to={`/profile/${post?.user?._id}`} className="text-dark">
+              {post?.user?.fullname}
             </Link>
           </h6>
           <small className="text-muted">
-            {moment(post.createdAt).fromNow()}
+            {moment(post?.createdAt).fromNow()}
           </small>
         </div>
       </div>

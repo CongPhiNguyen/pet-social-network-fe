@@ -69,7 +69,7 @@
 }
 .header .search_form .search_icon .material-icons {
   font-size: 14px;
-  transform: translateY(3px);
+  transform: translateY(-3px);
 }
 .header .search_form .close_search {
   position: absolute;

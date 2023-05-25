@@ -12,16 +12,18 @@ import {
   CalculatorOutlined,
   BarcodeOutlined,
   FolderOutlined,
-  FolderAddTwoTone
+  FolderAddTwoTone,
+  LogoutOutlined
 } from "@ant-design/icons"
 import { Layout, Menu, Card, Typography, Button } from "antd"
 import TableUser from "./User/TableUser"
 import { useNavigate } from "react-router-dom"
+import LogTable from "./Log/LogTable"
 
 const { Header, Sider, Content } = Layout
 
 export default function Admin() {
-  const history = useNavigate()
+  const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
   const [key, setCurrentKey] = useState("1")
 
@@ -30,6 +32,12 @@ export default function Admin() {
       return (
         <div>
           <TableUser />
+        </div>
+      )
+    } else if (key === "2") {
+      return (
+        <div>
+          <LogTable />
         </div>
       )
     }
@@ -52,13 +60,17 @@ export default function Admin() {
               key: "1",
               icon: <UserOutlined />,
               label: "User"
+            },
+            {
+              key: "2",
+              icon: <LogoutOutlined />,
+              label: "Log"
             }
           ]}
         />
         <Button
           onClick={() => {
-            history.push("/")
-            history.go(0)
+            navigate(-1)
           }}
         >
           Back

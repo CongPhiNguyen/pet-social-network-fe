@@ -1,11 +1,13 @@
 import { GLOBALTYPES } from "./globalTypes"
 import { postDataAPI } from "../../utils/fetchData"
 import { message } from "antd"
+import { loginApi } from "../../api/user"
 
 export const login = (data) => async (dispatch) => {
   try {
     dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
-    const res = await postDataAPI("login", data)
+    console.log(data)
+    const res = await loginApi(data)
     dispatch({
       type: GLOBALTYPES.AUTH,
       payload: {

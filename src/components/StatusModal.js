@@ -12,12 +12,9 @@ import { AiFillDelete } from "react-icons/ai"
 const StatusModal = () => {
   const { auth, theme, status, socket } = useSelector((state) => state)
   const dispatch = useDispatch()
-
   const [location, setLocation] = useState("")
-
   const [content, setContent] = useState("")
   const [images, setImages] = useState([])
-
   const [stream, setStream] = useState(false)
   const videoRef = useRef()
   const refCanvas = useRef()
@@ -38,7 +35,8 @@ const StatusModal = () => {
       return newImages.push(file)
     })
 
-    if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
+    // if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
+    if (err) message.error(err)
     setImages([...images, ...newImages])
   }
 
@@ -162,7 +160,7 @@ const StatusModal = () => {
             }}
             src={
               auth?.user?.avatar ===
-              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                 ? null
                 : auth?.user?.avatar
             }

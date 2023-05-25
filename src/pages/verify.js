@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Col, Row, Button, Form, Input, Typography, Radio, message } from "antd"
 import { useSelector, useDispatch } from "react-redux"
-import { useHistory, Link, useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { getEmailWithIdApi, sendCodeVerifyApi } from "../api/authen"
 const { Title } = Typography

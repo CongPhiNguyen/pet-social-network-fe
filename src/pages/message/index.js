@@ -24,7 +24,7 @@ const Message = () => {
     //   </div>
     // </div>
 
-    <Row gutter={[24, 0]} style={{ marginTop: 128, overflow: "hidden" }} >
+    <Row gutter={[24, 0]} style={{ paddingTop: 128, overflow: "hidden", marginRight: 0 }} >
       <Col style={{ height: 'calc(100vh - 192px)' }} span={6} offset={3}>
         <Card style={{ height: "100%", overflowY: "scroll" }}>
           <LeftSide />

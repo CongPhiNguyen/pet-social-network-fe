@@ -5,7 +5,7 @@ import { AiOutlineHome } from "react-icons/ai"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { RiProfileLine, RiFindReplaceLine } from "react-icons/ri"
-import { BiBasket } from "react-icons/bi"
+import { BiBasket, BiMessage } from "react-icons/bi"
 export default function LeftNavigation() {
   const [currentSetting, setCurrentSetting] = useState("")
   const currentUserId = useSelector((state) => state?.auth?.user?._id)
@@ -32,6 +32,11 @@ export default function LeftNavigation() {
       label: <Link to={`/adopt-pet`}>Adopt pet</Link>,
       key: "adopt-pet",
       icon: <BiBasket size={22} />
+    },
+    {
+      label: <Link to={`/chat-bot`}>Chat bot</Link>,
+      key: "chat-bot",
+      icon: <BiMessage size={22} />
     }
   ]
   return (

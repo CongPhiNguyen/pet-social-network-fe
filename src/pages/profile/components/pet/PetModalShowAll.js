@@ -28,7 +28,9 @@ export default function PetModalShowAll({
         <Row>
           {petList.map((val, index) => (
             <Col xs={12} sm={6}>
-              <PetCard {...val} key={index} isShowDelete={true} />
+              <div style={{ textAlign: "center" }}>
+                <PetCard {...val} key={index} isShowDelete={true} />
+              </div>
             </Col>
           ))}
         </Row>

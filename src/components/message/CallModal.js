@@ -4,6 +4,8 @@ import Avatar from "../Avatar"
 import { GLOBALTYPES } from "../../redux/actions/globalTypes"
 import { addMessage } from "../../redux/actions/messageAction"
 import RingRing from "../../audio/ringring.mp3"
+import { IoCall } from 'react-icons/io5'
+import { FaVideo } from 'react-icons/fa'
 
 const CallModal = () => {
   const { call, auth, peer, socket, theme } = useSelector((state) => state)
@@ -190,8 +192,8 @@ const CallModal = () => {
       >
         <div className="text-center" style={{ padding: "40px 0" }}>
           <Avatar src={call.avatar} size="supper-avatar" />
-          <h4>{call.username}</h4>
-          <h6>{call.fullname}</h6>
+          {/* <h4>{call.username}</h4> */}
+          <h4 style={{ margin: "10px 0" }}>{call.fullname}</h4>
 
           {answer ? (
             <div>
@@ -229,7 +231,7 @@ const CallModal = () => {
             className="material-icons text-danger"
             onClick={handleEndCall}
           >
-            call_end
+            <IoCall style={{ transform: "translateY(-12px)" }}></IoCall>
           </button>
 
           {call?.recipient === auth?.user?._id && !answer && (
@@ -239,14 +241,14 @@ const CallModal = () => {
                   className="material-icons text-success"
                   onClick={handleAnswer}
                 >
-                  videocam
+                  <FaVideo style={{ transform: "translateY(-12px)" }}></FaVideo>
                 </button>
               ) : (
                 <button
                   className="material-icons text-success"
                   onClick={handleAnswer}
                 >
-                  call
+                  <IoCall style={{ transform: "translateY(-12px)" }}></IoCall>
                 </button>
               )}
             </>
@@ -271,12 +273,11 @@ const CallModal = () => {
           <span>:</span>
           <span>{second.toString().length < 2 ? "0" + second : second}</span>
         </div>
-
         <button
           className="material-icons text-danger end_call"
           onClick={handleEndCall}
         >
-          call_end
+          <IoCall style={{ transform: "translateY(-12px)" }}></IoCall>
         </button>
       </div>
     </div>
