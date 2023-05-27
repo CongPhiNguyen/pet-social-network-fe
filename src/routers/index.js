@@ -16,6 +16,9 @@ import NotFoundPage from "../pages/notFound"
 import Peer from "peerjs"
 import ChatGpt from "../pages/chatGpt"
 import StatusModal from "../components/StatusModal"
+import { getAccessTokenV2Api } from "../api/authen"
+import { getRefreshToken, setRefreshToken } from "../utils/cookies"
+import { message } from "antd"
 // import { setCurrentUserInfo, handleLogin } from "../features/authen/authenSlice"
 const CustomRouters = () => {
   const { auth, call } = useSelector((state) => state)
@@ -28,8 +31,26 @@ const CustomRouters = () => {
     setIsAdminRoute(location.pathname.startsWith("/admin"))
   }, [location])
 
+  const getRefreshTokenFunction = async () => {
+    const refreshToken = getRefreshToken()
+    console.log("refreshToken", refreshToken)
+    const res = await getAccessTokenV2Api(refreshToken)
+    dispatch({
+      type: GLOBALTYPES.AUTH,
+      payload: {
+        token: res.data.access_token,
+        user: res.data.user
+      }
+    })
+    localStorage.setItem("firstLogin", true)
+    // setRefreshToken(res.data.refresh_token)
+    message.success(res.data.msg)
+  }
+
   useEffect(() => {
-    dispatch(refreshToken())
+    // dispatch(refreshToken())
+    // Get access token
+    getRefreshTokenFunction()
     const socket = io()
     dispatch({ type: GLOBALTYPES.SOCKET, payload: socket })
     return () => socket.close()

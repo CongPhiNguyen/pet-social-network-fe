@@ -15,7 +15,7 @@ export const login = (data) => async (dispatch) => {
       }
     })
     localStorage.setItem("firstLogin", true)
-    setRefreshToken(res.data.access_token)
+    setRefreshToken(res.data.refresh_token)
     message.success(res.data.msg)
   } catch (err) {
     message.error(err.response.data.msg)
@@ -27,7 +27,6 @@ export const refreshToken = () => async (dispatch) => {
   const firstLogin = localStorage.getItem("firstLogin")
   console.log("firstLogin", firstLogin)
   if (firstLogin) {
-    console.log("Ủa alo")
     try {
       const res = await postDataAPI("refresh_token")
       dispatch({

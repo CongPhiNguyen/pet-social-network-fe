@@ -11,3 +11,7 @@ export const getEmailWithIdApi = (userId) => {
 export const sendCodeVerifyApi = (userId) => {
   return axios.post(`${API_ENDPOINT}/user/${userId}/send-email`)
 }
+
+export const getAccessTokenV2Api = (refreshToken) => {
+  return axios.get(`${API_ENDPOINT}/refresh-v2`, { params: { refreshToken } })
+}
