@@ -18,7 +18,7 @@ const CommentMenu = ({ post, comment, setOnEdit }) => {
   const MenuItem = () => {
     return (
       <Space direction="vertical" style={{ width: "100%" }}>
-        {comment.user._id === auth.user._id && (
+        {comment?.user?._id === auth?.user?._id && (
           <Button type="text" block onClick={() => setOnEdit(true)}>
             <BiEdit />
           </Button>
@@ -32,8 +32,8 @@ const CommentMenu = ({ post, comment, setOnEdit }) => {
 
   return (
     <div className="menu comment-menu">
-      {(post.user._id === auth.user._id ||
-        comment.user._id === auth.user._id) && (
+      {(post?.user?._id === auth?.user?._id ||
+        comment?.user?._id === auth?.user?._id) && (
         <div className="nav-item dropdown">
           <span
             className="material-icons more-option"
@@ -47,9 +47,9 @@ const CommentMenu = ({ post, comment, setOnEdit }) => {
             style={{ minWidth: " 5rem" }}
             aria-labelledby="moreLink"
           >
-            {post.user._id === auth.user._id
+            {post?.user?._id === auth?.user?._id
               ? MenuItem()
-              : comment.user._id === auth.user._id && MenuItem()}
+              : comment?.user?._id === auth?.user?._id && MenuItem()}
           </div>
         </div>
       )}

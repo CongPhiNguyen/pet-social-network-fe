@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import {
-  BrowserRouter,
-  Navigate,
-  Route,
-  Router,
-  Routes,
-  useLocation,
-  useNavigate,
-  useRoutes
-} from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import routes from "./router"
 import { useSelector } from "react-redux"
 import io from "socket.io-client"
@@ -27,7 +18,7 @@ import ChatGpt from "../pages/chatGpt"
 import StatusModal from "../components/StatusModal"
 // import { setCurrentUserInfo, handleLogin } from "../features/authen/authenSlice"
 const CustomRouters = () => {
-  const { auth, status, modal, call } = useSelector((state) => state)
+  const { auth, call } = useSelector((state) => state)
   const role = useSelector((state) => state.auth?.user?.role)
   const dispatch = useDispatch()
   const location = useLocation()
