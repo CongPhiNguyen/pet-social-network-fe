@@ -107,7 +107,7 @@ const Register = () => {
                 {
                   // eslint-disable-next-line
                   pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Malformed!"
+                  message: "Your mail is not invalid"
                 }
               ]}
             >
