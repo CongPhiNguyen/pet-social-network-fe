@@ -24,7 +24,14 @@ export default function NotFoundPage() {
             alignItems: "center"
           }}
         >
-          <Button type="primary">Back</Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              navigate(-1)
+            }}
+          >
+            Back
+          </Button>
           <Button
             type="primary"
             onClick={() => {
