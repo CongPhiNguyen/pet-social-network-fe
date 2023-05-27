@@ -39,14 +39,15 @@ const Login = () => {
   return (
     <>
       <Row style={{ width: "100vw" }}>
-        <Col style={{ height: "100vh" }} xs={0} md={16}>
+        <Col style={{ height: "100vh" }} xs={0} md={12} xl={16}>
           <div className="login-background"></div>
         </Col>
         <Col
           className="login-form-warpper"
           style={{ height: "100vh" }}
           xs={24}
-          md={8}
+          md={12}
+          xl={8}
         >
           <Form
             form={form}

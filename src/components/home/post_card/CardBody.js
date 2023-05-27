@@ -52,8 +52,11 @@ const CardBody = ({ post, theme }) => {
       {post.images.length > 0 && (
         <>
           <Carousel autoplay dots>
-            {post.images.map((image) => (
-              <div style={{ display: "flex", justifyContent: "center" }}>
+            {post.images.map((image, index) => (
+              <div
+                key={index}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
                 <Image
                   preview={{
                     visible: false

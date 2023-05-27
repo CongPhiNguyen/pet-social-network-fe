@@ -6,7 +6,6 @@ import "./styles/antd.less"
 import CustomRouters from "./routers"
 import { BrowserRouter } from "react-router-dom"
 function App() {
-  console.log("process.env", process.env)
   return (
     <React.Fragment>
       <React.Suspense>

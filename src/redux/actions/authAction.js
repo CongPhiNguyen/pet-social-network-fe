@@ -1,13 +1,12 @@
 import { GLOBALTYPES } from "./globalTypes"
 import { postDataAPI } from "../../utils/fetchData"
 import { message } from "antd"
-import { loginApi } from "../../api/user"
+import { setRefreshToken } from "../../utils/cookies"
 
 export const login = (data) => async (dispatch) => {
   try {
     dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
-    console.log(data)
-    const res = await loginApi(data)
+    const res = await postDataAPI("login", data)
     dispatch({
       type: GLOBALTYPES.AUTH,
       payload: {
@@ -15,8 +14,8 @@ export const login = (data) => async (dispatch) => {
         user: res.data.user
       }
     })
-
     localStorage.setItem("firstLogin", true)
+    setRefreshToken(res.data.access_token)
     message.success(res.data.msg)
   } catch (err) {
     message.error(err.response.data.msg)
@@ -26,9 +25,9 @@ export const login = (data) => async (dispatch) => {
 
 export const refreshToken = () => async (dispatch) => {
   const firstLogin = localStorage.getItem("firstLogin")
+  console.log("firstLogin", firstLogin)
   if (firstLogin) {
-    dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
-
+    console.log("Ủa alo")
     try {
       const res = await postDataAPI("refresh_token")
       dispatch({

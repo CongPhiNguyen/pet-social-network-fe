@@ -33,6 +33,8 @@ export const getUserWithEmailApi = (email) => {
   return axios.get(`${API_ENDPOINT}/user?email=${email}`)
 }
 
-export const loginApi = (userData) => {
-  return axios.post(`${API_ENDPOINT}/login`, userData)
+export const loginTokenApi = (userData, token) => {
+  return axios.post(`${API_ENDPOINT}/login`, userData, {
+    headers: { Authorization: token }
+  })
 }

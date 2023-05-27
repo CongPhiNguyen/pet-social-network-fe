@@ -22,7 +22,7 @@ export default function PetModalShowAll({
       }}
       width={"60%"}
       maskClosable={false}
-      style={{ top: 20 }}
+      style={{ top: 120 }}
     >
       <div style={{ marginTop: 20 }}>
         <Row>

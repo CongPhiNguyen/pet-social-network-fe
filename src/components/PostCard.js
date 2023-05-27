@@ -9,7 +9,7 @@ import { Avatar, Card } from "antd"
 import { useSelector } from "react-redux"
 
 const PostCard = ({ post, theme }) => {
-  console.log(post)
+  // console.log(post)
   const { auth } = useSelector((state) => state)
   return (
     <>
