@@ -76,7 +76,6 @@ export default function PetModalAddUpdate({
       setIsEditPet(false)
       form.resetFields()
       message.success("Edit pet infomation ok!")
-      console.log("Calling refresh")
       refreshPetInfo()
     } else {
       setAvatar("")
