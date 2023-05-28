@@ -1,7 +1,7 @@
 import { Card, Menu } from "antd"
 import React, { useState } from "react"
 import { SiAuth0 } from "react-icons/si"
-import { AiOutlineHome } from "react-icons/ai"
+import { AiOutlineBook, AiOutlineHome } from "react-icons/ai"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { RiProfileLine, RiFindReplaceLine } from "react-icons/ri"
@@ -37,6 +37,11 @@ export default function LeftNavigation() {
       label: <Link to={`/chat-bot`}>Chat bot</Link>,
       key: "chat-bot",
       icon: <BiMessage size={22} />
+    },
+    {
+      label: <Link to={`/wiki`}>Pet wiki</Link>,
+      key: "wiki",
+      icon: <AiOutlineBook size={22} />
     }
   ]
   return (

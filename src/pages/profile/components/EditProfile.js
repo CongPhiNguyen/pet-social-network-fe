@@ -91,7 +91,7 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
         }}
         width={400}
         maskClosable={false}
-        style={{ top: 20 }}
+        style={{ top: 120 }}
       >
         Do you want to discard change ?
       </Modal>

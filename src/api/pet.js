@@ -11,3 +11,15 @@ export const getPetApiByUserId = (userId) => {
     params: { userId: userId }
   })
 }
+
+export const getPetByIdApi = (petId) => {
+  return axios.get(`${API_ENDPOINT}/pet/${petId}`)
+}
+
+export const deletePetByIdApi = (petId) => {
+  return axios.delete(`${API_ENDPOINT}/pet/${petId}`)
+}
+
+export const updatePetByIdApi = (petId, petInfo) => {
+  return axios.put(`${API_ENDPOINT}/pet/${petId}`, petInfo)
+}

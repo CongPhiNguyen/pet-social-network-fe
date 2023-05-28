@@ -1,8 +1,16 @@
 import Typography from "antd/es/typography/Typography"
 import React from "react"
 import { AiFillDelete } from "react-icons/ai"
+import { Link, useNavigate } from "react-router-dom"
 
-export default function PetCard({ image, name, description, isShowDelete }) {
+export default function PetCard({
+  image,
+  name,
+  description,
+  isShowDelete,
+  _id
+}) {
+  const navigate = useNavigate()
   return (
     <div style={{ textAlign: "center", width: "100%" }}>
       <div
@@ -34,8 +42,10 @@ export default function PetCard({ image, name, description, isShowDelete }) {
           />
         )}
       </div>
-      <Typography style={{ fontWeight: 600 }}>{name}</Typography>
-      <p>{description}</p>
+      <Link to={"/profile/pet/" + _id}>
+        <Typography style={{ fontWeight: 600 }}>{name}</Typography>
+        <p>{description}</p>
+      </Link>
     </div>
   )
 }

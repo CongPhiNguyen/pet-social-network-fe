@@ -8,18 +8,40 @@ import {
   InputNumber,
   message
 } from "antd"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { AiFillCamera } from "react-icons/ai"
 import { checkImage } from "../../../../utils/imageUpload"
 import { useSelector } from "react-redux"
 import { uploadImageApi } from "../../../../api/user"
-import { addPetApi } from "../../../../api/pet"
+import { addPetApi, getPetByIdApi, updatePetByIdApi } from "../../../../api/pet"
+import moment from "moment"
 
-export default function PetModalAdd({ isAddPet, setIsAddPet }) {
+export default function PetModalAddUpdate({
+  isEdit,
+  setIsEditPet,
+  petInfo,
+  refreshPetInfo
+}) {
   const [form] = Form.useForm()
   const userInfo = useSelector((state) => state.auth.user)
   const [avatar, setAvatar] = useState("")
   const [showconfirmDiscard, setShowConfirmDiscard] = useState(false)
+
+  // load init value
+  useEffect(() => {
+    form.setFieldValue("name", petInfo?.name)
+    form.setFieldValue("description", petInfo?.description)
+    form.setFieldValue("weight", petInfo?.weight)
+    form.setFieldValue("petType", petInfo?.petType)
+    form.setFieldValue("dateOfBirth", moment(new Date(petInfo?.dateOfBirth)))
+    try {
+      setAvatar(petInfo?.image)
+    } catch (err) {
+      console.log(err)
+    }
+
+    console.log("petInfo?.image", petInfo)
+  }, [petInfo])
 
   const changeAvatar = (e) => {
     const file = e.target.files[0]
@@ -27,9 +49,9 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
     if (!err) setAvatar(file)
   }
 
-  const addPet = async (value) => {
+  const editPet = async (value) => {
     let avatarUrl = avatar
-    if (avatarUrl !== "") {
+    if (avatarUrl !== "" && typeof avatarUrl !== "string") {
       message.info("Uploading image")
       // Upload avatar
       const formData = new FormData()
@@ -48,15 +70,17 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
       owner: userInfo._id
     }
 
-    const response = await addPetApi(sendData)
+    const response = await updatePetByIdApi(petInfo._id, sendData)
     const { data, status } = response
     if (status === 200) {
-      setIsAddPet(false)
+      setIsEditPet(false)
       form.resetFields()
-      message.success("Add pet infomation ok!")
+      message.success("Edit pet infomation ok!")
+      console.log("Calling refresh")
+      refreshPetInfo()
     } else {
       setAvatar("")
-      setIsAddPet(false)
+      setIsEditPet(false)
       message.error("Some errors happened. Wait and try again")
     }
   }
@@ -69,7 +93,7 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
         onOk={() => {
           setShowConfirmDiscard(false)
           form.resetFields()
-          setIsAddPet(false)
+          setIsEditPet(false)
           // setShowConfirmCloseEditModal(false)
         }}
         onCancel={() => {
@@ -78,21 +102,21 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
         }}
         width={400}
         maskClosable={false}
-        style={{ top: 20 }}
+        style={{ top: 120 }}
       >
         Do you want to discard change ?
       </Modal>
       <Modal
-        open={isAddPet}
-        title="Adding pet profile"
+        open={isEdit}
+        title={"Edit pet profile"}
         maskClosable={false}
         onOk={() => {
           setAvatar("")
-          setIsAddPet(false)
+          setIsEditPet(false)
         }}
         onCancel={() => {
           setAvatar("")
-          setIsAddPet(false)
+          setIsEditPet(false)
           form.resetFields()
         }}
         footer={
@@ -114,7 +138,7 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
             span: 6
           }}
           onFinish={(value) => {
-            addPet(value)
+            editPet(value)
           }}
         >
           <Form.Item
@@ -149,7 +173,9 @@ export default function PetModalAdd({ isAddPet, setIsAddPet }) {
               <img
                 src={
                   avatar
-                    ? URL.createObjectURL(avatar)
+                    ? typeof avatar === "string"
+                      ? avatar
+                      : URL.createObjectURL(avatar)
                     : "https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg"
                 }
                 alt="avatar"

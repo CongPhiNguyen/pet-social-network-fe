@@ -5,7 +5,9 @@ import Message from "../pages/message"
 import Conversation from "../pages/message/[id]"
 import NotificationPage from "../pages/notification/NotificationPage"
 import PostPage from "../pages/post/PostPage"
+import PetPage from "../pages/profile/PetPage"
 import Profile from "../pages/profile/Profile"
+
 import Register from "../pages/register"
 import Setting from "../pages/setting/Setting"
 
@@ -21,6 +23,7 @@ const publicRoute = [
 const protectedRoute = [
   { path: "/", name: "Home", element: <Home /> },
   { path: "/profile/:id", name: "Profile", element: <Profile /> },
+  { path: "/profile/pet/:id", name: "Pet", element: <PetPage /> },
   { path: "/setting", name: "Setting", element: <Setting /> },
   {
     path: "/notification",

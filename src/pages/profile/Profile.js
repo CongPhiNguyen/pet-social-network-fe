@@ -53,14 +53,14 @@ const Profile = () => {
         }}
       >
         <Row gutter={[16, 16]}>
-          <Col span={8}>
+          <Col xl={8} md={24} sm={24}>
             {!profile?.loading && (
               <Card>
                 <Following />
               </Card>
             )}
           </Col>
-          <Col span={16}>
+          <Col xl={16} md={24} sm={24}>
             {postList.map((val, index) => {
               return <PostCard key={index} post={val} />
             })}

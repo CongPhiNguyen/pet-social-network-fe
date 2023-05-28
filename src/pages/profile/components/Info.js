@@ -86,7 +86,7 @@ const Info = ({ auth, profile, dispatch }) => {
             </Col>
             <Col xs={24} md={12} xl={12}>
               <div className="pet-profile-container">
-                <PetProfile />
+                <PetProfile userInfo={profile} />
               </div>
             </Col>
           </Row>
