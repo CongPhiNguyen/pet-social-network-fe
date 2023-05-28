@@ -169,7 +169,7 @@ const PetInfoCard = ({ petInfo, updatePet }) => {
               </div>
               <div style={{ marginLeft: 60 }}>
                 <Typography style={{ fontSize: 16 }}>
-                  {petInfo?.description + "test reload"}
+                  {petInfo?.description}
                 </Typography>
                 <div style={{ marginTop: 20 }}>
                   {/* <Follower id={id} /> */}
