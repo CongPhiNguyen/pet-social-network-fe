@@ -27,8 +27,7 @@ export default function PetModalAddUpdate({
   const [avatar, setAvatar] = useState("")
   const [showconfirmDiscard, setShowConfirmDiscard] = useState(false)
 
-  // load init value
-  useEffect(() => {
+  const loadInitValue = () => {
     form.setFieldValue("name", petInfo?.name)
     form.setFieldValue("description", petInfo?.description)
     form.setFieldValue("weight", petInfo?.weight)
@@ -39,8 +38,10 @@ export default function PetModalAddUpdate({
     } catch (err) {
       console.log(err)
     }
-
-    console.log("petInfo?.image", petInfo)
+  }
+  // load init value
+  useEffect(() => {
+    loadInitValue()
   }, [petInfo])
 
   const changeAvatar = (e) => {
@@ -77,6 +78,7 @@ export default function PetModalAddUpdate({
       form.resetFields()
       message.success("Edit pet infomation ok!")
       refreshPetInfo()
+      loadInitValue()
     } else {
       setAvatar("")
       setIsEditPet(false)
