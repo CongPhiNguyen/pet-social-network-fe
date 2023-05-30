@@ -197,3 +197,19 @@
 .chat_input .dropdown-menu {
   transform: translate3d(-110px, -200px, 0px) !important;
 }
+
+.btn-back {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  position: absolute;
+  content: "";
+  top: -50px;
+  right: -50px;
+  cursor: pointer;
+  transition: 0.23 all ease-in-out;
+}
+
+.btn-back:hover {
+  background: #11111107;
+}

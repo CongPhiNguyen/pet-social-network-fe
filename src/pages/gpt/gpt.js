@@ -117,7 +117,7 @@ const Gpt = () => {
         const sse = new EventSourcePolyfill(
             `http://localhost:5000/api/gpt?message=${suggestedMessage}`,
             {
-                headers: { Authorization: `auth.token` }
+                headers: { Authorization: auth.token }
             }
         )
 
@@ -240,6 +240,21 @@ const Gpt = () => {
                                             ...
                                         </p>
                                     )}
+                                    {message.role === 'assistant' &&
+                                        !isReplying &&
+                                        message.content !== '' &&
+                                        index === messages.length - 1 && (
+                                            <Button
+
+                                                style={{
+                                                    float: 'right',
+                                                    marginTop: '5px',
+                                                }}
+                                            >
+                                                <ReloadOutlined />
+                                                Regenerate
+                                            </Button>
+                                        )}
                                 </div>
                             </div>
                         </div>
