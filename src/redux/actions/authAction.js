@@ -1,7 +1,7 @@
 import { GLOBALTYPES } from "./globalTypes"
 import { postDataAPI } from "../../utils/fetchData"
 import { message } from "antd"
-import { setRefreshToken } from "../../utils/cookies"
+import { deleteRefreshToken, setRefreshToken } from "../../utils/cookies"
 
 export const login = (data) => async (dispatch) => {
   try {
@@ -52,6 +52,7 @@ export const refreshToken = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     localStorage.removeItem("firstLogin")
+    deleteRefreshToken()
     await postDataAPI("logout")
     window.location.href = "/"
   } catch (err) {
