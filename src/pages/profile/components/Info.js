@@ -6,14 +6,17 @@ import { Row, Col } from "antd"
 import Follower from "./Follower"
 import PetProfile from "./pet/PetProfile"
 import { getUserInfoApi } from "../../../api/user"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import EditProfile from "./EditProfile"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { MESS_TYPES } from "../../../redux/actions/messageAction"
 import "./scss/Info.scss"
 
-const Info = ({ auth, profile, dispatch }) => {
+const Info = ({ auth, profile }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { id } = useParams()
-  const [userInfo, setUserInfo] = useState([])
+  const [userInfo, setUserInfo] = useState({})
   const currentUser = useSelector((state) => state.auth.user)
   const [isEdit, setIsEdit] = useState(false)
 
@@ -22,6 +25,7 @@ const Info = ({ auth, profile, dispatch }) => {
     const { data, status } = response
     setUserInfo(data.user)
   }
+
   useEffect(() => {
     if (id === currentUser._id) {
       setUserInfo(currentUser)
@@ -29,6 +33,14 @@ const Info = ({ auth, profile, dispatch }) => {
       getUserId()
     }
   }, [id, currentUser])
+
+  const messageToProfile = () => {
+    dispatch({
+      type: MESS_TYPES.ADD_USER,
+      payload: { ...userInfo, text: "", media: [] }
+    })
+    navigate(`/message/${userInfo._id}`)
+  }
   return (
     <div className="info">
       <React.Fragment>
@@ -71,7 +83,22 @@ const Info = ({ auth, profile, dispatch }) => {
                       Edit Profile
                     </Button>
                   ) : (
-                    <FollowBtn user={userInfo} />
+                    <>
+                      <FollowBtn user={userInfo} />
+                      <Button
+                        style={{
+                          width: 100,
+                          height: 38,
+                          marginTop: 2,
+                          marginLeft: 20
+                        }}
+                        onClick={() => {
+                          messageToProfile()
+                        }}
+                      >
+                        Message
+                      </Button>
+                    </>
                   )}
                 </div>
               </div>
