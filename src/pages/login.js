@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { Col, Row, Button, Form, Input, Typography } from "antd"
 import "../styles/login.css"
-import { getUserWithEmailApi } from "../api/user"
+import { getUserWithPatternApi } from "../api/user"
 const { Title } = Typography
 
 const Login = () => {
@@ -20,17 +20,17 @@ const Login = () => {
   }, [auth.token, navigate])
 
   const onFinish = async (values) => {
-    const { email, password, otp } = values
-    const response = await getUserWithEmailApi(email)
+    const { pattern, password, otp } = values
+    const response = await getUserWithPatternApi(pattern)
     if (response?.data?.user?.otpEnabled && !values.otp) {
       setUserOTPEnable(true)
       return
     } else setUserOTPEnable(false)
-    dispatch(login({ email, password, token: otp }))
+    dispatch(login({ pattern: pattern, password, token: otp }))
   }
 
-  const getUserWithEmail = async (email) => {
-    const response = await getUserWithEmailApi(email)
+  const getUserWithPattern = async (email) => {
+    const response = await getUserWithPatternApi(email)
     if (response?.data?.user?.otpEnabled) {
       setUserOTPEnable(true)
     } else setUserOTPEnable(false)
@@ -63,8 +63,8 @@ const Login = () => {
           >
             <Title level={2}>Login to Pet Love</Title>
             <Form.Item
-              label="Email address"
-              name="email"
+              label="Email or username"
+              name="pattern"
               style={{
                 width: "100%"
               }}
@@ -72,17 +72,12 @@ const Login = () => {
                 {
                   required: true,
                   message: "Please input your mail!"
-                },
-                {
-                  // eslint-disable-next-line
-                  pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Your mail is not invalid"
                 }
               ]}
             >
               <Input
                 onBlur={(e) => {
-                  getUserWithEmail(e.target.value)
+                  getUserWithPattern(e.target.value)
                 }}
               />
             </Form.Item>

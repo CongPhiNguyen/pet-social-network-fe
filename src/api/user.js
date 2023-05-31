@@ -29,8 +29,8 @@ export const updateProfileApi = (userId, userData) => {
   return axios.post(`${API_ENDPOINT}/user/` + userId, userData)
 }
 
-export const getUserWithEmailApi = (email) => {
-  return axios.get(`${API_ENDPOINT}/user?email=${email}`)
+export const getUserWithPatternApi = (pattern) => {
+  return axios.get(`${API_ENDPOINT}/user?pattern=${pattern}`)
 }
 
 export const loginTokenApi = (userData, token) => {
