@@ -40,6 +40,15 @@ const Menu = () => {
   const { auth, theme, notify } = useSelector((state) => state)
   const [showArrow, setShowArrow] = useState(true)
   const [arrowAtCenter, setArrowAtCenter] = useState(false)
+
+  const countUnreadNoti = (notify) => {
+    let val = 0
+    for (const noti of notify.data) {
+      if (!noti.isRead) val++
+    }
+    return val
+  }
+
   const isActive = (pn) => {
     if (pn === pathname) return "active"
     return ""
@@ -133,7 +142,7 @@ const Menu = () => {
       >
         <Link onClick={handleOpenChange1} className={`nav-link`}>
           <span className="material-icons">
-            <Badge count={notify.data.length}>
+            <Badge count={countUnreadNoti(notify)}>
               <BellFilled className="icon" />
             </Badge>
           </span>

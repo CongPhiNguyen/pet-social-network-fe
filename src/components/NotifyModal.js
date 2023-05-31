@@ -83,7 +83,6 @@ const NotifyModal = () => {
                 </div>
                 {msg.content && <small>{msg.content.slice(0, 20)}...</small>}
               </div>
-
               {msg.image && (
                 <div style={{ width: "30px" }}>
                   {msg.image.match(/video/i) ? (
