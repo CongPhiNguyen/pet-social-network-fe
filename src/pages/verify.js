@@ -42,19 +42,20 @@ export default function Verify() {
 
   useEffect(() => {
     const getUserWithEmail = async () => {
-      const response = await getEmailWithIdApi(id)
-      const { data, status } = response
+      try {
+        const response = await getEmailWithIdApi(id)
+        const { data, status } = response
+        if (status === 200) {
+          form.setFieldValue("email", data.email)
+        }
+      } catch (err) {
+        message.error(err?.response?.data?.msg)
+        // message.error("Not found user with this email")
+        // const timeoutId = setTimeout(() => {
+        //   history("/")
+        // }, 2000)
 
-      if (status === 200) {
-        form.setFieldValue("email", data.email)
-      }
-      if (status === 404) {
-        message.error("Not found user with this email")
-        const timeoutId = setTimeout(() => {
-          history("/")
-        }, 2000)
-
-        return () => clearTimeout(timeoutId)
+        // return () => clearTimeout(timeoutId)
       }
     }
     getUserWithEmail()
@@ -110,7 +111,7 @@ export default function Verify() {
                 }
               ]}
             >
-              <Input readOnly />
+              <Input readOnly disabled />
             </Form.Item>
             <Form.Item
               label="Code"

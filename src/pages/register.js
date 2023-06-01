@@ -25,16 +25,18 @@ const Register = () => {
   // }
 
   const onFinish = async (values) => {
-    const response = await registerApi(values)
-    const { data, status } = response
-    if (status === 200) {
-      message.success(
-        "Create account successfully. Verify email and sign in into your account"
-      )
-      navigate("/verify/" + data.user._id)
-    }
-    if (status === 400) {
-      message.error(data.msg)
+    try {
+      const response = await registerApi(values)
+      const { data, status } = response
+      console.log(response)
+      if (status === 200) {
+        message.success(
+          "Create account successfully. Verify email and sign in into your account!"
+        )
+        navigate("/verify/" + data.user._id)
+      }
+    } catch (err) {
+      message.error(err?.response?.data?.msg)
     }
   }
 

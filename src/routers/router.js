@@ -10,13 +10,15 @@ import Profile from "../pages/profile/Profile"
 
 import Register from "../pages/register"
 import Setting from "../pages/setting/Setting"
+import Verify from "../pages/verify"
 
 const mainRoute = []
 
 // Những route chỉ truy xuất khi chưa đăng nhập
 const publicRoute = [
   { path: "/", name: "Login", element: <Login /> },
-  { path: "/register", name: "Register", element: <Register /> }
+  { path: "/register", name: "Register", element: <Register /> },
+  { path: "/verify/:id", name: "Verify", element: <Verify /> }
 ]
 
 // Những route dùng khi đã đăng nhập
