@@ -30,10 +30,27 @@ const Home = () => {
   return (
     <div style={{ width: "100%", maxWidth: 1200, margin: "auto" }}>
       <Row style={{ marginTop: "64px" }} className="home">
-        <Col xs={0} sm={0} md={8} lg={6}>
+        <Col xs={0} sm={0} md={6} lg={6}>
           <LeftNavigation />
         </Col>
-        <Col xs={{ span: 20, offset: 2 }} md={12} lg={8}>
+        <Col xs={{ span: 0 }} md={{ span: 14 }} lg={{ span: 10 }}>
+          <Status />
+          {homePosts.loading ? (
+            <img src={LoadIcon} alt="loading" className="d-block mx-auto" />
+          ) : homePosts.result === 0 && homePosts.posts.length === 0 ? (
+            <Card>
+              <Result
+                status="404"
+                title="NO POST"
+                subTitle="You can follow someone or create new post!"
+              />
+            </Card>
+          ) : (
+            <Posts />
+          )}
+        </Col>
+
+        <Col xs={{ span: 22, offset: 1 }} md={{ span: 0 }} >
           <Status />
           {homePosts.loading ? (
             <img src={LoadIcon} alt="loading" className="d-block mx-auto" />
