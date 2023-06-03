@@ -8,7 +8,7 @@ import { EventSourcePolyfill } from "event-source-polyfill"
 import { useSelector } from "react-redux"
 import { BACKEND_URL } from "../../constants"
 
-const Gpt = () => {
+const Gpt = ({ setIsOpen }) => {
   const chatRef = useRef(null)
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState("")
@@ -52,7 +52,11 @@ const Gpt = () => {
 
     sse.onerror = (event) => {
       setIsReplying(false)
+      setIsOpen(false)
       sse.close()
+      message.error(
+        "ChatGPT is receive many request now. Please try again later!"
+      )
     }
   }
 
@@ -130,6 +134,8 @@ const Gpt = () => {
       sse.close()
     }
   }
+
+  console.log("isReplying", isReplying)
 
   return (
     <div style={{ width: "400px", height: "600px" }}>
