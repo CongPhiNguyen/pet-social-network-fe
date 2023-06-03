@@ -1,4 +1,4 @@
-import { Card, Menu } from "antd"
+import { Badge, Card, Menu } from "antd"
 import React, { useState } from "react"
 import { SiAuth0 } from "react-icons/si"
 import { AiOutlineBook, AiOutlineHome } from "react-icons/ai"
@@ -39,7 +39,16 @@ export default function LeftNavigation() {
       icon: <BiMessage size={22} />
     },
     {
-      label: <Link to={`/wiki`}>Pet wiki</Link>,
+      label: (
+        <Link to={`/wiki`}>
+          <div
+            style={{ display: "flex", alignItems: "baseline", marginTop: 16 }}
+          >
+            <p style={{ marginRight: 10 }}>Pet wiki</p>
+            <Badge count={10}></Badge>
+          </div>
+        </Link>
+      ),
       key: "wiki",
       icon: <AiOutlineBook size={22} />
     }
