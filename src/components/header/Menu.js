@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { Tooltip, Badge, Popover, Divider } from "antd"
+import { Tooltip, Badge, Popover, Divider, Col, Row } from "antd"
 import {
   HomeFilled,
   MessageFilled,
@@ -110,7 +110,38 @@ const Menu = () => {
   )
   return (
     <div className="menu">
-      {navLinks.map((link, index) => (
+      <Row>
+        <Col xs={0} lg={2}  >
+          <Link
+            key={0}
+            className={`nav-link${isActive('/')}`}
+            to={'/'}
+          >
+            <span className="material-icons">
+              <Tooltip placement="bottom" title={'Home'} arrow={mergedArrow}>
+                <HomeFilled />
+              </Tooltip>
+            </span>
+          </Link>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={0} sm={0} md={2} lg={2}  >
+          <Link
+            key={1}
+            className={`nav-link${isActive('/message')}`}
+            to={'/message'}
+          >
+            <span className="material-icons">
+              <Tooltip placement="bottom" title={'Message'} arrow={mergedArrow}>
+                <MessageFilled />
+              </Tooltip>
+            </span>
+          </Link>
+        </Col>
+      </Row>
+
+      {/* {navLinks.map((link, index) => (
         <Link
           key={index}
           className={`nav-link${isActive(link.path)}`}
@@ -122,7 +153,7 @@ const Menu = () => {
             </Tooltip>
           </span>
         </Link>
-      ))}
+      ))} */}
       <Popover
         className="popover-notify"
         onOpenChange={handleOpenChange1}
@@ -155,7 +186,7 @@ const Menu = () => {
               }}
               src={
                 auth.user.avatar ===
-                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                  "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                   ? null
                   : auth.user.avatar
               }
