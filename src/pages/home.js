@@ -30,10 +30,10 @@ const Home = () => {
   return (
     <div style={{ width: "100%", maxWidth: 1200, margin: "auto" }}>
       <Row style={{ marginTop: "64px" }} className="home">
-        <Col xs={8}>
+        <Col xs={0} sm={0} md={8} lg={6}>
           <LeftNavigation />
         </Col>
-        <Col xs={8}>
+        <Col xs={{ span: 20, offset: 2 }} md={12} lg={8}>
           <Status />
           {homePosts.loading ? (
             <img src={LoadIcon} alt="loading" className="d-block mx-auto" />
@@ -49,7 +49,7 @@ const Home = () => {
             <Posts />
           )}
         </Col>
-        <Col xs={{ span: 6, offset: 1 }}>
+        <Col xs={0} sm={0} md={0} lg={{ span: 6, offset: 2 }}>
           <RightSideBar />
         </Col>
       </Row>
