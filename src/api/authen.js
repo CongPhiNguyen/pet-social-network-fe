@@ -19,3 +19,15 @@ export const getAccessTokenV2Api = (refreshToken) => {
 export const verifyAccountApi = (verifyInfo) => {
   return axios.post(`${API_ENDPOINT}/user/verify-account`, verifyInfo)
 }
+
+export const sendEmailWithPatternApi = (pattern) => {
+  return axios.post(`${API_ENDPOINT}/user/${pattern}/send-email-by-pattern`)
+}
+
+export const forgotPasswordApi = (forgotInfo) => {
+  return axios.post(`${API_ENDPOINT}/forgot-password/`, forgotInfo)
+}
+
+export const changePasswordApi = (changePassInfo) => {
+  return axios.post(`${API_ENDPOINT}/change-password/`, changePassInfo)
+}

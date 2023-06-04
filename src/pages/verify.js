@@ -77,7 +77,6 @@ export default function Verify() {
       const response = await sendCodeVerifyApi(id)
       const { status, data } = response
       if (status === 200) {
-        setCount(10)
         setDisableCode(false)
         setDisableSendCode(true)
         setIsCounting(true)
