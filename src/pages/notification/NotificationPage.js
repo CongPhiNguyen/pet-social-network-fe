@@ -1,10 +1,11 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { Row, Col, Card } from "antd"
+import { Row, Col, Card, Result } from "antd"
 import { Link } from "react-router-dom"
 import Avatar from "../../components/Avatar"
 import moment from "moment"
 import LeftNavigation from "../../components/navigation/LeftNavigation"
+import Title from "antd/es/typography/Title"
 
 export default function NotificationPage() {
   const dispatch = useDispatch()
@@ -28,7 +29,15 @@ export default function NotificationPage() {
           <Col span={16}>
             <div style={{ marginTop: 17, marginRight: 20 }}>
               <Card>
+                <Title level={3}>Notification</Title>
                 <div style={{ overflow: "auto" }}>
+                  {notify?.data?.length === 0 && (
+                    <Result
+                      status="404"
+                      title="No Notification"
+                      subTitle="Nothing here!"
+                    />
+                  )}
                   {notify.data.map((msg, index) => (
                     <div key={index} style={{ marginBottom: 20 }}>
                       <Link
