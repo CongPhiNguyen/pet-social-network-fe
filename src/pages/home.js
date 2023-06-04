@@ -8,12 +8,9 @@ import LoadIcon from "../images/loading.gif"
 import { Row, Col, Result, Card, Menu } from "antd"
 import LeftNavigation from "../components/navigation/LeftNavigation"
 import { RiProfileLine, RiFindReplaceLine } from "react-icons/ri"
-import { AiOutlineHome, AiOutlineMessage } from "react-icons/ai"
+import { AiOutlineHome, AiOutlineMessage, AiOutlineBook } from "react-icons/ai"
 import { BiBasket, BiMessage } from "react-icons/bi"
-import {
-  MessageFilled,
 
-} from "@ant-design/icons"
 let scroll = 0
 
 const Home = () => {
@@ -68,6 +65,11 @@ const Home = () => {
       label: <Link to={`/chat-bot`}></Link>,
       key: "chat-bot",
       icon: <BiMessage style={{ transform: "translateX(-10px)" }} size={22} />
+    },
+    {
+      label: <Link to={`/wiki`}></Link>,
+      key: "wiki",
+      icon: <AiOutlineBook style={{ transform: "translateX(-10px)" }} size={22} />
     }
   ]
 
