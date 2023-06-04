@@ -2,10 +2,9 @@ import { GLOBALTYPES } from "./globalTypes"
 import { postDataAPI } from "../../utils/fetchData"
 import { message } from "antd"
 import { deleteRefreshToken, setRefreshToken } from "../../utils/cookies"
-import { logInGoogleApi } from "../../api/authen"
 
 export const login = (data) => async (dispatch) => {
-  console.log(data)
+  console.log("dataLogin", data)
   try {
     dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
     const res = await postDataAPI("login", data)
@@ -25,36 +24,11 @@ export const login = (data) => async (dispatch) => {
   dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } })
 }
 
-export const loginGoogle = (credential) => async (dispatch) => {
-  try {
-    logInGoogleApi(credential)
-      .then((response) => {
-        const { data, status } = response
-        if (status === 200) {
-          dispatch({
-            type: GLOBALTYPES.AUTH,
-            payload: {
-              msg: data.msg,
-              access_token: data.access_token,
-              refresh_token: data.refresh_token,
-              user: data.user
-            }
-          })
-          localStorage.setItem("firstLogin", true)
-          setRefreshToken(data.refresh_token)
-          message.success(data.msg)
-        } else {
-          // Handle non-200 status codes
-          message.error("Unexpected Error")
-        }
-      })
-      .catch((error) => {
-        console.error(error)
-        message.error(error?.response?.data?.message || "Unexpected Error")
-      })
-  } catch (err) {
-    message.error(err?.response?.data?.msg || "Unexpected error")
-  }
+export const loginGoogleAction = (dataCredential) => (dispatch) => {
+  console.log(dataCredential)
+  localStorage.setItem("firstLogin", true)
+  setRefreshToken(dataCredential.refresh_token)
+  dispatch({ type: GLOBALTYPES.AUTH, payload: dataCredential })
 }
 
 export const refreshToken = () => async (dispatch) => {

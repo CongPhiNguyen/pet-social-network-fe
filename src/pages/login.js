@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { login } from "../redux/actions/authAction"
+import { login, loginGoogleAction } from "../redux/actions/authAction"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { Col, Row, Button, Form, Input, Typography, message } from "antd"
@@ -47,7 +47,21 @@ const Login = () => {
 
   const loginGoogle = async (value) => {
     if (value?.credential) {
-      dispatch(loginGoogle(value?.credential))
+      try {
+        const response = await logInGoogleApi(value?.credential)
+        const { data, status } = response
+        dispatch(
+          loginGoogleAction({
+            msg: data.msg,
+            token: data.access_token,
+            refresh_token: data.refresh_token,
+            user: data.user
+          })
+        )
+      } catch (error) {
+        console.error(error)
+        message.error(error?.response?.data?.message || "Unexpected Error")
+      }
     }
   }
   return (
