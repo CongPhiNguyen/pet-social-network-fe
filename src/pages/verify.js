@@ -11,13 +11,13 @@ import {
 const { Title } = Typography
 
 export default function Verify() {
-  const history = useNavigate()
+  const navigate = useNavigate()
   const params = useParams()
   const { id } = params
   const [form] = Form.useForm()
   const [disableCode, setDisableCode] = useState(true)
   const [disableSendCode, setDisableSendCode] = useState(false)
-  const [count, setCount] = useState(10)
+  const [count, setCount] = useState(120)
   const [isCounting, setIsCounting] = useState(false)
   const [timer, setTimer] = useState(null)
 
@@ -64,11 +64,11 @@ export default function Verify() {
       const response = await verifyAccountApi(value)
       const { data, status } = response
       if (status === 200) {
-        message.info("Verify ok")
+        message.info("Verify ok, login to your account now")
+        navigate("/")
       }
     } catch (err) {
-      console.log(err)
-      message.error(err?.response?.data?.msg)
+      message.error(err?.response?.data?.message)
     }
   }
 
@@ -82,9 +82,9 @@ export default function Verify() {
         setDisableSendCode(true)
         setIsCounting(true)
       }
-      message.info("Verification code is 123456 😋😊😋", 1000)
+      message.info("Verification code is 123456 😋😊😋", 12)
     } catch (err) {
-      message.error(err?.response?.data?.message)
+      message.error(err?.response?.data?.message || "Unexpected error")
     }
   }
   return (
@@ -155,6 +155,7 @@ export default function Verify() {
                 style={{ width: "100%" }}
                 type="primary"
                 htmlType="submit"
+                disabled={!disableSendCode}
               >
                 Verify email
               </Button>

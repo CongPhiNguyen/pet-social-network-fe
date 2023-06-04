@@ -1,4 +1,5 @@
 import Admin from "../pages/admin/Admin"
+import ForgotPassword from "../pages/forgotPassword"
 import Home from "../pages/home"
 import Login from "../pages/login"
 import Message from "../pages/message"
@@ -18,7 +19,12 @@ const mainRoute = []
 const publicRoute = [
   { path: "/", name: "Login", element: <Login /> },
   { path: "/register", name: "Register", element: <Register /> },
-  { path: "/verify/:id", name: "Verify", element: <Verify /> }
+  { path: "/verify/:id", name: "Verify", element: <Verify /> },
+  {
+    path: "/forgot-password",
+    name: "Forgot Password",
+    element: <ForgotPassword />
+  }
 ]
 
 // Những route dùng khi đã đăng nhập
