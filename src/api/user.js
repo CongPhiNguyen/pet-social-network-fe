@@ -2,8 +2,16 @@ import axios from "../service/axios"
 
 const API_ENDPOINT = process.env.REACT_APP_BE_URL || "http://localhost:5000/api"
 
-export const getAllUserApi = () => {
-  return axios.get(`${API_ENDPOINT}/get-all-user`)
+
+export const changeRole = (role, id) => {
+  return axios.post(`${API_ENDPOINT}/change-role`, {
+    role,
+    id
+  })
+}
+
+export const getAllUserApi = (filters) => {
+  return axios.get(`${API_ENDPOINT}/get-all-user?id=${filters?.id}&username=${filters?.username}&role=${filters?.role}`)
 }
 
 export const getUserInfoApi = (userId) => {
