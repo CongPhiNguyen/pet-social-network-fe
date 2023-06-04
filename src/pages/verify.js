@@ -3,7 +3,11 @@ import { Col, Row, Button, Form, Input, Typography, Radio, message } from "antd"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, Link } from "react-router-dom"
 import { useParams } from "react-router-dom"
-import { getEmailWithIdApi, sendCodeVerifyApi } from "../api/authen"
+import {
+  getEmailWithIdApi,
+  sendCodeVerifyApi,
+  verifyAccountApi
+} from "../api/authen"
 const { Title } = Typography
 
 export default function Verify() {
@@ -50,27 +54,37 @@ export default function Verify() {
         }
       } catch (err) {
         message.error(err?.response?.data?.msg)
-        // message.error("Not found user with this email")
-        // const timeoutId = setTimeout(() => {
-        //   history("/")
-        // }, 2000)
-
-        // return () => clearTimeout(timeoutId)
       }
     }
     getUserWithEmail()
   }, [])
 
-  const onFinish = (value) => {}
+  const onFinish = async (value) => {
+    try {
+      const response = await verifyAccountApi(value)
+      const { data, status } = response
+      if (status === 200) {
+        message.info("Verify ok")
+      }
+    } catch (err) {
+      console.log(err)
+      message.error(err?.response?.data?.msg)
+    }
+  }
 
   const sendCodeVerify = async () => {
-    const response = await sendCodeVerifyApi(id)
-    const { status, data } = response
-    if (status === 200) {
-      setCount(10)
-      setDisableCode(false)
-      setDisableSendCode(true)
-      setIsCounting(true)
+    try {
+      const response = await sendCodeVerifyApi(id)
+      const { status, data } = response
+      if (status === 200) {
+        setCount(10)
+        setDisableCode(false)
+        setDisableSendCode(true)
+        setIsCounting(true)
+      }
+      message.info("Verification code is 123456 😋😊😋", 1000)
+    } catch (err) {
+      message.error(err?.response?.data?.message)
     }
   }
   return (

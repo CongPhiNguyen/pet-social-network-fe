@@ -15,3 +15,7 @@ export const sendCodeVerifyApi = (userId) => {
 export const getAccessTokenV2Api = (refreshToken) => {
   return axios.get(`${API_ENDPOINT}/refresh-v2`, { params: { refreshToken } })
 }
+
+export const verifyAccountApi = (verifyInfo) => {
+  return axios.post(`${API_ENDPOINT}/user/verify-account`, verifyInfo)
+}
