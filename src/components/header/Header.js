@@ -21,7 +21,7 @@ const HeaderLayout = () => {
       }}
     >
       <Row style={{ maxWidth: "1200px", width: "100%" }}>
-        <Col xs={2}>
+        <Col xs={0} sm={0} md={2} lg={2}>
           <Link to="/" className="logo">
             <Image
               className="header-logo"
@@ -38,11 +38,13 @@ const HeaderLayout = () => {
             justifyContent: "center",
             alignItems: "center"
           }}
-          xs={10}
+          xs={14}
+          sm={14}
+          lg={10}
         >
           <Search />
         </Col>
-        <Col xs={12}>
+        <Col xs={{ offset: 3, span: 7 }} sm={8} lg={12}>
           <Menu />
         </Col>
       </Row>
