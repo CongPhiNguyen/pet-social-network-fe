@@ -3,9 +3,18 @@ import { Link, useNavigate } from "react-router-dom"
 import { login } from "../redux/actions/authAction"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
-import { Col, Row, Button, Form, Input, Typography } from "antd"
+import { Col, Row, Button, Form, Input, Typography, message } from "antd"
 import "../styles/login.css"
 import { getUserWithPatternApi } from "../api/user"
+import { FaGoogle } from "react-icons/fa"
+import { GOOGLE_CLIENT_ID } from "../constants"
+import {
+  GoogleOAuthProvider,
+  GoogleLogin,
+  GoogleLoginButton,
+  useGoogleLogin
+} from "@react-oauth/google"
+import { logInGoogleApi } from "../api/authen"
 const { Title } = Typography
 
 const Login = () => {
@@ -36,6 +45,11 @@ const Login = () => {
     } else setUserOTPEnable(false)
   }
 
+  const loginGoogle = async (value) => {
+    if (value?.credential) {
+      dispatch(loginGoogle(value?.credential))
+    }
+  }
   return (
     <>
       <Row style={{ width: "100vw" }}>
@@ -135,6 +149,27 @@ const Login = () => {
                 Register Now
               </Link>
             </p>
+            <div style={{ textAlign: "center", marginTop: 20 }}>
+              <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+                <GoogleLogin
+                  onSuccess={(credentialResponse) => {
+                    // console.log(credentialResponse)
+                    loginGoogle(credentialResponse)
+                  }}
+                  onError={() => {
+                    console.log("Login Failed")
+                  }}
+                />
+              </GoogleOAuthProvider>
+              {/* <Button
+                icon={<FaGoogle />}
+                onClick={() => {
+                  loginGoogle()
+                }}
+              >
+                Sign in with Google
+              </Button> */}
+            </div>
           </Form>
         </Col>
       </Row>
