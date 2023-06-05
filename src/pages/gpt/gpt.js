@@ -51,9 +51,9 @@ const Gpt = ({ setIsOpen }) => {
     }
 
     sse.onerror = (event) => {
+      sse.close()
       setIsReplying(false)
       setIsOpen(false)
-      sse.close()
       message.error(
         "ChatGPT is receive many request now. Please try again later!"
       )
@@ -132,6 +132,11 @@ const Gpt = ({ setIsOpen }) => {
       message.error(event.statusText)
       setIsReplying(false)
       sse.close()
+      setIsReplying(false)
+      setIsOpen(false)
+      message.error(
+        "ChatGPT is receive many request now. Please try again later!"
+      )
     }
   }
 

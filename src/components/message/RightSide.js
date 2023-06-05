@@ -29,6 +29,7 @@ const RightSide = () => {
   const [text, setText] = useState("")
   const [media, setMedia] = useState([])
   const [loadMedia, setLoadMedia] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const refDisplay = useRef()
   const pageEnd = useRef()
@@ -130,6 +131,7 @@ const RightSide = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
+          setLoading(true)
           setIsLoadMore((p) => p + 1)
         }
       },
@@ -141,11 +143,12 @@ const RightSide = () => {
     observer.observe(pageEnd.current)
   }, [setIsLoadMore])
 
-  useEffect(() => {
+  useEffect(async () => {
     if (isLoadMore > 1) {
       if (result >= page * 9) {
-        dispatch(loadMoreMessages({ auth, id, page: page + 1 }))
+        await dispatch(loadMoreMessages({ auth, id, page: page + 1 }))
         setIsLoadMore(1)
+        setLoading(false)
       }
     }
     // eslint-disable-next-line
@@ -233,9 +236,11 @@ const RightSide = () => {
         style={{ height: media.length > 0 ? "calc(100% - 180px)" : "" }}
       >
         <div className="chat_display" ref={refDisplay}>
-          <button style={{ marginTop: "-25px", opacity: 0 }} ref={pageEnd}>
-            Load more
-          </button>
+          <div style={{ marginTop: "0", opacity: 1, width: "100%", height: "10px" }} ref={pageEnd}>
+          </div>
+          {
+            loading && <Spin></Spin>
+          }
 
           {data.map((msg, index) => (
             <div key={index}>
