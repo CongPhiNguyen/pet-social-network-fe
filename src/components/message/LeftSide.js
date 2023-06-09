@@ -2,10 +2,8 @@ import React, { useState, useEffect, useRef } from "react"
 import UserCard from "../UserCard"
 import { useSelector, useDispatch } from "react-redux"
 import { getDataAPI } from "../../utils/fetchData"
-import { GLOBALTYPES } from "../../redux/actions/globalTypes"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { MESS_TYPES, getConversations } from "../../redux/actions/messageAction"
-import BotCard from "./BotCard"
 import {
   Typography,
   Input,

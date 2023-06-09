@@ -1,4 +1,5 @@
 import Admin from "../pages/admin/Admin"
+import ChatBotPage from "../pages/chat-bot/ChatBotPage"
 import ForgotPassword from "../pages/forgotPassword"
 import Home from "../pages/home"
 import Login from "../pages/login"
@@ -39,7 +40,8 @@ const protectedRoute = [
     element: <NotificationPage />
   },
   { path: "/message", name: "Chat", element: <Message /> },
-  { path: "/message/:id", name: "Chat", element: <Conversation /> }
+  { path: "/message/:id", name: "Chat", element: <Conversation /> },
+  { path: "/chat-bot", name: "ChatBot", element: <ChatBotPage /> }
 ]
 
 // route dùng cho mọi trường hợp
