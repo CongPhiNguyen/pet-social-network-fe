@@ -12,6 +12,7 @@
 .right-side .ant-card-body {
   width: 100%;
 }
+
 .chat-message {
   display: flex;
   flex-direction: column;

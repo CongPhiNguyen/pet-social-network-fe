@@ -236,11 +236,16 @@ const RightSide = () => {
         style={{ height: media.length > 0 ? "calc(100% - 180px)" : "" }}
       >
         <div className="chat_display" ref={refDisplay}>
-          <div style={{ marginTop: "0", opacity: 1, width: "100%", height: "10px" }} ref={pageEnd}>
-          </div>
-          {
-            loading && <Spin></Spin>
-          }
+          <div
+            style={{
+              marginTop: "0",
+              opacity: 1,
+              width: "100%",
+              height: "10px"
+            }}
+            ref={pageEnd}
+          ></div>
+          {loading && <Spin></Spin>}
 
           {data.map((msg, index) => (
             <div key={index}>
