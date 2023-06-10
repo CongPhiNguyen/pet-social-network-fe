@@ -108,7 +108,7 @@ const CustomRouters = () => {
   return (
     <>
       {/* đã đăng nhập */}
-      {auth.token && !isAdminRoute && <SocketClient />}
+      {auth.token && <SocketClient />}
       {auth.token && !isAdminRoute && <HeaderLayout />}
       {auth.token && !isAdminRoute && <ChatGpt />}
       <StatusModal></StatusModal>

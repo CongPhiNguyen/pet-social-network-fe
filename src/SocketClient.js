@@ -32,6 +32,7 @@ const SocketClient = () => {
     socket.emit("joinUser", auth.user)
   }, [socket, auth.user])
 
+
   // Likes
   useEffect(() => {
     socket.on("likeToClient", (newPost) => {
