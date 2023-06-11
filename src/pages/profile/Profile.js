@@ -8,6 +8,7 @@ import Following from "./components/Following"
 import { getPostByUserIdApi } from "../../api/post"
 import PostCard from "../../components/PostCard"
 import { getUserInfoApi } from "../../api/user"
+import "../../styles/home.css"
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -61,9 +62,11 @@ const Profile = () => {
             )}
           </Col>
           <Col xl={16} md={24} sm={24}>
-            {postList.map((val, index) => {
-              return <PostCard key={index} post={val} />
-            })}
+            <div className="home posts">
+              {postList.map((val, index) => {
+                return <PostCard key={index} post={val} />
+              })}
+            </div>
           </Col>
         </Row>
       </div>

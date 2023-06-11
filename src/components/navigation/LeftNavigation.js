@@ -40,7 +40,7 @@ export default function LeftNavigation() {
     },
     {
       label: (
-        <Link to={`/wiki`}>
+        <Link to={`/pet-wiki`}>
           <div
             style={{ display: "flex", alignItems: "baseline", marginTop: 16 }}
           >
