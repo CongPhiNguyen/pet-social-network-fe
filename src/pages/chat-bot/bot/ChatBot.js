@@ -4,7 +4,10 @@ import axios from "axios"
 import "./Chat.css"
 import { message, Col, Row, Card, Typography, Form, Input, Button } from "antd"
 import MessageDisplay from "./MessageDisplay"
-import { sendDialogflowMessageApi } from "../../../api/chatbot"
+import {
+  getBotMessageApi,
+  sendDialogflowMessageApi
+} from "../../../api/chatbot"
 import { useEffect } from "react"
 
 export default function ChatBot({ currentBot }) {
@@ -16,138 +19,43 @@ export default function ChatBot({ currentBot }) {
   const [botMessage, setBotMessage] = useState([])
 
   useEffect(() => {
-    setTimeout(() => {
-      myDivRef.current.scrollIntoView({ behavior: "smooth", block: "end" })
-    }, 50)
-    console.log("keso")
-  }, [myDivRef.current, message, currentBot, triggerScroll])
+    try {
+      setTimeout(() => {
+        myDivRef.current.scrollIntoView({ behavior: "smooth", block: "end" })
+      }, 50)
+    } catch (err) {
+      message.error(err.message)
+    }
+  }, [currentBot.key, triggerScroll])
 
   const { auth } = useSelector((state) => state)
 
+  const getBotMessage = async (botName) => {
+    try {
+      const response = await getBotMessageApi({
+        userId: auth?.user?._id,
+        botName: botName
+      })
+      const { data, status } = response
+      if (status === 200) {
+        setBotMessage(data.messageList || [])
+        setTriggerScroll((prev) => !prev)
+      }
+      // message.success("Verify user and TOTP ok")
+      // navigate("/set-password?")
+    } catch (err) {
+      message.error(err?.response?.data?.message || "Unexpected Error")
+    }
+  }
+
   // Dùng để get mấy message của mấy con bot tại đây
   useEffect(() => {
-    if (!currentBot.name) {
+    if (!currentBot.key) {
       setBotMessage([])
     } else {
-      setBotMessage([
-        {
-          text: "wfkodu3bqly5pi07vysp",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "vi7vfuzo6id2zs1849joms",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "3jxhs7w9isphgm2y6qtzh",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "wfkodu3bqly5pi07vysp",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "vi7vfuzo6id2zs1849joms",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "3jxhs7w9isphgm2y6qtzh",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "wfkodu3bqly5pi07vysp",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "vi7vfuzo6id2zs1849joms",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "3jxhs7w9isphgm2y6qtzh",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "llnnir7ankdwxesczivi8",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "awycn2jz5es4aikkgxh4e",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "1c19pt5jh6ysn4kty5gpq",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "62oc877lhoyuwhcsjk0etg",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "i9lp4i8d0zlolco4vbol9o",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "1c19pt5jh6ysn4kty5gpq",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "62oc877lhoyuwhcsjk0etg",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "i9lp4i8d0zlolco4vbol9o",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "1c19pt5jh6ysn4kty5gpq",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "62oc877lhoyuwhcsjk0etg",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "i9lp4i8d0zlolco4vbol9o",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "1c19pt5jh6ysn4kty5gpq",
-          sender: "bot",
-          createdAt: 1686472797631
-        },
-        {
-          text: "62oc877lhoyuwhcsjk0etg",
-          sender: "647e03134cf1723cbc71e714",
-          createdAt: 1686472797631
-        },
-        {
-          text: "i9lp4i8d0zlolco4vbol9o",
-          sender: "bot",
-          createdAt: 1686472797631
-        }
-      ])
+      getBotMessage(currentBot.key)
     }
-  }, [currentBot])
+  }, [currentBot.key])
 
   const sendMessage = async (value) => {
     setBotMessage((prevBotMessage) => [
@@ -155,12 +63,14 @@ export default function ChatBot({ currentBot }) {
       { text: value.message, sender: auth?.user?._id, createdAt: Date.now() }
     ])
     form.resetFields()
-    form.scrollToField("message")
     messageInputRef.current.focus()
-    setTriggerScroll(!triggerScroll)
+    setTriggerScroll((prev) => !prev)
     try {
       if (currentBot.name === "Dialogflow") {
-        const response = await sendDialogflowMessageApi(value)
+        const response = await sendDialogflowMessageApi({
+          ...value,
+          userId: auth.user._id
+        })
         // Add the bot's response to the chat
         setBotMessage((prevBotMessage) => [
           ...prevBotMessage,
@@ -170,7 +80,7 @@ export default function ChatBot({ currentBot }) {
             createdAt: Date.now()
           }
         ])
-        setTriggerScroll(!triggerScroll)
+        setTriggerScroll((prev) => !prev)
       } else {
         message.error("Chat bot is not supported now!")
         message.error("Chat bot is not supported now!")
@@ -193,18 +103,18 @@ export default function ChatBot({ currentBot }) {
         overflowY: "scroll"
       }}
     >
-      <Card hoverable>
+      <Card hoverable bodyStyle={{ padding: 10 }}>
         <div style={{ display: "flex" }}>
           <img
             src={currentBot?.img}
             alt={currentBot?.key}
-            style={{ borderRadius: "100%", width: 36, height: 36 }}
+            style={{ borderRadius: "100%", width: 24, height: 24 }}
           ></img>
           <Typography
             style={{
               fontWeight: 600,
-              fontSize: 18,
-              lineHeight: "36px",
+              fontSize: 14,
+              lineHeight: "24px",
               marginLeft: 20
             }}
           >
@@ -257,44 +167,7 @@ export default function ChatBot({ currentBot }) {
                 )}
               </div>
             ))}
-            {botMessage.map((msg, index) => (
-              <div key={index}>
-                {msg.sender !== auth?.user?._id && (
-                  <div className="chat_row other_message">
-                    <MessageDisplay msg={msg} />
-                  </div>
-                )}
-                {msg.sender === auth?.user?._id && (
-                  <div className="chat_row you_message">
-                    <MessageDisplay
-                      // user={auth?.user}
-                      msg={msg}
-                      // theme={theme}
-                      // data={data}
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
-            {botMessage.map((msg, index) => (
-              <div key={index}>
-                {msg.sender !== auth?.user?._id && (
-                  <div className="chat_row other_message">
-                    <MessageDisplay msg={msg} />
-                  </div>
-                )}
-                {msg.sender === auth?.user?._id && (
-                  <div className="chat_row you_message">
-                    <MessageDisplay
-                      // user={auth?.user}
-                      msg={msg}
-                      // theme={theme}
-                      // data={data}
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
+
             <div ref={myDivRef}></div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { AiOutlineAccountBook } from "react-icons/ai"
 import { Link } from "react-router-dom"
 import ChatBot from "./bot/ChatBot"
 import { MdArrowBack } from "react-icons/md"
+import "./bot/Chat.css"
 
 const { Title } = Typography
 
@@ -25,7 +26,7 @@ export default function ChatBotPage() {
   const chooseBot = () => {}
 
   return (
-    <div>
+    <div style={{ marginTop: -40 }}>
       <div
         style={{
           width: "100%",
@@ -46,7 +47,9 @@ export default function ChatBotPage() {
             offset={2}
           >
             <Card style={{ overflowY: "scroll" }}>
-              <Title level={2}>Chatbot</Title>
+              <Title level={2} style={{ fontSize: 16 }}>
+                Chatbot
+              </Title>
               <div style={{ padding: "4px 20px" }}>
                 {chatBotList.map((val, index) => {
                   return (
@@ -56,7 +59,8 @@ export default function ChatBotPage() {
                       onClick={() => {
                         setCurrentChatbot(chatBotList[index])
                       }}
-                      style={{ marginBottom: 10 }}
+                      style={{ marginBottom: 10, padding: "0" }}
+                      bodyStyle={{ padding: "10px 10px" }}
                     >
                       <div style={{ display: "flex" }}>
                         <img
@@ -64,17 +68,18 @@ export default function ChatBotPage() {
                           alt={val?.key}
                           style={{
                             borderRadius: "100%",
-                            width: 48,
-                            height: 48
+                            width: 24,
+                            height: 24
                           }}
                         ></img>
                         <Typography
                           style={{
                             fontWeight: 600,
-                            fontSize: 18,
-                            lineHeight: "48px",
+                            fontSize: 14,
+                            lineHeight: "24px",
                             marginLeft: 20
                           }}
+                          className="chatbot-name"
                         >
                           {val.name}
                         </Typography>
