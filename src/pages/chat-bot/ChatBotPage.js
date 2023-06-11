@@ -1,9 +1,10 @@
-import { Col, Row, Menu, Typography, Card } from "antd"
+import { Col, Row, Menu, Typography, Card, message } from "antd"
 import React from "react"
 import { useState } from "react"
 import { AiOutlineAccountBook } from "react-icons/ai"
 import { Link } from "react-router-dom"
 import ChatBot from "./bot/ChatBot"
+import { MdArrowBack } from "react-icons/md"
 
 const { Title } = Typography
 
@@ -17,14 +18,14 @@ export default function ChatBotPage() {
     },
     {
       img: "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
-      name: "Duumy",
-      key: "duumy"
+      name: "Dummy",
+      key: "dummy"
     }
   ])
   const chooseBot = () => {}
 
   return (
-    <div style={{ marginTop: 84 }}>
+    <div>
       <div
         style={{
           width: "100%",
@@ -34,43 +35,88 @@ export default function ChatBotPage() {
           padding: "0px 10px"
         }}
       >
-        <Row>
-          <Col xl={8} md={8} sm={24} xs={24}>
-            <Title level={2}>Chatbot</Title>
-            <div style={{ padding: "4px" }}>
-              {chatBotList.map((val, index) => {
-                return (
-                  <Card
-                    hoverable
-                    key={val?.key}
-                    onClick={() => {
-                      setCurrentChatbot(chatBotList[index])
-                    }}
-                  >
-                    <div style={{ display: "flex" }}>
-                      <img
-                        src={val?.img}
-                        alt={val?.key}
-                        style={{ borderRadius: "100%", width: 48, height: 48 }}
-                      ></img>
-                      <Typography
-                        style={{
-                          fontWeight: 600,
-                          fontSize: 18,
-                          lineHeight: "48px",
-                          marginLeft: 20
-                        }}
-                      >
-                        {val.name}
-                      </Typography>
-                    </div>
-                  </Card>
-                )
-              })}
+        <Row
+          gutter={[24, 0]}
+          style={{ paddingTop: 128, overflow: "hidden", marginRight: 0 }}
+        >
+          <Col
+            // style={{ height: "calc(100vh - 192px)" }}
+            xs={0}
+            md={6}
+            offset={2}
+          >
+            <Card style={{ overflowY: "scroll" }}>
+              <Title level={2}>Chatbot</Title>
+              <div style={{ padding: "4px 20px" }}>
+                {chatBotList.map((val, index) => {
+                  return (
+                    <Card
+                      hoverable
+                      key={val?.key}
+                      onClick={() => {
+                        setCurrentChatbot(chatBotList[index])
+                      }}
+                      style={{ marginBottom: 10 }}
+                    >
+                      <div style={{ display: "flex" }}>
+                        <img
+                          src={val?.img}
+                          alt={val?.key}
+                          style={{
+                            borderRadius: "100%",
+                            width: 48,
+                            height: 48
+                          }}
+                        ></img>
+                        <Typography
+                          style={{
+                            fontWeight: 600,
+                            fontSize: 18,
+                            lineHeight: "48px",
+                            marginLeft: 20
+                          }}
+                        >
+                          {val.name}
+                        </Typography>
+                      </div>
+                    </Card>
+                  )
+                })}
+              </div>
+            </Card>
+          </Col>
+          <Col
+            style={{ height: "calc(100vh - 192px)", position: "relative" }}
+            xs={2}
+            md={0}
+          >
+            <div
+              // onClick={() => {
+              //   navigate("/message")
+              // }}
+              className="btn-back"
+            >
+              <MdArrowBack
+                style={{ fontSize: "1.4rem", transform: "translate(9px, 8px)" }}
+              ></MdArrowBack>
             </div>
           </Col>
-          <Col xl={16} md={16} sm={24} xs={24}>
-            <ChatBot currentBot={currentChatbot} />
+          <Col
+            style={{ height: "calc(100vh - 192px)" }}
+            xs={{ span: 20 }}
+            md={14}
+          >
+            <Card
+              className="right-side"
+              style={{
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                width: "100%"
+              }}
+            >
+              <ChatBot currentBot={currentChatbot} />
+            </Card>
           </Col>
         </Row>
       </div>

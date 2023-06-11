@@ -1,6 +1,6 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { Modal } from "antd"
+import { Modal, Tooltip } from "antd"
 import { ExclamationCircleFilled } from "@ant-design/icons"
 import { FaVideo } from "react-icons/fa"
 import { IoCall } from "react-icons/io5"
@@ -29,9 +29,12 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
         <Avatar src={user.avatar} size="small-avatar" />
         <span>{user.username}</span>
       </div> */}
-
-      <div className="you_content">
-        {/* {user?._id === auth?.user?._id && (
+      <Tooltip
+        title={new Date(msg.createdAt).toLocaleString()}
+        style={{ cursor: "pointer" }}
+      >
+        <div className="you_content">
+          {/* {user?._id === auth?.user?._id && (
           <i
             style={{ transform: "translate(-6px,-10px)" }}
             className="fas fa-trash"
@@ -39,28 +42,25 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
           />
         )} */}
 
-        <div>
-          {msg.text && (
-            <div
-              className="chat_text"
-              style={{ filter: theme ? "invert(1)" : "invert(0)" }}
-            >
-              {msg.text}
-            </div>
-          )}
-          {/* {msg.media.map((item, index) => (
+          <div>
+            {msg.text && (
+              <div
+                className="chat_text"
+                style={{ filter: theme ? "invert(1)" : "invert(0)" }}
+              >
+                {msg.text}
+              </div>
+            )}
+            {/* {msg.media.map((item, index) => (
             <div key={index}>
               {item.url.match(/video/i)
                 ? videoShow(item.url, theme)
                 : imageShow(item.url, theme)}
             </div>
           ))} */}
+          </div>
         </div>
-      </div>
-
-      <div className="chat_time">
-        {new Date(msg.createdAt).toLocaleString()}
-      </div>
+      </Tooltip>
     </>
   )
 }
