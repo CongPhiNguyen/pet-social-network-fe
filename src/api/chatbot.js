@@ -5,6 +5,10 @@ export const sendDialogflowMessageApi = (data) => {
   return axios.post(`${API_ENDPOINT}/dialogflow-api`, data)
 }
 
+export const sendDummyMessageApi = (data) => {
+  return axios.post(`${API_ENDPOINT}/chat/dummy`, data)
+}
+
 export const getBotMessageApi = (params) => {
   return axios.get(`${API_ENDPOINT}/bot-message/`, {
     params: params

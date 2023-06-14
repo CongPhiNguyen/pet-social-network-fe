@@ -6,7 +6,8 @@ import { message, Col, Row, Card, Typography, Form, Input, Button } from "antd"
 import MessageDisplay from "./MessageDisplay"
 import {
   getBotMessageApi,
-  sendDialogflowMessageApi
+  sendDialogflowMessageApi,
+  sendDummyMessageApi
 } from "../../../api/chatbot"
 import { useEffect } from "react"
 
@@ -81,9 +82,21 @@ export default function ChatBot({ currentBot }) {
           }
         ])
         setTriggerScroll((prev) => !prev)
-      } else {
-        message.error("Chat bot is not supported now!")
-        message.error("Chat bot is not supported now!")
+      } else if (currentBot.name === "Dummy") {
+        const response = await sendDummyMessageApi({
+          ...value,
+          userId: auth.user._id
+        })
+        // Add the bot's response to the chat
+        setBotMessage((prevBotMessage) => [
+          ...prevBotMessage,
+          {
+            text: response.data.message,
+            sender: "dialogflow",
+            createdAt: Date.now()
+          }
+        ])
+        setTriggerScroll((prev) => !prev)
       }
     } catch (error) {
       message.error(error)
