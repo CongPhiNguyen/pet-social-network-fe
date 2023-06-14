@@ -12,10 +12,13 @@ const { Item } = Form
 export default function TableUser() {
   const [userList, setUserList] = useState([])
   const [filters, setFilters] = useState({})
+  const [loading, setLoading] = useState(false)
   const getAllUser = async () => {
+    setLoading(true)
     const response = await getAllUserApi(filters)
     const { data, status } = response
     setUserList(data)
+    setLoading(false)
   }
   useEffect(() => {
     getAllUser()
@@ -147,7 +150,7 @@ export default function TableUser() {
           </Col>
         </Row>
       </Form>
-      <Table columns={columns} dataSource={userList} />
+      <Table columns={columns} loading={loading} dataSource={userList} />
     </div>
   )
 }

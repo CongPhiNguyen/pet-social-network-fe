@@ -62,15 +62,14 @@ const Register = () => {
             style={{ width: "100%" }}
             onFinish={onFinish}
             autoComplete="off"
-            size="large"
           >
             <Title level={2}>Register to Pet Love</Title>
             <Form.Item
-              label="Full Name"
               name="fullname"
               style={{
                 width: "100%"
               }}
+              label='Fullname'
               rules={[
                 {
                   required: true,
@@ -78,7 +77,7 @@ const Register = () => {
                 }
               ]}
             >
-              <Input />
+              <Input placeholder="Fullname" />
             </Form.Item>
             <Form.Item
               label="User Name"
@@ -160,7 +159,7 @@ const Register = () => {
               <Input.Password />
             </Form.Item>
             <Form.Item name="gender">
-              <Radio.Group onChange={() => {}}>
+              <Radio.Group onChange={() => { }}>
                 <Radio value={"male"}>Male</Radio>
                 <Radio value={"female"}>Female</Radio>
                 <Radio value={"other"}>Other</Radio>

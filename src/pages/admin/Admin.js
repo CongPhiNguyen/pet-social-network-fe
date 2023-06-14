@@ -1,25 +1,18 @@
 import React, { useState } from "react"
 import {
-  BulbOutlined,
-  DatabaseOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  RobotOutlined,
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
-  TransactionOutlined,
-  CalculatorOutlined,
-  BarcodeOutlined,
-  FolderOutlined,
-  FolderAddTwoTone,
-  LogoutOutlined
+  LogoutOutlined,
+  DribbbleOutlined,
+  BoxPlotOutlined
 } from "@ant-design/icons"
 import { Layout, Menu, Card, Typography, Button } from "antd"
 import TableUser from "./User/TableUser"
 import { useNavigate } from "react-router-dom"
 import LogTable from "./Log/LogTable"
-
+import OnlineTable from "./Online/OnlineTable"
+import PostTable from "./Post/PostTable"
 const { Header, Sider, Content } = Layout
 
 export default function Admin() {
@@ -38,6 +31,16 @@ export default function Admin() {
       return (
         <div>
           <LogTable />
+        </div>
+      )
+    } else if (key === '3') {
+      return <>
+        <PostTable></PostTable>
+      </>
+    } else {
+      return (
+        <div>
+          <OnlineTable></OnlineTable>
         </div>
       )
     }
@@ -65,6 +68,16 @@ export default function Admin() {
               key: "2",
               icon: <LogoutOutlined />,
               label: "Log"
+            },
+            {
+              key: "3",
+              icon: <BoxPlotOutlined />,
+              label: "Post"
+            },
+            {
+              key: "4",
+              icon: <DribbbleOutlined />,
+              label: "Online"
             }
           ]}
         />
