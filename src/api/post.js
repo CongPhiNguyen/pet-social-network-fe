@@ -9,3 +9,11 @@ export const getPostByUserIdApi = (userId) => {
 export const getAllPostApi = ({ username }) => {
   return axios.get(`${API_ENDPOINT}/get-all-posts?username=${username}`)
 }
+
+export const getAllLimitsWord = () => {
+  return axios.get(`${API_ENDPOINT}/get-all-limits-word`)
+}
+
+export const updateListsWord = (words) => {
+  return axios.post(`${API_ENDPOINT}/get-all-limits-word`, { words })
+}

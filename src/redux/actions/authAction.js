@@ -47,6 +47,7 @@ export const refreshToken = () => async (dispatch) => {
 
       dispatch({ type: GLOBALTYPES.ALERT, payload: {} })
     } catch (err) {
+      message.error(err?.response?.data?.msg)
       dispatch({
         type: GLOBALTYPES.ALERT,
         payload: {
@@ -64,6 +65,7 @@ export const logout = () => async (dispatch) => {
     await postDataAPI("logout")
     window.location.href = "/"
   } catch (err) {
+    message.error(err?.response?.data?.msg)
     dispatch({
       type: GLOBALTYPES.ALERT,
       payload: {

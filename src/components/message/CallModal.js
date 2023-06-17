@@ -6,6 +6,7 @@ import { addMessage } from "../../redux/actions/messageAction"
 import RingRing from "../../audio/ringring.mp3"
 import { IoCall } from 'react-icons/io5'
 import { FaVideo } from 'react-icons/fa'
+import { message } from "antd"
 
 const CallModal = () => {
   const { call, auth, peer, socket, theme } = useSelector((state) => state)
@@ -151,7 +152,7 @@ const CallModal = () => {
       addCallMessage(call, times, true)
 
       dispatch({ type: GLOBALTYPES.CALL, payload: null })
-
+      message.error(`The ${call.username} disconnect`)
       dispatch({
         type: GLOBALTYPES.ALERT,
         payload: { error: `The ${call.username} disconnect` }
