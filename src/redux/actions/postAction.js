@@ -142,7 +142,8 @@ export const likePost =
 
         dispatch(createNotify({ msg, auth, socket }))
       } catch (err) {
-        message.success(err.response.data.msg)
+        console.log(err)
+        // message.success(err.response.data.msg)
         dispatch({
           type: GLOBALTYPES.ALERT,
           payload: { error: err.response.data.msg }
