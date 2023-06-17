@@ -1,9 +1,10 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { Modal, Tooltip } from "antd"
+import { Modal, Tooltip, message } from "antd"
 import { ExclamationCircleFilled } from "@ant-design/icons"
 import { FaVideo } from "react-icons/fa"
 import { IoCall } from "react-icons/io5"
+import PetCard from "./PetCardInfo"
 const { confirm } = Modal
 const MessageDisplay = ({ user, msg, theme, data }) => {
   const { auth } = useSelector((state) => state)
@@ -22,6 +23,7 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
   //     }
   //   })
   // }
+  console.log(msg)
 
   return (
     <>
@@ -30,7 +32,7 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
         <span>{user.username}</span>
       </div> */}
       <Tooltip
-        title={new Date(msg.createdAt).toLocaleString()}
+        title={new Date(msg.createdAt || msg.time).toLocaleString()}
         style={{ cursor: "pointer" }}
       >
         <div className="you_content">
@@ -50,6 +52,9 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
               >
                 {msg.text}
               </div>
+            )}
+            {msg?.dialogflowFeature?.name === "ask.find_dog" && (
+              <PetCard info={msg?.dialogflowFeature?.dogInfo} type="dog" />
             )}
             {/* {msg.media.map((item, index) => (
             <div key={index}>

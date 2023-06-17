@@ -72,13 +72,15 @@ export default function ChatBot({ currentBot }) {
           ...value,
           userId: auth.user._id
         })
+        const { text, sender, time, dialogflowFeature } = response.data
         // Add the bot's response to the chat
         setBotMessage((prevBotMessage) => [
           ...prevBotMessage,
           {
-            text: response.data.message,
-            sender: "dialogflow",
-            createdAt: Date.now()
+            text: text,
+            sender: sender,
+            createdAt: time,
+            dialogflowFeature: dialogflowFeature
           }
         ])
         setTriggerScroll((prev) => !prev)
