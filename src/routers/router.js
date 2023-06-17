@@ -1,10 +1,12 @@
 import Admin from "../pages/admin/Admin"
+import ChatBotPage from "../pages/chat-bot/ChatBotPage"
 import ForgotPassword from "../pages/forgotPassword"
 import Home from "../pages/home"
 import Login from "../pages/login"
 import Message from "../pages/message"
 import Conversation from "../pages/message/[id]"
 import NotificationPage from "../pages/notification/NotificationPage"
+import PetWiki from "../pages/pet-wiki/PetWiki"
 import PostPage from "../pages/post/PostPage"
 import PetPage from "../pages/profile/PetPage"
 import Profile from "../pages/profile/Profile"
@@ -38,8 +40,14 @@ const protectedRoute = [
     name: "Notification",
     element: <NotificationPage />
   },
+  {
+    path: "/pet-wiki",
+    name: "PetWiki",
+    element: <PetWiki />
+  },
   { path: "/message", name: "Chat", element: <Message /> },
-  { path: "/message/:id", name: "Chat", element: <Conversation /> }
+  { path: "/message/:id", name: "Chat", element: <Conversation /> },
+  { path: "/chat-bot", name: "ChatBot", element: <ChatBotPage /> }
 ]
 
 // route dùng cho mọi trường hợp
