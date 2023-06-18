@@ -240,13 +240,15 @@ const RightSide = () => {
           <div
             style={{
               marginTop: "0",
-              opacity: 1,
+              opacity: 0,
               width: "100%",
               height: "10px"
             }}
             ref={pageEnd}
-          ></div>
-          {loading && <Spin></Spin>}
+          >
+            {loading && <Spin></Spin>}
+          </div>
+
 
           {data.map((msg, index) => (
             <div key={index}>

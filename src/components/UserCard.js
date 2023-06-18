@@ -35,11 +35,11 @@ const UserCard = ({
           <span className="material-icons">
             {user.call.times === 0
               ? user.call.video
-                ? "videocam_off"
-                : "phone_disabled"
+                ? "Miss Video Phone"
+                : "Miss Phone"
               : user.call.video
-              ? "video_camera_front"
-              : "call"}
+                ? "Video Phone"
+                : "Phone"}
           </span>
         )}
       </>
@@ -65,7 +65,7 @@ const UserCard = ({
             }}
             src={
               user.avatar ===
-              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                 ? null
                 : user.avatar
             }
