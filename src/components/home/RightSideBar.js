@@ -5,6 +5,7 @@ import UserCard from '../UserCard'
 import FollowBtn from '../FollowBtn'
 import LoadIcon from '../../images/loading.gif'
 import { getSuggestions } from '../../redux/actions/suggestionsAction'
+import { Spin } from 'antd'
 
 const RightSideBar = () => {
     const { auth, suggestions } = useSelector(state => state)
@@ -25,7 +26,7 @@ const RightSideBar = () => {
 
             {
                 suggestions.loading
-                    ? <img src={LoadIcon} alt="loading" className="d-block mx-auto my-4" />
+                    ? <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
                     : <div className="suggestions">
                         {
                             suggestions.users.map(user => (

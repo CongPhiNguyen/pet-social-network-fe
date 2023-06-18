@@ -75,7 +75,7 @@ const Menu = () => {
       >
         Profile
       </Link>
-      <label
+      {/* <label
         style={{ fontWeight: "600" }}
         htmlFor="theme"
         className="dropdown-item"
@@ -87,7 +87,7 @@ const Menu = () => {
         }
       >
         {theme ? "Light mode" : "Dark mode"}
-      </label>
+      </label> */}
       <Link
         style={{ fontWeight: "600" }}
         className="dropdown-item"

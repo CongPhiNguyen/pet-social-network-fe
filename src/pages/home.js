@@ -5,7 +5,7 @@ import RightSideBar from "../components/home/RightSideBar"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import LoadIcon from "../images/loading.gif"
-import { Row, Col, Result, Card, Menu } from "antd"
+import { Row, Col, Result, Card, Menu, Spin } from "antd"
 import LeftNavigation from "../components/navigation/LeftNavigation"
 import { RiProfileLine, RiFindReplaceLine } from "react-icons/ri"
 import { AiOutlineHome, AiOutlineMessage, AiOutlineBook } from "react-icons/ai"
@@ -93,7 +93,7 @@ const Home = () => {
         <Col xs={{ span: 0 }} md={{ span: 14 }} lg={{ span: 10 }}>
           <Status />
           {homePosts.loading ? (
-            <img src={LoadIcon} alt="loading" className="d-block mx-auto" />
+            <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
           ) : homePosts.result === 0 && homePosts.posts.length === 0 ? (
             <Card>
               <Result
@@ -110,7 +110,7 @@ const Home = () => {
         <Col xs={{ span: 18 }} md={{ span: 0 }} >
           <Status />
           {homePosts.loading ? (
-            <img src={LoadIcon} alt="loading" className="d-block mx-auto" />
+            <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
           ) : homePosts.result === 0 && homePosts.posts.length === 0 ? (
             <Card>
               <Result

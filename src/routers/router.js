@@ -15,6 +15,7 @@ import Register from "../pages/register"
 import Setting from "../pages/setting/Setting"
 import Verify from "../pages/verify"
 
+
 const mainRoute = []
 
 // Những route chỉ truy xuất khi chưa đăng nhập
