@@ -14,7 +14,7 @@ import Profile from "../pages/profile/Profile"
 import Register from "../pages/register"
 import Setting from "../pages/setting/Setting"
 import Verify from "../pages/verify"
-
+import FindPet from "../pages/find-pet/FindPet"
 
 const mainRoute = []
 
@@ -45,6 +45,11 @@ const protectedRoute = [
     path: "/pet-wiki",
     name: "PetWiki",
     element: <PetWiki />
+  },
+  {
+    path: "/find-pet",
+    name: "PetWiki",
+    element: <FindPet />
   },
   { path: "/message", name: "Chat", element: <Message /> },
   { path: "/message/:id", name: "Chat", element: <Conversation /> },

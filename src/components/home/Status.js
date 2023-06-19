@@ -10,7 +10,6 @@ const Status = () => {
   const dispatch = useDispatch()
 
 
-
   return (
     <Card className="card-status" style={{ margin: "16px 0" }}>
       <div className="status my-3 d-flex mt-6">
