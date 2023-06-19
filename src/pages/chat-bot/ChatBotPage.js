@@ -10,7 +10,11 @@ import "./bot/Chat.css"
 const { Title } = Typography
 
 export default function ChatBotPage() {
-  const [currentChatbot, setCurrentChatbot] = useState({})
+  const [currentChatbot, setCurrentChatbot] = useState({
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsK1MOGA1qihG3A-dzf9jV2aYAhJOKb3-gontQdDKjLtqnBhGVd55zsulTS3Zx4JJbE-A&usqp=CAU",
+    name: "Dialogflow",
+    key: "dialogflow"
+  })
   const [chatBotList, setChatBotList] = useState([
     {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsK1MOGA1qihG3A-dzf9jV2aYAhJOKb3-gontQdDKjLtqnBhGVd55zsulTS3Zx4JJbE-A&usqp=CAU",
@@ -21,6 +25,11 @@ export default function ChatBotPage() {
       img: "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
       name: "Dummy",
       key: "dummy"
+    },
+    {
+      img: "https://toquoc.mediacdn.vn/280518851207290880/2021/11/17/co9-16371265918121873152617-1637131220338-1637131220738965031106.jpg",
+      name: "Gossip",
+      key: "gossip"
     }
   ])
   const chooseBot = () => {}
@@ -46,11 +55,11 @@ export default function ChatBotPage() {
             md={6}
             offset={2}
           >
-            <Card style={{ overflowY: "scroll" }}>
+            <Card style={{ overflowY: "hidden" }} bodyStyle={{ padding: 12 }}>
               <Title level={2} style={{ fontSize: 16 }}>
                 Chatbot
               </Title>
-              <div style={{ padding: "4px 20px" }}>
+              <div style={{ padding: "4px 0px" }}>
                 {chatBotList.map((val, index) => {
                   return (
                     <Card
@@ -107,7 +116,7 @@ export default function ChatBotPage() {
             </div>
           </Col>
           <Col
-            style={{ height: "calc(100vh - 192px)" }}
+            style={{ height: "calc(100vh - 100px)" }}
             xs={{ span: 20 }}
             md={14}
           >

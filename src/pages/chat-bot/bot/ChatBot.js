@@ -7,7 +7,8 @@ import MessageDisplay from "./MessageDisplay"
 import {
   getBotMessageApi,
   sendDialogflowMessageApi,
-  sendDummyMessageApi
+  sendDummyMessageApi,
+  sendGossipMessageApi
 } from "../../../api/chatbot"
 import { useEffect } from "react"
 
@@ -94,11 +95,29 @@ export default function ChatBot({ currentBot }) {
           ...prevBotMessage,
           {
             text: response.data.message,
-            sender: "dialogflow",
+            sender: "dummy",
             createdAt: Date.now()
           }
         ])
         setTriggerScroll((prev) => !prev)
+      } else if (currentBot.name === "Gossip") {
+        const response = await sendGossipMessageApi({
+          ...value,
+          userId: auth.user._id
+        })
+        // Add the bot's response to the chat
+        setBotMessage((prevBotMessage) => [
+          ...prevBotMessage,
+          {
+            text: response.data.message,
+            sender: "gossip",
+            createdAt: Date.now()
+          }
+        ])
+        setTriggerScroll((prev) => !prev)
+      } else {
+        message.error("This chatbot is not currently supported")
+        message.error("This chatbot is not currently supported")
       }
     } catch (error) {
       message.error(error)
@@ -111,11 +130,11 @@ export default function ChatBot({ currentBot }) {
         display: "flex",
         flexDirection: "column",
         width: "100%",
-        height: "calc(100vh - 200px)",
+        height: "100%",
         backgroundColor: "#f2f2f2",
         borderRadius: "10px",
-        padding: "10px",
-        overflowY: "scroll"
+        padding: "10px 10px 0px 10px",
+        overflowY: "hidden"
       }}
     >
       <Card hoverable bodyStyle={{ padding: 10 }}>
@@ -141,7 +160,7 @@ export default function ChatBot({ currentBot }) {
         className="chat_container"
         style={{
           width: "100%",
-          height: "calc(100% - 120px)",
+          height: "100%",
           overflowY: "auto",
           padding: "0 10px"
         }}
@@ -187,7 +206,7 @@ export default function ChatBot({ currentBot }) {
           </div>
         </div>
       </div>
-      <div>
+      <div style={{ marginBottom: -22, paddingBottom: 0 }}>
         <Form
           form={form}
           onFinish={(value) => {

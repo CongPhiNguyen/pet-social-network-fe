@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useParams } from "react-router-dom"
-import { fetchBreeds } from "../../api/dogcat"
+import { fetchBreeds, getCatApi } from "../../api/dogcat"
 import { useEffect } from "react"
 import { Row, Col, Typography, Spin, Tag } from "antd"
 
@@ -9,12 +9,19 @@ export default function PetWikiPage() {
   const [loading, setLoading] = useState(true)
   const [currentPet, setCurrentPet] = useState({})
   const getPetInfo = async () => {
-    const data = await fetchBreeds()
-    console.log(data)
-    const findPet = data.find((val) => {
-      return String(val.id) === String(id)
-    })
-    setCurrentPet(findPet)
+    if (type === "dog") {
+      const data = await fetchBreeds()
+      const findPet = data.find((val) => {
+        return String(val.id) === String(id)
+      })
+      setCurrentPet(findPet)
+    } else {
+      const data = await getCatApi()
+      const findPet = data.find((val) => {
+        return String(val.id) === String(id)
+      })
+      setCurrentPet(findPet)
+    }
   }
 
   useEffect(() => {
@@ -39,7 +46,7 @@ export default function PetWikiPage() {
         <div>
           <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-              {Object.keys(currentPet).length !== 0 && (
+              {Object.keys(currentPet || {}).length !== 0 && (
                 <div
                   style={{
                     display: "flex",

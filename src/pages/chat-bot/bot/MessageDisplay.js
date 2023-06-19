@@ -4,7 +4,7 @@ import { Modal, Tooltip, message } from "antd"
 import { ExclamationCircleFilled } from "@ant-design/icons"
 import { FaVideo } from "react-icons/fa"
 import { IoCall } from "react-icons/io5"
-import PetCard from "./PetCardInfo"
+import PetCardInfo from "./PetCardInfo"
 const { confirm } = Modal
 const MessageDisplay = ({ user, msg, theme, data }) => {
   const { auth } = useSelector((state) => state)
@@ -53,8 +53,19 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
                 {msg.text}
               </div>
             )}
-            {msg?.dialogflowFeature?.name === "ask.find_dog" && (
-              <PetCard info={msg?.dialogflowFeature?.dogInfo} type="dog" />
+            {msg?.dialogflowFeature?.name === "ask_find-dog" && (
+              <PetCardInfo
+                info={msg?.dialogflowFeature?.dogInfo}
+                name={msg?.dialogflowFeature?.dogName}
+                type="dog"
+              />
+            )}
+            {msg?.dialogflowFeature?.name === "ask_find-cat" && (
+              <PetCardInfo
+                info={msg?.dialogflowFeature?.catInfo}
+                name={msg?.dialogflowFeature?.catName}
+                type="cat"
+              />
             )}
             {/* {msg.media.map((item, index) => (
             <div key={index}>

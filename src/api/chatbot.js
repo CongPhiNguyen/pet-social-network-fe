@@ -9,6 +9,10 @@ export const sendDummyMessageApi = (data) => {
   return axios.post(`${API_ENDPOINT}/chat/dummy`, data)
 }
 
+export const sendGossipMessageApi = (data) => {
+  return axios.post(`${API_ENDPOINT}/chat/gossip`, data)
+}
+
 export const getBotMessageApi = (params) => {
   return axios.get(`${API_ENDPOINT}/bot-message/`, {
     params: params
