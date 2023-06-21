@@ -40,7 +40,6 @@ export default function FindPet() {
   }, [location])
 
   const onGetLocation = async () => {
-    setIsModalOpen(true);
     setLoading(true)
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -151,7 +150,10 @@ export default function FindPet() {
       <Col xs={{ span: 0 }} md={{ span: 14 }} lg={{ span: 10 }}>
         {/* <Status /> */}
         <Card style={{ margin: "20px 0" }}>
-          <FaLocationArrow onClick={onGetLocation} style={{ color: "#ff4d4f", fontSize: "1.5rem", cursor: "pointer", transform: "translateY(-3px)" }} />   <span style={{ fontWeight: "600", fontSize: "1rem", marginLeft: 5 }}>{location}</span>
+          <FaLocationArrow onClick={() => {
+            onGetLocation()
+            setIsModalOpen(true);
+          }} style={{ color: "#ff4d4f", fontSize: "1.5rem", cursor: "pointer", transform: "translateY(-3px)" }} />   <span style={{ fontWeight: "600", fontSize: "1rem", marginLeft: 5 }}>{location}</span>
         </Card>
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
@@ -174,7 +176,10 @@ export default function FindPet() {
 
       <Col xs={{ span: 18 }} md={{ span: 0 }} >
         <Card style={{ margin: "20px 0" }}>
-          <FaLocationArrow onClick={onGetLocation} style={{ color: "#ff4d4f", fontSize: "1.5rem", cursor: "pointer", transform: "translateY(-3px)" }} />   <span style={{ fontWeight: "600", fontSize: "1rem", marginLeft: 5 }}>{location}</span>
+          <FaLocationArrow onClick={() => {
+            onGetLocation()
+            setIsModalOpen(true);
+          }} style={{ color: "#ff4d4f", fontSize: "1.5rem", cursor: "pointer", transform: "translateY(-3px)" }} />   <span style={{ fontWeight: "600", fontSize: "1rem", marginLeft: 5 }}>{location}</span>
         </Card>
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
