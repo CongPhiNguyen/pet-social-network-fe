@@ -13,7 +13,7 @@ import axios from "axios"
 import { FaLocationArrow } from "react-icons/fa"
 import { getPostByLocation } from "../../api/post"
 import PostCard from "../../components/PostCard"
-
+import GoogleMap1 from "./GoogleMap"
 
 let scroll = 0
 export default function FindPet() {
@@ -22,7 +22,8 @@ export default function FindPet() {
   const [location, setLocation] = useState("")
   const [posts, setPosts] = useState([])
   const currentUserId = useSelector((state) => state?.auth?.user?._id)
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [geolocation, setGeolocation] = useState({ lat: 0, lon: 0 })
 
   const getPost = async () => {
     setLoading(true)
@@ -39,11 +40,15 @@ export default function FindPet() {
   }, [location])
 
   const onGetLocation = async () => {
+    setIsModalOpen(true);
     setLoading(true)
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords
+          setGeolocation({
+            lat: latitude, lon: longitude
+          })
           axios
             .get(
               `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
@@ -61,6 +66,24 @@ export default function FindPet() {
         }
       )
     }
+    setLoading(false)
+
+  }
+
+  const onGetLocation1 = async () => {
+    setLoading(true)
+    axios
+      .get(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${geolocation.lat}&lon=${geolocation.lon}`
+      )
+      .then((response) => {
+        const locationName = response.data.display_name
+        setLocation(locationName)
+      })
+      .catch((error) => {
+        message.error(error)
+      })
+
     setLoading(false)
 
   }
@@ -108,7 +131,10 @@ export default function FindPet() {
   ]
 
   return <div style={{ width: "100%", maxWidth: 1200, margin: "auto" }}>
+
     <Row style={{ marginTop: "64px" }} className="home">
+      <GoogleMap1 geolocation={geolocation} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} onGetLocation1={onGetLocation1} setGeolocation={setGeolocation} />
+
       <Col xs={4} sm={4} md={0} lg={0}>
         <div style={{ position: "fixed", left: 0, top: 64, bottom: 0, borderRight: "1px solid #0000001a", width: "60px" }}>
           <Menu
