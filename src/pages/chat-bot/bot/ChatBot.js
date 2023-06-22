@@ -111,7 +111,8 @@ export default function ChatBot({ currentBot }) {
           {
             text: response.data.message,
             sender: "gossip",
-            createdAt: Date.now()
+            createdAt: Date.now(),
+            dialogflowFeature: response.data.dialogflowFeature
           }
         ])
         setTriggerScroll((prev) => !prev)

@@ -26,6 +26,7 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
   }
 
   const editProfile = async (value) => {
+    console.log(value)
     // Validate các value ở đây
     if (value?.fullname?.length <= 6 || value?.fullname?.length >= 200) {
       message.error(

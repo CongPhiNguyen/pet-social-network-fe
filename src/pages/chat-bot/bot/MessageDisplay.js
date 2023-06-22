@@ -50,7 +50,15 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
                 className="chat_text"
                 style={{ filter: theme ? "invert(1)" : "invert(0)" }}
               >
-                {msg.text}
+                <p style={{ margin: 0, padding: 0 }}>{msg.text}</p>
+                <p style={{ margin: 0, padding: 0, fontWeight: 600 }}>
+                  {msg?.dialogflowFeature?.name === "ask_pet-fact" &&
+                    msg?.dialogflowFeature?.fact}
+                </p>
+                <p style={{ margin: 0, padding: 0, fontWeight: 600 }}>
+                  {msg?.dialogflowFeature?.name === "ask_pet-care-tips" &&
+                    msg?.dialogflowFeature?.tip}
+                </p>
               </div>
             )}
             {msg?.dialogflowFeature?.name === "ask_find-dog" && (
@@ -66,6 +74,14 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
                 name={msg?.dialogflowFeature?.catName}
                 type="cat"
               />
+            )}
+            {(msg?.dialogflowFeature?.name === "say_gau" ||
+              msg?.dialogflowFeature?.name === "say_meow") && (
+              <img
+                src={msg?.dialogflowFeature?.imgUrl}
+                alt=""
+                style={{ maxWidth: 400 }}
+              ></img>
             )}
             {/* {msg.media.map((item, index) => (
             <div key={index}>
