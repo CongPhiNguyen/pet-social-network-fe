@@ -19,6 +19,8 @@ import StatusModal from "../components/StatusModal"
 import { getAccessTokenV2Api } from "../api/authen"
 import { getRefreshToken, setRefreshToken } from "../utils/cookies"
 import { message } from "antd"
+import Notify from "../components/alert/Alert"
+
 // import { setCurrentUserInfo, handleLogin } from "../features/authen/authenSlice"
 const CustomRouters = () => {
   const { auth, call } = useSelector((state) => state)
@@ -108,6 +110,7 @@ const CustomRouters = () => {
   return (
     <>
       {/* đã đăng nhập */}
+      <Notify></Notify>
       {auth.token && <SocketClient />}
       {auth.token && !isAdminRoute && <HeaderLayout />}
       {auth.token && !isAdminRoute && <ChatGpt />}

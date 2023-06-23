@@ -4,6 +4,7 @@ import LoadIcon from "../../../images/loading.gif"
 import LoadMoreBtn from "../../../components/LoadMoreBtn"
 import { getDataAPI } from "../../../utils/fetchData"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
+import { Spin } from "antd"
 
 const Saved = ({ auth, dispatch }) => {
   const [savePosts, setSavePosts] = useState([])
@@ -42,7 +43,7 @@ const Saved = ({ auth, dispatch }) => {
     <div>
       <PostThumb posts={savePosts} result={result} />
 
-      {load && <img src={LoadIcon} alt="loading" className="d-block mx-auto" />}
+      {load && <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>}
 
       <LoadMoreBtn
         result={result}

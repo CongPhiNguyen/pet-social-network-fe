@@ -8,6 +8,7 @@ import LoadIcon from "../images/loading.gif"
 import PostThumb from "../components/PostThumb"
 import LoadMoreBtn from "../components/LoadMoreBtn"
 import { getDataAPI } from "../utils/fetchData"
+import { Spin } from "antd"
 
 const Discover = () => {
   const { auth, discover } = useSelector((state) => state)
@@ -34,12 +35,12 @@ const Discover = () => {
   return (
     <div>
       {discover.loading ? (
-        <img src={LoadIcon} alt="loading" className="d-block mx-auto my-4" />
+        <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
       ) : (
         <PostThumb posts={discover.posts} result={discover.result} />
       )}
 
-      {load && <img src={LoadIcon} alt="loading" className="d-block mx-auto" />}
+      {load && <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>}
 
       {!discover.loading && (
         <LoadMoreBtn

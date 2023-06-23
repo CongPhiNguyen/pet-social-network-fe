@@ -6,6 +6,7 @@ import LoadIcon from "../../images/loading.gif"
 import LoadMoreBtn from "../LoadMoreBtn"
 import { getDataAPI } from "../../utils/fetchData"
 import { POST_TYPES } from "../../redux/actions/postAction"
+import { Spin } from "antd"
 
 const Posts = () => {
   const { homePosts, auth, theme } = useSelector((state) => state)
@@ -35,7 +36,7 @@ const Posts = () => {
         <PostCard key={post._id} post={post} theme={theme} />
       ))}
 
-      {load && <img src={LoadIcon} alt="loading" className="d-block mx-auto" />}
+      {load && <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>}
 
       <LoadMoreBtn
         result={homePosts.result}

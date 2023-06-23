@@ -34,7 +34,7 @@ const CardHeader = ({ post }) => {
         dispatch(deletePost({ post, auth, socket }))
         return navigate("/")
       },
-      onCancel() {}
+      onCancel() { }
     })
   }
 
@@ -47,7 +47,7 @@ const CardHeader = ({ post }) => {
           label: (
             <div onClick={handleEditPost}>
               <EditOutlined
-                style={{ transform: "translateY(-4px)", marginRight: "6px" }}
+                style={{ marginRight: "6px" }}
               />{" "}
               <span style={{ fontWeight: "600" }}>Edit</span>
             </div>
@@ -58,7 +58,7 @@ const CardHeader = ({ post }) => {
           label: (
             <div onClick={handleDeletePost}>
               <DeleteOutlined
-                style={{ transform: "translateY(-4px)", marginRight: "6px" }}
+                style={{ marginRight: "6px" }}
               />{" "}
               <span style={{ fontWeight: "600" }}>Delete</span>
             </div>
@@ -69,7 +69,7 @@ const CardHeader = ({ post }) => {
           label: (
             <div onClick={handleCopyLink}>
               <CopyOutlined
-                style={{ transform: "translateY(-4px)", marginRight: "6px" }}
+                style={{ marginRight: "6px" }}
               />{" "}
               <span style={{ fontWeight: "600" }}>Copy</span>
             </div>
@@ -104,7 +104,7 @@ const CardHeader = ({ post }) => {
           }}
           src={
             post?.user?.avatar ===
-            "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
               ? null
               : post?.user?.avatar
           }

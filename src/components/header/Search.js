@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDataAPI } from '../../utils/fetchData'
 import { GLOBALTYPES } from '../../redux/actions/globalTypes'
-import { Form, Input, Button, Popover, Result } from 'antd'
+import { Form, Input, Button, Popover, Result, Spin } from 'antd'
 import UserCard from '../UserCard'
 import LoadIcon from '../../images/loading.gif'
 import { message } from 'antd'
@@ -38,7 +38,7 @@ const SearchComponent = () => {
 
     const content = (
         <div className="users">
-            {load && <img className="loading" src={LoadIcon} alt="loading" />}
+            {load && <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>}
             {
                 search && users.map(user => (
                     <UserCard

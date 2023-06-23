@@ -35,6 +35,7 @@ const StatusModal = () => {
       return newImages.push(file)
     })
 
+
     // if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
     if (err) message.error(err)
     setImages([...images, ...newImages])
@@ -104,12 +105,16 @@ const StatusModal = () => {
     if (status.onEdit) {
       setContent(status.content)
       setImages(status.images)
+      setLocation(status.location)
     }
   }, [status])
   const handleOk = () => {
     handleSubmit()
   }
   const handleCancel = () => {
+    setLocation("")
+    setContent("")
+    setImages([])
     dispatch({ type: GLOBALTYPES.STATUS, payload: false })
   }
   const handleGetLocation = () => {
@@ -135,9 +140,10 @@ const StatusModal = () => {
       )
     }
   }
+
   return (
     <Modal
-      title="Create Post"
+      title={`${status.onEdit ? "Edit" : "Create"} Post`}
       open={status}
       onOk={handleOk}
       footer={[]}
@@ -284,7 +290,7 @@ const StatusModal = () => {
             type="primary"
             onClick={handleOk}
           >
-            POST
+            {`${status.onEdit ? "SAVE" : "POST"}`}
           </Button>
         </div>
       </form>

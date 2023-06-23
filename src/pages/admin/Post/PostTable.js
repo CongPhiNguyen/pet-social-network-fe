@@ -1,6 +1,7 @@
-import { Table, Input, Col, Button, Form, Row, Select } from "antd"
+import { Table, Input, Col, Button, Form, Row, Select, Space, Tag } from "antd"
 import React, { useEffect, useState } from "react"
 import { getAllPostApi } from "../../../api/post"
+import LimitedWords from './LimitedWords'
 const REGEX_INVALID_CHAR = new RegExp(
     /^(?!.*[\\^\\$\\*\\(\\)\\[\]<>'"\\/\\;`%+])/,
 )
@@ -67,7 +68,9 @@ export default function PostTable() {
 
     return (
         <div style={{ margin: 20 }}>
-            <Form onFinish={handleSearch}>
+            <LimitedWords></LimitedWords>
+            <Form style={{ marginTop: "30px" }} onFinish={handleSearch}>
+
                 <Row gutter={20}>
                     <Col>
                         <Item

@@ -4,6 +4,7 @@ import LoadIcon from "../../../images/loading.gif"
 import LoadMoreBtn from "../../../components/LoadMoreBtn"
 import { getDataAPI } from "../../../utils/fetchData"
 import { PROFILE_TYPES } from "../../../redux/actions/profileAction"
+import { Spin } from "antd"
 
 const Posts = ({ auth, id, dispatch, profile }) => {
   const [posts, setPosts] = useState([])
@@ -35,7 +36,7 @@ const Posts = ({ auth, id, dispatch, profile }) => {
   return (
     <div>
       <PostThumb posts={posts} result={result} />
-      {load && <img src={LoadIcon} alt="loading" className="d-block mx-auto" />}
+      {load && <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>}
       <LoadMoreBtn
         result={result}
         page={page}

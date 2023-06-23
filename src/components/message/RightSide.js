@@ -16,7 +16,7 @@ import {
 import LoadIcon from "../../images/loading.gif"
 import { Button, Spin } from "antd"
 import { ExclamationCircleFilled } from "@ant-design/icons"
-import { Modal } from "antd"
+import { Modal, message } from "antd"
 
 const { confirm } = Modal
 
@@ -76,7 +76,8 @@ const RightSide = () => {
       return newMedia.push(file)
     })
 
-    if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
+    if (err)
+      message.error(err)
     setMedia([...media, ...newMedia])
   }
 
@@ -239,13 +240,15 @@ const RightSide = () => {
           <div
             style={{
               marginTop: "0",
-              opacity: 1,
+              opacity: 0,
               width: "100%",
               height: "10px"
             }}
             ref={pageEnd}
-          ></div>
-          {loading && <Spin></Spin>}
+          >
+            {loading && <Spin></Spin>}
+          </div>
+
 
           {data.map((msg, index) => (
             <div key={index}>

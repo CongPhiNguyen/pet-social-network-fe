@@ -1,3 +1,15 @@
 .ant-btn.css-dev-only-do-not-override-10ed4xt:focus {
   outline: none;
 }
+
+.slick-slide.slick-active.slick-current > div > div {
+  display: flex !important;
+  justify-content: center;
+}
+:where(.css-dev-only-do-not-override-w8mnev).ant-modal-root .ant-modal-mask {
+  z-index: 1000;
+}
+
+:where(.css-dev-only-do-not-override-w8mnev).ant-popover {
+  z-index: 999;
+}

@@ -9,6 +9,7 @@ const Status = () => {
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
 
+
   return (
     <Card className="card-status" style={{ margin: "16px 0" }}>
       <div className="status my-3 d-flex mt-6">
@@ -20,7 +21,7 @@ const Status = () => {
           }}
           src={
             auth?.user?.avatar ===
-            "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
               ? null
               : auth?.user?.avatar
           }
@@ -38,7 +39,6 @@ const Status = () => {
           {auth.user.fullname}, what are you thinking?
         </button>
       </div>
-      <StatusModal />
     </Card>
   )
 }

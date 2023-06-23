@@ -9,7 +9,7 @@ const { Header } = Layout;
 
 const HeaderLayout = () => {
     return (
-        <Header style={{ display: "flex", justifyContent: "center", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1029 }}>
+        <Header style={{ display: "flex", justifyContent: "center", position: "fixed", top: 0, left: 0, right: 0, zIndex: 999 }}>
             <Row style={{ maxWidth: "1200px", width: "100%" }} >
                 <Col xs={0} sm={0} md={2} lg={2}>
                     <Link to="/" className="logo">

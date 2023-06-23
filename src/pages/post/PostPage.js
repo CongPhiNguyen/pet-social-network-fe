@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { getPost } from "../../redux/actions/postAction"
 import LoadIcon from "../../images/loading.gif"
 import PostCard from "../../components/PostCard"
-import { Col, Row } from "antd"
+import { Col, Row, Spin } from "antd"
 
 const PostPage = () => {
   const { id } = useParams()
@@ -28,11 +28,7 @@ const PostPage = () => {
       <Col xs={12}>
         <div style={{ paddingTop: 16 }} className="posts">
           {post.length === 0 && (
-            <img
-              src={LoadIcon}
-              alt="loading"
-              className="d-block mx-auto my-4"
-            />
+            <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
           )}
           {post.map((item) => (
             <PostCard key={item._id} post={item} />

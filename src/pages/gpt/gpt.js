@@ -248,20 +248,7 @@ const Gpt = ({ setIsOpen }) => {
                       ...
                     </p>
                   )}
-                  {message.role === "assistant" &&
-                    !isReplying &&
-                    message.content !== "" &&
-                    index === messages.length - 1 && (
-                      <Button
-                        style={{
-                          float: "right",
-                          marginTop: "5px"
-                        }}
-                      >
-                        <ReloadOutlined />
-                        Regenerate
-                      </Button>
-                    )}
+
                 </div>
               </div>
             </div>

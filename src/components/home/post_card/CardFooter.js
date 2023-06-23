@@ -54,7 +54,7 @@ const CardFooter = ({ post }) => {
       content: (
         <ShareModal url={`${BASE_URL}/post/${post._id}`} theme={theme} />
       ),
-      onOk() {}
+      onOk() { }
     })
   }
 

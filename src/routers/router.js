@@ -15,6 +15,7 @@ import Profile from "../pages/profile/Profile"
 import Register from "../pages/register"
 import Setting from "../pages/setting/Setting"
 import Verify from "../pages/verify"
+import FindPet from "../pages/find-pet/FindPet"
 
 const mainRoute = []
 
