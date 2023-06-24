@@ -45,7 +45,7 @@ export default function LeftNavigation() {
             style={{ display: "flex", alignItems: "baseline", marginTop: 16 }}
           >
             <p style={{ marginRight: 10 }}>Pet wiki</p>
-            <Badge count={10}></Badge>
+            {/* <Badge count={10}></Badge> */}
           </div>
         </Link>
       ),
