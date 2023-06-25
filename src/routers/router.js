@@ -43,6 +43,11 @@ const protectedRoute = [
     element: <NotificationPage />
   },
   {
+    path: "/find-pet",
+    name: "FindPet",
+    element: <FindPet />
+  },
+  {
     path: "/pet-wiki",
     name: "PetWiki",
     element: <PetWiki />

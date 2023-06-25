@@ -68,7 +68,6 @@ const CustomRouters = () => {
 
   useEffect(() => {
     if (auth.token) {
-      dispatch(getPosts(auth.token))
       dispatch(getSuggestions(auth.token))
       dispatch(getNotifies(auth.token))
     }

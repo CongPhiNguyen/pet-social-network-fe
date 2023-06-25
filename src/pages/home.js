@@ -3,18 +3,27 @@ import Status from "../components/home/Status"
 import Posts from "../components/home/Posts"
 import RightSideBar from "../components/home/RightSideBar"
 import { Link } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import LoadIcon from "../images/loading.gif"
 import { Row, Col, Result, Card, Menu, Spin } from "antd"
 import LeftNavigation from "../components/navigation/LeftNavigation"
 import { RiProfileLine, RiFindReplaceLine } from "react-icons/ri"
 import { AiOutlineHome, AiOutlineMessage, AiOutlineBook } from "react-icons/ai"
 import { BiBasket, BiMessage } from "react-icons/bi"
+import { getPosts } from "../redux/actions/postAction"
 
 let scroll = 0
 
 const Home = () => {
+  const dispatch = useDispatch()
+  const { auth } = useSelector((state) => state)
+
   const { homePosts } = useSelector((state) => state)
+  useEffect(() => {
+    if (auth.token) {
+      dispatch(getPosts(auth.token))
+    }
+  }, [dispatch, auth.token])
 
   window.addEventListener("scroll", () => {
     if (window.location.pathname === "/") {

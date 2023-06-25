@@ -3,7 +3,7 @@ import Status from "../../components/home/Status"
 import Posts from "../../components/home/Posts"
 import RightSideBar from "../../components/home/RightSideBar"
 import { Link } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Row, Col, Result, Card, Menu, Spin, message } from "antd"
 import LeftNavigation from "../../components/navigation/LeftNavigation"
 import { RiProfileLine, RiFindReplaceLine } from "react-icons/ri"
@@ -14,22 +14,23 @@ import { FaLocationArrow } from "react-icons/fa"
 import { getPostByLocation } from "../../api/post"
 import PostCard from "../../components/PostCard"
 import GoogleMap1 from "./GoogleMap"
+import { getPostsByLocationDispatch } from "../../redux/actions/postAction"
 
 let scroll = 0
 export default function FindPet() {
   const { theme } = useSelector((state) => state)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [location, setLocation] = useState("")
-  const [posts, setPosts] = useState([])
   const currentUserId = useSelector((state) => state?.auth?.user?._id)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [geolocation, setGeolocation] = useState({ lat: 0, lon: 0 })
-
+  const { homePosts } = useSelector((state) => state)
+  const dispatch = useDispatch()
   const getPost = async () => {
     setLoading(true)
     const rs = await getPostByLocation(location)
     const { data } = rs.data
-    setPosts(data)
+    dispatch(getPostsByLocationDispatch({ posts: data || [] }))
     setLoading(false)
   }
 
@@ -65,8 +66,6 @@ export default function FindPet() {
         }
       )
     }
-    setLoading(false)
-
   }
 
   const onGetLocation1 = async () => {
@@ -151,13 +150,12 @@ export default function FindPet() {
         {/* <Status /> */}
         <Card style={{ margin: "20px 0" }}>
           <FaLocationArrow onClick={() => {
-            onGetLocation()
             setIsModalOpen(true);
           }} style={{ color: "#ff4d4f", fontSize: "1.5rem", cursor: "pointer", transform: "translateY(-3px)" }} />   <span style={{ fontWeight: "600", fontSize: "1rem", marginLeft: 5 }}>{location}</span>
         </Card>
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
-        ) : posts.length === 0 ? (
+        ) : homePosts.posts && homePosts.posts.length === 0 ? (
           <Card>
             <Result
               status="404"
@@ -167,7 +165,7 @@ export default function FindPet() {
           </Card>
         ) : (
           <div className="posts">
-            {posts.map((post) => (
+            {homePosts.posts && homePosts.posts.map((post) => (
               <PostCard key={post._id} post={post} theme={theme} />
             ))}
           </div>
@@ -177,13 +175,12 @@ export default function FindPet() {
       <Col xs={{ span: 18 }} md={{ span: 0 }} >
         <Card style={{ margin: "20px 0" }}>
           <FaLocationArrow onClick={() => {
-            onGetLocation()
             setIsModalOpen(true);
           }} style={{ color: "#ff4d4f", fontSize: "1.5rem", cursor: "pointer", transform: "translateY(-3px)" }} />   <span style={{ fontWeight: "600", fontSize: "1rem", marginLeft: 5 }}>{location}</span>
         </Card>
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
-        ) : posts.length === 0 ? (
+        ) : homePosts.posts && homePosts.posts.length === 0 ? (
           <Card>
             <Result
               status="404"
@@ -193,7 +190,7 @@ export default function FindPet() {
           </Card>
         ) : (
           <div className="posts">
-            {posts.map((post) => (
+            {homePosts.posts && homePosts.posts.map((post) => (
               <PostCard key={post._id} post={post} theme={theme} />
             ))}
           </div>

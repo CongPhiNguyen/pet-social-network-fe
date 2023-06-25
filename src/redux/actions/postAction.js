@@ -8,6 +8,7 @@ import {
 } from "../../utils/fetchData"
 import { createNotify, removeNotify } from "./notifyAction"
 import { message } from "antd"
+import { getPostByLocation } from "../../api/post"
 
 export const POST_TYPES = {
   CREATE_POST: "CREATE_POST",
@@ -77,6 +78,24 @@ export const getPosts = (token) => async (dispatch) => {
     // })
   }
 }
+
+export const getPostsByLocationDispatch = (data) => async (dispatch) => {
+  try {
+    dispatch({
+      type: POST_TYPES.GET_POSTS,
+      payload: { ...data }
+    })
+
+  } catch (err) {
+    message.error(err.response.data.msg)
+    // dispatch({
+    //   type: GLOBALTYPES.ALERT,
+    //   payload: { error: err.response?.data?.msg }
+    // })
+  }
+}
+
+
 
 export const updatePost =
   ({ content, images, auth, status, location }) =>

@@ -198,7 +198,7 @@ const Login = () => {
               <Button>Login with google</Button>
             </div> */}
             {/* <label to="#google-login-phiroud">Login with google</label> */}
-            <div style={{ textAlign: "center", marginTop: 20 }}>
+            <div style={{ textAlign: "center", marginTop: 20, display: "flex", justifyContent: "center" }}>
               <GoogleOAuthProvider
                 clientId={GOOGLE_CLIENT_ID}
                 ref={GoogleButton}

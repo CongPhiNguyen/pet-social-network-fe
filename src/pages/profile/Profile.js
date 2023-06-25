@@ -3,13 +3,14 @@ import Info from "./components/Info"
 import { useSelector, useDispatch } from "react-redux"
 import { getProfileUsers } from "../../redux/actions/profileAction"
 import { useParams } from "react-router-dom"
-import { Card, Col, Row, Spin, message } from "antd"
+import { Card, Col, Row, Spin, message, Result } from "antd"
 import Following from "./components/Following"
 import { getPostByUserIdApi } from "../../api/post"
 import PostCard from "../../components/PostCard"
 import { getUserInfoApi } from "../../api/user"
 import "../../styles/home.css"
 import NotFoundPage from "../notFound"
+import { getPostsByLocationDispatch } from "../../redux/actions/postAction"
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -17,14 +18,18 @@ const Profile = () => {
   const { auth } = useSelector((state) => state)
   const [isGettingProfile, setIsGettingProfile] = useState(false)
   const [profile, setProfile] = useState({})
-  const [postList, setPostList] = useState([])
-
+  const [loading, setLoading] = useState(false)
+  const { theme } = useSelector((state) => state)
+  const { homePosts } = useSelector((state) => state)
+  const { posts: postList } = homePosts
   const getUserPost = async (userId) => {
+    setLoading(true)
     const response = await getPostByUserIdApi(userId)
     const { data, status } = response
     if (status === 200) {
-      setPostList(data.postList)
+      dispatch(getPostsByLocationDispatch({ posts: data.postList || [] }))
     }
+    setLoading(false)
   }
 
   const getProfileInfo = async () => {
@@ -49,7 +54,6 @@ const Profile = () => {
     getUserPost(id)
   }, [id])
 
-  console.log("profile", profile)
 
   if (isGettingProfile) {
     return <Spin loading={isGettingProfile}></Spin>
@@ -75,11 +79,28 @@ const Profile = () => {
               )}
             </Col>
             <Col xl={16} md={24} sm={24}>
-              <div className="home posts">
+              {loading ? (
+                <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
+              ) : postList.length === 0 ? (
+                <Card>
+                  <Result
+                    status="404"
+                    title="NO POST"
+                    subTitle="You can follow someone or create new post!"
+                  />
+                </Card>
+              ) : (
+                <div className="posts">
+                  {postList.map((post) => (
+                    <PostCard key={post._id} post={post} theme={theme} />
+                  ))}
+                </div>
+              )}
+              {/* <div className="home posts">
                 {postList.map((val, index) => {
                   return <PostCard key={index} post={val} />
                 })}
-              </div>
+              </div> */}
             </Col>
           </Row>
         </div>
