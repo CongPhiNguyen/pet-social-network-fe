@@ -35,3 +35,7 @@ export const changePasswordApi = (changePassInfo) => {
 export const logInGoogleApi = (token) => {
   return axios.post(`${API_ENDPOINT}/login-google/`, { token: token })
 }
+
+export const loginApi = (data) => {
+  return axios.post(`${API_ENDPOINT}/login`, data)
+}

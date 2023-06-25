@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { login, loginGoogleAction } from "../redux/actions/authAction"
+import { loginGoogleAction } from "../redux/actions/authAction"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { Col, Row, Button, Form, Input, Typography, message } from "antd"
@@ -14,7 +14,9 @@ import {
   GoogleLoginButton,
   useGoogleLogin
 } from "@react-oauth/google"
-import { logInGoogleApi } from "../api/authen"
+import { logInGoogleApi, loginApi } from "../api/authen"
+import { GLOBALTYPES } from "../redux/actions/globalTypes"
+import { setRefreshToken } from "../utils/cookies"
 
 const { Title } = Typography
 
@@ -36,13 +38,42 @@ const Login = () => {
       setUserOTPEnable(true)
       return
     } else setUserOTPEnable(false)
-    dispatch(login({ pattern: pattern, password, token: otp }))
+    const sendData = { pattern: pattern, password, token: otp }
+    try {
+      dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
+      const res = await loginApi(sendData)
+      dispatch({
+        type: GLOBALTYPES.AUTH,
+        payload: {
+          token: res.data.access_token,
+          user: res.data.user
+        }
+      })
+      localStorage.setItem("firstLogin", true)
+      setRefreshToken(res?.data?.refresh_token)
+      message.success(res?.data?.msg)
+    } catch (err) {
+      message.error(err?.response?.data?.msg)
+      if (
+        err?.response?.data?.msg ===
+        "Unverified account. Verify account to login"
+      ) {
+        navigate(`/verify/${err?.response?.data?.userId}`)
+      }
+    }
+    dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } })
   }
 
   const getUserWithPattern = async (email) => {
     const response = await getUserWithPatternApi(email)
     if (response?.data?.user?.otpEnabled) {
       setUserOTPEnable(true)
+      message.info(
+        "You have set up your otp so you have to input your otp inorder to login"
+      )
+      // message.info(
+      //   "You have set up your otp so you have to input your otp inorder to login"
+      // )
     } else setUserOTPEnable(false)
   }
 
@@ -146,9 +177,15 @@ const Login = () => {
             >
               <Input.Password style={{ marginTop: -20 }} />
             </Form.Item>
+
+            <p style={{ marginBottom: "10px", marginTop: -20 }}>
+              <Link to="/forgot-password" className="forgot-password">
+                Forgot your password?
+              </Link>
+            </p>
             {userOTPEnable && (
               <Form.Item
-                label="OTP"
+                label="OTP (You have set up your otp so you have to input your otp inorder to login)"
                 name="otp"
                 rules={[
                   {
@@ -156,16 +193,11 @@ const Login = () => {
                     message: "Please input otp!"
                   }
                 ]}
+                style={{ marginTop: 0 }}
               >
-                <Input />
+                <Input style={{ marginTop: -20 }} />
               </Form.Item>
             )}
-
-            <p style={{ marginBottom: "20px", marginTop: -20 }}>
-              <Link to="/forgot-password" className="forgot-password">
-                Forgot your password?
-              </Link>
-            </p>
             <Form.Item>
               <Button
                 type="primary"

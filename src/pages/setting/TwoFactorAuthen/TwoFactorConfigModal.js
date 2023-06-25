@@ -5,6 +5,7 @@ import "./TwoFactorConfigModal.scss"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
+import { verifyOtpApi } from "../../../api/setting"
 
 export default function TwoFactorConfigModal(props) {
   const dispatch = useDispatch()
@@ -14,28 +15,20 @@ export default function TwoFactorConfigModal(props) {
 
   const verifyOtp = async (token) => {
     try {
-      const response = await axios.post("api/auth/otp/verify", {
+      const sendData = {
         token,
         userId: user._id
-      })
+      }
+      const response = await verifyOtpApi(sendData)
+      const { data } = response
       message.success("Two-Factor Auth Enabled Successfully")
       props.closeModal()
-      const { status, data } = response
-      if (status === 200) {
-        dispatch({
-          type: GLOBALTYPES.AUTH,
-          payload: { ...auth, user: data.user }
-        })
-      }
-    } catch (error) {
-      const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.response.data.detail ||
-        error.message ||
-        error.toString()
-      message.error(resMessage)
+      dispatch({
+        type: GLOBALTYPES.AUTH,
+        payload: { ...auth, user: data.user }
+      })
+    } catch (err) {
+      message.error(err?.response?.data?.message || "Unexpected Error")
     }
   }
 

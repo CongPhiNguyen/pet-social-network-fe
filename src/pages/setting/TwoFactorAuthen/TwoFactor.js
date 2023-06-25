@@ -1,9 +1,13 @@
-import { Button, Typography, Modal } from "antd"
+import { Button, Typography, Modal, message } from "antd"
 import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import axios from "axios"
 import TwoFactorConfigModal from "./TwoFactorConfigModal"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
+import {
+  disableTwoFactorAuthApi,
+  generateQrCodeApi
+} from "../../../api/setting"
 
 export default function TwoFactor() {
   const dispatch = useDispatch()
@@ -16,25 +20,28 @@ export default function TwoFactor() {
   const [isOpenModal, setIsOpenModal] = useState(false)
 
   const generateQrCode = async ({ userId, email }) => {
-    const response = await axios.post("api/auth/otp/generate", {
-      userId,
-      email
-    })
-    setSecret(response.data)
-    setIsOpenModal(true)
+    try {
+      const response = await generateQrCodeApi({ userId, email })
+      const { data } = response
+      setSecret(data)
+      setIsOpenModal(true)
+    } catch (err) {
+      message.error(err?.response?.data?.message || "Unexpected Error")
+    }
   }
 
   const disableTwoFactorAuth = async (userId) => {
-    const response = await axios.post("api/auth/otp/disable", {
-      userId: userId
-    })
-    const { status, data } = response
-
-    if (status === 200) {
+    try {
+      const response = await disableTwoFactorAuthApi({ userId })
+      const { data } = response
+      // setSecret(data)
+      // setIsOpenModal(true)
       dispatch({
         type: GLOBALTYPES.AUTH,
         payload: { ...auth, user: data.updateUser }
       })
+    } catch (err) {
+      message.error(err?.response?.data?.message || "Unexpected Error")
     }
   }
   return (

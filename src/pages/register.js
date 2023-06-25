@@ -3,6 +3,7 @@ import { Col, Row, Button, Form, Input, Typography, Radio, message } from "antd"
 import { useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { registerApi } from "../api/authen"
+import Logo from "../images/logo.png"
 const { Title } = Typography
 
 const Register = () => {
@@ -63,13 +64,30 @@ const Register = () => {
             onFinish={onFinish}
             autoComplete="off"
           >
-            <Title level={2}>Register to Pet Love</Title>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <img src={Logo} alt="logo-petlove" width={40}></img>
+              <Title level={5} style={{ marginTop: 10 }}>
+                PetLove
+              </Title>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <Title style={{ marginTop: 10, fontSize: 36 }}>
+                Register to join PetLove
+              </Title>
+            </div>
+
             <Form.Item
               name="fullname"
               style={{
                 width: "100%"
               }}
-              label='Fullname'
+              label="Fullname"
               rules={[
                 {
                   required: true,
@@ -159,7 +177,7 @@ const Register = () => {
               <Input.Password />
             </Form.Item>
             <Form.Item name="gender">
-              <Radio.Group onChange={() => { }}>
+              <Radio.Group onChange={() => {}}>
                 <Radio value={"male"}>Male</Radio>
                 <Radio value={"female"}>Female</Radio>
                 <Radio value={"other"}>Other</Radio>

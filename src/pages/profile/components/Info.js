@@ -56,19 +56,28 @@ const Info = ({ auth, profile }) => {
               </div>
             </Col>
             <Col xs={24} md={12} xl={12}>
-              <img
-                style={{
-                  marginTop: -80,
-                  marginLeft: 40,
-                  border: "6px solid #fff",
-                  width: 180,
-                  height: 180,
-                  objectFit: "cover",
-                  borderRadius: "100%"
-                }}
-                src={userInfo.avatar}
-                alt=""
-              ></img>
+              <div>
+                <Avatar
+                  style={{
+                    backgroundColor: "#f56a00",
+                    verticalAlign: "middle",
+                    marginTop: -80,
+                    marginLeft: 40,
+                    border: "6px solid #fff"
+                  }}
+                  src={
+                    auth.user.avatar ===
+                    "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                      ? null
+                      : auth.user.avatar
+                  }
+                  size={180}
+                >
+                  <p style={{ fontSize: 92, marginTop: -10 }}>
+                    {auth.user.username[0].toUpperCase()}
+                  </p>
+                </Avatar>
+              </div>
               <div style={{ marginLeft: 60, marginTop: 20, marginBottom: 10 }}>
                 <Typography.Title level={2}>
                   {userInfo.fullname} (@{userInfo?.username})
