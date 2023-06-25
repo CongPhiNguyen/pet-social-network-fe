@@ -22,6 +22,7 @@ const mainRoute = []
 // Những route chỉ truy xuất khi chưa đăng nhập
 const publicRoute = [
   { path: "/", name: "Login", element: <Login /> },
+  { path: "/login", name: "Login", element: <Login /> },
   { path: "/register", name: "Register", element: <Register /> },
   { path: "/verify/:id", name: "Verify", element: <Verify /> },
   {

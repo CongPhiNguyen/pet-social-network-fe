@@ -95,14 +95,12 @@ const Register = () => {
                 }
               ]}
             >
-              <Input placeholder="Fullname" />
+              <Input />
             </Form.Item>
             <Form.Item
               label="User Name"
               name="username"
-              style={{
-                width: "100%"
-              }}
+              style={{ marginTop: -20, width: "100%" }}
               rules={[
                 {
                   required: true,
@@ -115,9 +113,7 @@ const Register = () => {
             <Form.Item
               label="Email address"
               name="email"
-              style={{
-                width: "100%"
-              }}
+              style={{ marginTop: -20, width: "100%" }}
               rules={[
                 {
                   required: true,
@@ -135,6 +131,7 @@ const Register = () => {
             <Form.Item
               label="Password"
               name="password"
+              style={{ marginTop: -20 }}
               rules={[
                 {
                   required: true,
@@ -151,6 +148,7 @@ const Register = () => {
             <Form.Item
               label="Confirm Password"
               name="cf_password"
+              style={{ marginTop: -20 }}
               rules={[
                 {
                   required: true,
@@ -176,7 +174,7 @@ const Register = () => {
             >
               <Input.Password />
             </Form.Item>
-            <Form.Item name="gender">
+            <Form.Item style={{ marginTop: -20 }} name="gender">
               <Radio.Group onChange={() => {}}>
                 <Radio value={"male"}>Male</Radio>
                 <Radio value={"female"}>Female</Radio>
@@ -191,9 +189,13 @@ const Register = () => {
             </p>
             <Form.Item>
               <Button
-                style={{ width: "100%" }}
                 type="primary"
                 htmlType="submit"
+                style={{
+                  width: "100%",
+                  background: "#f39161",
+                  borderColor: "#f39161"
+                }}
               >
                 Register
               </Button>
