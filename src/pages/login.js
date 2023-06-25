@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { login, loginGoogleAction } from "../redux/actions/authAction"
 import { useDispatch, useSelector } from "react-redux"
@@ -6,7 +6,7 @@ import axios from "axios"
 import { Col, Row, Button, Form, Input, Typography, message } from "antd"
 import "../styles/login.css"
 import { getUserWithPatternApi } from "../api/user"
-import { FaGoogle } from "react-icons/fa"
+import Logo from "../images/logo.png"
 import { GOOGLE_CLIENT_ID } from "../constants"
 import {
   GoogleOAuthProvider,
@@ -15,6 +15,7 @@ import {
   useGoogleLogin
 } from "@react-oauth/google"
 import { logInGoogleApi } from "../api/authen"
+
 const { Title } = Typography
 
 const Login = () => {
@@ -23,7 +24,7 @@ const Login = () => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
   const [userOTPEnable, setUserOTPEnable] = useState("")
-
+  const GoogleButton = useRef(null)
   useEffect(() => {
     if (auth.token) navigate("/")
   }, [auth.token, navigate])
@@ -89,12 +90,30 @@ const Login = () => {
             autoComplete="off"
             size="large"
           >
-            <Title level={2}>Login to Pet Love</Title>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <img src={Logo} alt="logo-petlove" width={40}></img>
+              <Title level={5} style={{ marginTop: 10 }}>
+                PetLove
+              </Title>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <Title style={{ marginTop: 10, fontSize: 36 }}>
+                Login to discover!
+              </Title>
+            </div>
+
             <Form.Item
-              label="Email or username"
+              label={"Email or username"}
               name="pattern"
               style={{
-                width: "100%"
+                width: "100%",
+                marginTop: 50
               }}
               rules={[
                 {
@@ -104,6 +123,7 @@ const Login = () => {
               ]}
             >
               <Input
+                style={{ marginTop: -20 }}
                 onBlur={(e) => {
                   getUserWithPattern(e.target.value)
                 }}
@@ -122,8 +142,9 @@ const Login = () => {
                   message: "Password at least 6 characters!"
                 }
               ]}
+              style={{ marginTop: -20 }}
             >
-              <Input.Password />
+              <Input.Password style={{ marginTop: -20 }} />
             </Form.Item>
             {userOTPEnable && (
               <Form.Item
@@ -140,31 +161,48 @@ const Login = () => {
               </Form.Item>
             )}
 
-            <p style={{ marginBottom: "20px" }}>
+            <p style={{ marginBottom: "20px", marginTop: -20 }}>
               <Link to="/forgot-password" className="forgot-password">
                 Forgot your password?
               </Link>
             </p>
             <Form.Item>
               <Button
-                style={{ width: "100%" }}
                 type="primary"
                 htmlType="submit"
+                style={{
+                  width: "100%",
+                  background: "#f39161",
+                  borderColor: "#f39161"
+                }}
               >
                 Login
               </Button>
             </Form.Item>
-            <p style={{ textAlign: "center" }} className="my-2">
+            <p style={{ textAlign: "center", marginTop: -20 }} className="my-2">
               You don't have an account?{" "}
               <Link
                 to="/register"
-                style={{ color: "crimson", fontWeight: "700" }}
+                style={{ color: "#f39161", fontWeight: "700" }}
               >
                 Register Now
               </Link>
             </p>
+            {/* <div
+              style={{ textAlign: "center" }}
+              onClick={() => {
+                console.log(GoogleButton.current)
+                // GoogleButton.current.click()
+              }}
+            >
+              <Button>Login with google</Button>
+            </div> */}
+            {/* <label to="#google-login-phiroud">Login with google</label> */}
             <div style={{ textAlign: "center", marginTop: 20 }}>
-              <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+              <GoogleOAuthProvider
+                clientId={GOOGLE_CLIENT_ID}
+                ref={GoogleButton}
+              >
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
                     // console.log(credentialResponse)

@@ -1,9 +1,10 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { Modal, Tooltip } from "antd"
+import { Modal, Tooltip, message } from "antd"
 import { ExclamationCircleFilled } from "@ant-design/icons"
 import { FaVideo } from "react-icons/fa"
 import { IoCall } from "react-icons/io5"
+import PetCardInfo from "./PetCardInfo"
 const { confirm } = Modal
 const MessageDisplay = ({ user, msg, theme, data }) => {
   const { auth } = useSelector((state) => state)
@@ -22,6 +23,7 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
   //     }
   //   })
   // }
+  console.log(msg)
 
   return (
     <>
@@ -30,7 +32,7 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
         <span>{user.username}</span>
       </div> */}
       <Tooltip
-        title={new Date(msg.createdAt).toLocaleString()}
+        title={new Date(msg.createdAt || msg.time).toLocaleString()}
         style={{ cursor: "pointer" }}
       >
         <div className="you_content">
@@ -48,8 +50,38 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
                 className="chat_text"
                 style={{ filter: theme ? "invert(1)" : "invert(0)" }}
               >
-                {msg.text}
+                <p style={{ margin: 0, padding: 0 }}>{msg.text}</p>
+                <p style={{ margin: 0, padding: 0, fontWeight: 600 }}>
+                  {msg?.dialogflowFeature?.name === "ask_pet-fact" &&
+                    msg?.dialogflowFeature?.fact}
+                </p>
+                <p style={{ margin: 0, padding: 0, fontWeight: 600 }}>
+                  {msg?.dialogflowFeature?.name === "ask_pet-care-tips" &&
+                    msg?.dialogflowFeature?.tip}
+                </p>
               </div>
+            )}
+            {msg?.dialogflowFeature?.name === "ask_find-dog" && (
+              <PetCardInfo
+                info={msg?.dialogflowFeature?.dogInfo}
+                name={msg?.dialogflowFeature?.dogName}
+                type="dog"
+              />
+            )}
+            {msg?.dialogflowFeature?.name === "ask_find-cat" && (
+              <PetCardInfo
+                info={msg?.dialogflowFeature?.catInfo}
+                name={msg?.dialogflowFeature?.catName}
+                type="cat"
+              />
+            )}
+            {(msg?.dialogflowFeature?.name === "say_gau" ||
+              msg?.dialogflowFeature?.name === "say_meow") && (
+              <img
+                src={msg?.dialogflowFeature?.imgUrl}
+                alt=""
+                style={{ maxWidth: 400 }}
+              ></img>
             )}
             {/* {msg.media.map((item, index) => (
             <div key={index}>

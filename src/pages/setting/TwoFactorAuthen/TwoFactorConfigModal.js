@@ -11,6 +11,7 @@ export default function TwoFactorConfigModal(props) {
   const { auth } = useSelector((state) => state)
   const [qrcodeUrl, setqrCodeUrl] = useState("")
   const user = useSelector((state) => state.auth.user)
+
   const verifyOtp = async (token) => {
     try {
       const response = await axios.post("api/auth/otp/verify", {

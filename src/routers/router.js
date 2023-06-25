@@ -7,6 +7,7 @@ import Message from "../pages/message"
 import Conversation from "../pages/message/[id]"
 import NotificationPage from "../pages/notification/NotificationPage"
 import PetWiki from "../pages/pet-wiki/PetWiki"
+import PetWikiPage from "../pages/pet-wiki/PetWikiPage"
 import PostPage from "../pages/post/PostPage"
 import PetPage from "../pages/profile/PetPage"
 import Profile from "../pages/profile/Profile"
@@ -47,9 +48,9 @@ const protectedRoute = [
     element: <PetWiki />
   },
   {
-    path: "/find-pet",
+    path: "/pet-wiki/:type/:id",
     name: "PetWiki",
-    element: <FindPet />
+    element: <PetWikiPage />
   },
   { path: "/message", name: "Chat", element: <Message /> },
   { path: "/message/:id", name: "Chat", element: <Conversation /> },
