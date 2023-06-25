@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { login, loginGoogleAction } from "../redux/actions/authAction"
 import { useDispatch, useSelector } from "react-redux"
@@ -24,7 +24,7 @@ const Login = () => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
   const [userOTPEnable, setUserOTPEnable] = useState("")
-
+  const GoogleButton = useRef(null)
   useEffect(() => {
     if (auth.token) navigate("/")
   }, [auth.token, navigate])
@@ -183,21 +183,25 @@ const Login = () => {
               You don't have an account?{" "}
               <Link
                 to="/register"
-                style={{ color: "crimson", fontWeight: "700" }}
+                style={{ color: "#f39161", fontWeight: "700" }}
               >
                 Register Now
               </Link>
             </p>
-            <div style={{ textAlign: "center" }}>
-              <Button>
-                <label to="#google-login-phiroud">Login with google</label>
-              </Button>
-            </div>
-
+            {/* <div
+              style={{ textAlign: "center" }}
+              onClick={() => {
+                console.log(GoogleButton.current)
+                // GoogleButton.current.click()
+              }}
+            >
+              <Button>Login with google</Button>
+            </div> */}
+            {/* <label to="#google-login-phiroud">Login with google</label> */}
             <div style={{ textAlign: "center", marginTop: 20 }}>
               <GoogleOAuthProvider
                 clientId={GOOGLE_CLIENT_ID}
-                id="google-login-phiroud"
+                ref={GoogleButton}
               >
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
