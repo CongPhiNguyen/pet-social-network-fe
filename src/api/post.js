@@ -21,3 +21,7 @@ export const getAllLimitsWord = () => {
 export const updateListsWord = (words) => {
   return axios.post(`${API_ENDPOINT}/get-all-limits-word`, { words })
 }
+
+export const searchInPageSearch = (search) => {
+  return axios.get(`${API_ENDPOINT}/search-in-page${search}`)
+}
