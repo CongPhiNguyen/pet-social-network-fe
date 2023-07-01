@@ -44,14 +44,15 @@ const Register = () => {
   return (
     <div>
       <Row style={{ width: "100vw" }}>
-        <Col style={{ height: "100vh" }} xs={0} md={16}>
+        <Col style={{ height: "100vh" }} xs={0} md={12} xl={16}>
           <div className="login-background"></div>
         </Col>
         <Col
           className="login-form-warpper"
           style={{ height: "100vh" }}
           xs={24}
-          md={8}
+          md={12}
+          xl={8}
         >
           <Form
             form={form}
@@ -182,11 +183,18 @@ const Register = () => {
               </Radio.Group>
             </Form.Item>
 
-            <p style={{ marginBottom: "20px" }}>
-              <Link to="/forgot-password" className="forgot-password">
+            {/* <p style={{ marginBottom: "20px", marginTop: -20 }}>
+              <Link
+                to="/forgot-password"
+                className="forgot-password"
+                style={{
+                  color: "#f39161",
+                  cursor: "pointer"
+                }}
+              >
                 Forgot your password?
               </Link>
-            </p>
+            </p> */}
             <Form.Item>
               <Button
                 type="primary"
@@ -200,9 +208,9 @@ const Register = () => {
                 Register
               </Button>
             </Form.Item>
-            <p style={{ textAlign: "center" }} className="my-2">
+            <p style={{ textAlign: "center", marginTop: -12 }}>
               Have an account?{" "}
-              <Link to="/" style={{ color: "crimson", fontWeight: "700" }}>
+              <Link to="/" style={{ color: "#f39161", fontWeight: "700" }}>
                 Login
               </Link>
             </p>

@@ -179,7 +179,11 @@ const Login = () => {
             </Form.Item>
 
             <p style={{ marginBottom: "10px", marginTop: -20 }}>
-              <Link to="/forgot-password" className="forgot-password">
+              <Link
+                to="/forgot-password"
+                className="forgot-password"
+                style={{ color: "#f39161", fontWeight: "700" }}
+              >
                 Forgot your password?
               </Link>
             </p>
@@ -230,7 +234,14 @@ const Login = () => {
               <Button>Login with google</Button>
             </div> */}
             {/* <label to="#google-login-phiroud">Login with google</label> */}
-            <div style={{ textAlign: "center", marginTop: 20, display: "flex", justifyContent: "center" }}>
+            <div
+              style={{
+                textAlign: "center",
+                marginTop: 20,
+                display: "flex",
+                justifyContent: "center"
+              }}
+            >
               <GoogleOAuthProvider
                 clientId={GOOGLE_CLIENT_ID}
                 ref={GoogleButton}

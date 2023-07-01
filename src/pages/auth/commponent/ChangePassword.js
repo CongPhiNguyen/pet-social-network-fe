@@ -2,6 +2,7 @@ import React from "react"
 import { Col, Row, Button, Form, Input, Typography, message } from "antd"
 import { Link, useNavigate } from "react-router-dom"
 import { changePasswordApi } from "../../../api/authen"
+import Logo from "../../../images/logo.png"
 const { Title } = Typography
 export default function ChangePassword({ pattern }) {
   const navigate = useNavigate()
@@ -23,7 +24,7 @@ export default function ChangePassword({ pattern }) {
     }
   }
   return (
-    <div>
+    <div className="changepass-container" style={{ width: "100%" }}>
       <Form
         form={form}
         layout="vertical"
@@ -36,7 +37,21 @@ export default function ChangePassword({ pattern }) {
         autoComplete="off"
         size="large"
       >
-        <Title level={2}>Change password</Title>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <img src={Logo} alt="logo-petlove" width={40}></img>
+          <Title level={5} style={{ marginTop: 10 }}>
+            PetLove
+          </Title>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <Title style={{ marginTop: 10, fontSize: 36 }}>Change Password</Title>
+        </div>
         <Form.Item
           label="Password"
           name="password"
@@ -76,23 +91,26 @@ export default function ChangePassword({ pattern }) {
               }
             })
           ]}
+          style={{ marginTop: -20 }}
         >
           <Input.Password />
         </Form.Item>
-
-        <p style={{ marginBottom: "20px" }}>
-          <Link to="/register" className="forgot-password">
-            Register?
-          </Link>
-        </p>
         <Form.Item>
-          <Button style={{ width: "100%" }} type="primary" htmlType="submit">
+          <Button
+            style={{
+              width: "100%",
+              background: "#f39161",
+              borderColor: "#f39161"
+            }}
+            type="primary"
+            htmlType="submit"
+          >
             Continue
           </Button>
         </Form.Item>
         <p style={{ textAlign: "center" }} className="my-2">
           You don't have an account?{" "}
-          <Link to="/register" style={{ color: "crimson", fontWeight: "700" }}>
+          <Link to="/register" style={{ color: "#f39161", fontWeight: "700" }}>
             Register Now
           </Link>
         </p>

@@ -88,10 +88,8 @@ const CustomRouters = () => {
   useEffect(() => {
     const newPeer = new Peer(undefined, {
       path: "/",
-
       secure: true
     })
-
     dispatch({ type: GLOBALTYPES.PEER, payload: newPeer })
   }, [dispatch])
   // useEffect(() => {

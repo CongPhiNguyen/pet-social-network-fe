@@ -7,6 +7,7 @@ import {
   sendCodeVerifyApi,
   sendEmailWithPatternApi
 } from "../api/authen"
+import Logo from "../images/logo.png"
 import ChangePassword from "./auth/commponent/ChangePassword"
 
 const { Title } = Typography
@@ -18,14 +19,14 @@ export default function ForgotPassword() {
   const [disableCode, setDisableCode] = useState(true)
   const [disableSendCode, setDisableSendCode] = useState(false)
   const [isCounting, setIsCounting] = useState(false)
-  const [count, setCount] = useState(10)
+  const [count, setCount] = useState(120)
   const [timer, setTimer] = useState(null)
   const [isChangePassword, setIsChangePassword] = useState(false)
   const [pattern, setPattern] = useState("")
 
   useEffect(() => {
     if (count === 0) {
-      setCount(10)
+      setCount(120)
       clearInterval(timer)
       setIsCounting(false)
       setDisableSendCode(false)
@@ -93,7 +94,7 @@ export default function ForgotPassword() {
           md={12}
           xl={8}
         >
-          {!isChangePassword ? (
+          {!isChangePassword && (
             <Form
               form={form}
               layout="vertical"
@@ -106,7 +107,23 @@ export default function ForgotPassword() {
               autoComplete="off"
               size="large"
             >
-              <Title level={2}>Forgot password</Title>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <img src={Logo} alt="logo-petlove" width={40}></img>
+                <Title level={5} style={{ marginTop: 10 }}>
+                  PetLove
+                </Title>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <Title style={{ marginTop: 10, fontSize: 36 }}>
+                  Forgot Password
+                </Title>
+              </div>
               <Form.Item
                 label="Email or username"
                 name="pattern"
@@ -144,18 +161,26 @@ export default function ForgotPassword() {
                     message: "Please input code!"
                   }
                 ]}
+                style={{ marginTop: -20 }}
               >
                 <Input />
               </Form.Item>
 
-              <p style={{ marginBottom: "20px" }}>
-                <Link to="/register" className="forgot-password">
+              <p style={{ marginBottom: "20px", marginTop: -10 }}>
+                <Link
+                  to="/register"
+                  style={{ fontSize: 14, color: "#f39161", fontWeight: 600 }}
+                >
                   Register?
                 </Link>
               </p>
               <Form.Item>
                 <Button
-                  style={{ width: "100%" }}
+                  style={{
+                    width: "100%",
+                    background: "#f39161",
+                    borderColor: "#f39161"
+                  }}
                   type="primary"
                   htmlType="submit"
                 >
@@ -166,15 +191,14 @@ export default function ForgotPassword() {
                 You don't have an account?{" "}
                 <Link
                   to="/register"
-                  style={{ color: "crimson", fontWeight: "700" }}
+                  style={{ color: "#f39161", fontWeight: "700" }}
                 >
                   Register Now
                 </Link>
               </p>
             </Form>
-          ) : (
-            <ChangePassword pattern={pattern} />
           )}
+          {isChangePassword && <ChangePassword pattern={pattern} />}
         </Col>
       </Row>
     </>

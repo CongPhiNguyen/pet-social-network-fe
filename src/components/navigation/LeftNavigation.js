@@ -28,11 +28,11 @@ export default function LeftNavigation() {
       key: "find-losted",
       icon: <RiFindReplaceLine size={22} />
     },
-    {
-      label: <Link to={`/adopt-pet`}>Adopt pet</Link>,
-      key: "adopt-pet",
-      icon: <BiBasket size={22} />
-    },
+    // {
+    //   label: <Link to={`/adopt-pet`}>Adopt pet</Link>,
+    //   key: "adopt-pet",
+    //   icon: <BiBasket size={22} />
+    // },
     {
       label: <Link to={`/chat-bot`}>Chat bot</Link>,
       key: "chat-bot",

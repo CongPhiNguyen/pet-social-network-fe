@@ -26,14 +26,20 @@ export default function PetWiki() {
       >
         <Card>
           <Title level={2}>Pet wiki</Title>
-          <Select
-            defaultValue="dogs"
-            style={{ width: 120 }}
-            onChange={handleSelectChange}
-          >
-            <Option value="dogs">Dogs</Option>
-            <Option value="cats">Cats</Option>
-          </Select>
+          <div style={{ display: "flex" }}>
+            <p style={{ fontWeight: 600, marginTop: 2, marginRight: 20 }}>
+              Select pet type
+            </p>
+            <Select
+              defaultValue="dogs"
+              style={{ width: 120 }}
+              onChange={handleSelectChange}
+            >
+              <Option value="dogs">Dogs</Option>
+              <Option value="cats">Cats</Option>
+            </Select>
+          </div>
+
           <div style={{ marginTop: 10 }}></div>
           {selectedPet === "dogs" && <Dogs />}
           {selectedPet === "cats" && <Cats />}
