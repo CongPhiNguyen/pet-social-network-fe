@@ -37,20 +37,33 @@ export default function Dogs() {
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={24} md={8} lg={8} xl={6}>
-        <Select
-          showSearch
-          placeholder="Search by breed name"
-          loading={loading}
-          style={{ width: "100%" }}
-          onChange={(e) => {
-            console.log(e)
-            setCurrentSelectPet(e)
-          }}
-          value={currentPet.name}
-          options={breeds.map((breed, index) => {
-            return { value: breed.name, label: breed.name }
-          })}
-        ></Select>
+        <div style={{ display: "flex" }}>
+          <p
+            style={{
+              fontWeight: 600,
+              marginTop: 2,
+              marginRight: 20,
+              width: 128
+            }}
+          >
+            Select breed name:
+          </p>
+          <Select
+            showSearch
+            placeholder="Search by breed name"
+            loading={loading}
+            style={{ width: "80%" }}
+            onChange={(e) => {
+              console.log(e)
+              setCurrentSelectPet(e)
+            }}
+            value={currentPet.name}
+            options={breeds.map((breed, index) => {
+              return { value: breed.name, label: breed.name }
+            })}
+          ></Select>
+        </div>
+
         <List
           size="small"
           dataSource={breeds}
