@@ -18,7 +18,7 @@ import ChatGpt from "../pages/chatGpt"
 import StatusModal from "../components/StatusModal"
 import { getAccessTokenV2Api } from "../api/authen"
 import { getRefreshToken, setRefreshToken } from "../utils/cookies"
-import { message } from "antd"
+import { Spin, message } from "antd"
 import Notify from "../components/alert/Alert"
 
 // import { setCurrentUserInfo, handleLogin } from "../features/authen/authenSlice"
@@ -28,25 +28,31 @@ const CustomRouters = () => {
   const dispatch = useDispatch()
   const location = useLocation()
   const [isAdminRoute, setIsAdminRoute] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setIsAdminRoute(location.pathname.startsWith("/admin"))
   }, [location])
 
   const getRefreshTokenFunction = async () => {
-    const refreshToken = getRefreshToken()
-    console.log("refreshToken", refreshToken)
-    const res = await getAccessTokenV2Api(refreshToken)
-    dispatch({
-      type: GLOBALTYPES.AUTH,
-      payload: {
-        token: res.data.access_token,
-        user: res.data.user
-      }
-    })
-    localStorage.setItem("firstLogin", true)
+    try {
+      const refreshToken = getRefreshToken()
+      const res = await getAccessTokenV2Api(refreshToken)
+      dispatch({
+        type: GLOBALTYPES.AUTH,
+        payload: {
+          token: res.data.access_token,
+          user: res.data.user
+        }
+      })
+      localStorage.setItem("firstLogin", true)
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+
+    }
+
     // setRefreshToken(res.data.refresh_token)
-    message.success(res.data.msg)
   }
 
   useEffect(() => {
@@ -104,6 +110,12 @@ const CustomRouters = () => {
   //       console.log("err", err)
   //     })
   // }, [dispatch])
+
+  if (loading)
+    return <div style={{ display: "flex", height: "100vh", justifyContent: "center", alignItems: "center" }}>
+      <Spin></Spin>
+    </div>
+
   return (
     <>
       {/* đã đăng nhập */}

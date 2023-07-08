@@ -110,7 +110,7 @@ const CardHeader = ({ post }) => {
           }
           size="large"
         >
-          {post?.user?.username[0]?.toUpperCase()}
+          {post?.user?.fullname[0]?.toUpperCase()}
         </Avatar>
         <div className="card_name">
           <h6 className="m-0">
