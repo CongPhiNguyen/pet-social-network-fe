@@ -19,7 +19,7 @@ import { MessageFilled } from "@ant-design/icons"
 const { Title } = Typography
 const { Search } = Input
 
-const LeftSide = () => {
+const LeftSide = ({ language }) => {
   const { auth, message, online } = useSelector((state) => state)
   const dispatch = useDispatch()
 
@@ -104,16 +104,18 @@ const LeftSide = () => {
     <>
       <Modal
         open={open}
-        title="List user"
+        title={language === 'en' ? "List user" : "Danh sách người dùng"}
         onCancel={handleCancel}
         footer={[
           <Button key="back" onClick={handleCancel}>
-            Cancel
+            {
+              language === 'en' ? "Cancel" : "Hủy"
+            }
           </Button>
         ]}
       >
         {searchUsers.length === 0 ? (
-          <Result status="404" title="User not found!" />
+          <Result status="404" title={language === "en" ? "User not found!" : "Không tim thấy người dùng!"} />
         ) : (
           <List
             className="demo-loadmore-list"
@@ -147,13 +149,13 @@ const LeftSide = () => {
           />
         )}
       </Modal>
-      <Title level={2}>Messager</Title>
+      <Title level={2}>{language === 'en' ? "Messager" : "Tin nhắn"}</Title>
       <Search
         style={{ marginBottom: "16px" }}
         onChange={(e) => setSearch(e.target.value)}
         onSearch={handleSearch}
         size="large"
-        placeholder="Enter name to search"
+        placeholder={language === 'en' ? "Enter name to search" : "Nhập tên cần tìm kiếm"}
         allowClear
       />
 
@@ -165,7 +167,8 @@ const LeftSide = () => {
               className={`message_user ${isActive(user)}`}
               onClick={() => handleAddUser(user)}
             >
-              <UserCard user={user} msg={true}>
+
+              <UserCard language={language} user={user} msg={true}>
                 {user.online ? (
                   <i className="fas fa-circle text-success" />
                 ) : (
@@ -182,7 +185,9 @@ const LeftSide = () => {
           <BotCard />
         </Link> */}
         <button ref={pageEnd} style={{ opacity: 0 }}>
-          Load More
+          {
+            language === 'en' ? "Load More" : "Tải thêm"
+          }
         </button>
       </div>
     </>

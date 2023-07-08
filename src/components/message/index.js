@@ -1,7 +1,11 @@
 import React from "react"
 import LeftSide from "./LeftSide"
+import { useContext } from "react";
+import LanguageContext from "../../context/LanguageContext";
 
 const Message = () => {
+  const { language } = useContext(LanguageContext);
+
   return (
     <div className="message d-flex">
       <div className="col-md-4 border-right px-0">
@@ -17,7 +21,9 @@ const Message = () => {
             className="fab fa-facebook-messenger text-primary"
             style={{ fontSize: "5rem" }}
           />
-          <h4>Messenger</h4>
+          <h4>
+            {language === 'en' ? "Messenger" : "Tin nhắn"}
+          </h4>
         </div>
       </div>
     </div>

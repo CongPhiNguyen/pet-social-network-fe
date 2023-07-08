@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import NoNotice from "../images/notice.png"
 import { Link, useHistory, useNavigate } from "react-router-dom"
@@ -11,12 +11,14 @@ import {
 } from "../redux/actions/notifyAction"
 import { Button, Modal } from "antd"
 import { DeleteFilled } from "@ant-design/icons"
+import LanguageContext from "../context/LanguageContext"
 
 const NotifyModal = () => {
   const navigate = useNavigate()
   const { auth, notify } = useSelector((state) => state)
   const [modal, contextHolder] = Modal.useModal()
   const dispatch = useDispatch()
+  const { language } = useContext(LanguageContext);
 
   const handleIsRead = (msg) => {
     dispatch(isReadNotify({ msg, auth }))
@@ -27,13 +29,13 @@ const NotifyModal = () => {
   }
   const confirm = () => {
     modal.confirm({
-      title: "Confirm",
+      title: language === 'en' ? "Confirm" : "Xác nhận",
       icon: <DeleteFilled />,
-      content: `You have ${
-        notify.data.filter((item) => item.isRead === false).length
-      } unread notices. Are you sure you want to delete all?`,
-      okText: "Delete",
-      cancelText: "Cancel",
+      content: language === 'en' ? `You have ${notify.data.filter((item) => item.isRead === false).length
+        } unread notices. Are you sure you want to delete all?` : `Bạn có ${notify.data.filter((item) => item.isRead === false).length
+        } thông báo chưa đọc. Bạn có chắc chắn xóa tất cả?`,
+      okText: language === 'en' ? "Delete" : "Xóa",
+      cancelText: language === 'en' ? "Cancel" : "Hủy",
       onOk: handleDeleteAll
     })
   }
@@ -46,7 +48,9 @@ const NotifyModal = () => {
   return (
     <div style={{ minWidth: "300px" }}>
       <div className="d-flex justify-content-between align-items-center px-3">
-        <h5 style={{ fontWeight: "700", fontSize: "1.4rem" }}>Notifications</h5>
+        <h5 style={{ fontWeight: "700", fontSize: "1.4rem" }}>
+          {language === 'en' ? "Notifications" : "Thông báo"}
+        </h5>
         {notify.sound ? (
           <i
             className="fas fa-bell icon-notify "
@@ -107,10 +111,12 @@ const NotifyModal = () => {
             navigate("/notification")
           }}
         >
-          Open in window
+          {language === 'en' ? "Open in window" : "Mở trong cửa sổ khác"}
         </Button>
         <Button type="primary" onClick={confirm} danger>
-          Delete All
+          {language === 'en' ? "Delete All" : "Xóa tất cả"}
+
+
         </Button>
         {contextHolder}
       </div>

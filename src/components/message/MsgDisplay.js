@@ -10,7 +10,7 @@ import { IoCall } from 'react-icons/io5'
 import { FaVideo } from 'react-icons/fa'
 
 const { confirm } = Modal;
-const MsgDisplay = ({ user, msg, theme, data }) => {
+const MsgDisplay = ({ user, msg, theme, data, language }) => {
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
 
@@ -86,7 +86,7 @@ const MsgDisplay = ({ user, msg, theme, data }) => {
             </span>
 
             <div className="text-left">
-              <h6>{msg.call.video ? "Video Call" : "Audio Call"}</h6>
+              <h6>{msg.call.video ? language === 'en' ? "Video Call" : "Cuộc gọi video" : language === 'en' ? "Audio Call" : "Cuộc gọi"}</h6>
               <small>
                 {msg.call.times > 0 ? (
                   <Times total={msg.call.times} />
