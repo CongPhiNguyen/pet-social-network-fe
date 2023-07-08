@@ -75,6 +75,22 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
                 type="cat"
               />
             )}
+            {msg?.dialogflowFeature?.name === "choose.pet-by-personal" &&
+              (msg?.dialogflowFeature?.dogName ||
+                msg?.dialogflowFeature?.catName) && (
+                <PetCardInfo
+                  cardType={
+                    msg?.dialogflowFeature?.dogName
+                      ? "choose_dog"
+                      : "choose_cat"
+                  }
+                  name={
+                    msg?.dialogflowFeature?.dogName ||
+                    msg?.dialogflowFeature?.catName
+                  }
+                  type="cat"
+                />
+              )}
             {(msg?.dialogflowFeature?.name === "say_gau" ||
               msg?.dialogflowFeature?.name === "say_meow") && (
               <img

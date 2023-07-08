@@ -63,12 +63,24 @@ export default function Following() {
             <Avatar.Group key={index}>
               <Tooltip title={val.fullname} placement="top">
                 <Avatar
-                  src={val.avatar}
+                  style={{
+                    backgroundColor: "#f56a00",
+                    fontSize: 28,
+                    cursor: "pointer"
+                  }}
+                  src={
+                    val?.avatar ===
+                    "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                      ? null
+                      : val?.avatar
+                  }
                   size={60}
                   onClick={() => {
-                    navigate("/profile/" + val._id)
+                    navigate("/profile/" + val?._id)
                   }}
-                />
+                >
+                  {val?.username ? val?.username[0].toUpperCase() : ""}
+                </Avatar>
               </Tooltip>
             </Avatar.Group>
           ))}

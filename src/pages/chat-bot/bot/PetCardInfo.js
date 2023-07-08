@@ -1,10 +1,49 @@
 import { Card } from "antd"
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import { getDogMongoApi } from "../../../api/dogcat"
+import { useState } from "react"
+import { useEffect } from "react"
 
-export default function PetCardInfo({ info, name, type }) {
+export default function PetCardInfo({ info, name, type, cardType }) {
   const navigate = useNavigate()
-  console.log(info)
+  const [petInfo, setPetInfo] = useState([])
+  const getDog = async () => {
+    const response = await getDogMongoApi()
+    const { data, status } = response
+    if (status === 200) {
+      const dogInfo = data.dogList.find((val) => val.name === name)
+      setPetInfo(dogInfo)
+      console.log(dogInfo)
+    }
+  }
+  useEffect(() => {
+    if (cardType === "choose_dog") {
+      getDog()
+    }
+  }, [])
+
+  if (cardType === "choose_dog") {
+    return (
+      <Card
+        hoverable
+        style={{ width: 240 }}
+        cover={<img alt="example" src={petInfo?.image?.url} />}
+        onClick={() => {
+          navigate(
+            `/pet-wiki/${cardType === "choose_dog" ? "dog" : "cat"}/${
+              petInfo.id
+            }`
+          )
+        }}
+      >
+        <Card.Meta
+          title={petInfo?.name}
+          description={petInfo?.bred_for || petInfo?.alt_names}
+        ></Card.Meta>
+      </Card>
+    )
+  }
   if (!info) {
     return (
       <Card
