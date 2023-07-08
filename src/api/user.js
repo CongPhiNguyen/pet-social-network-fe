@@ -1,7 +1,6 @@
 import axios from "../service/axios"
-
+import axios2 from "axios"
 const API_ENDPOINT = process.env.REACT_APP_BE_URL || "http://localhost:5000/api"
-
 
 export const changeRole = (role, id) => {
   return axios.post(`${API_ENDPOINT}/change-role`, {
@@ -11,7 +10,9 @@ export const changeRole = (role, id) => {
 }
 
 export const getAllUserApi = (filters) => {
-  return axios.get(`${API_ENDPOINT}/get-all-user?id=${filters?.id}&username=${filters?.username}&role=${filters?.role}`)
+  return axios.get(
+    `${API_ENDPOINT}/get-all-user?id=${filters?.id}&username=${filters?.username}&role=${filters?.role}`
+  )
 }
 
 export const getUserInfoApi = (userId) => {
@@ -27,7 +28,7 @@ export const getFollowingApi = (id) => {
 }
 
 export const uploadImageApi = (formData) => {
-  return axios.post(
+  return axios2.post(
     "https://api.cloudinary.com/v1_1/databaseimg/image/upload",
     formData
   )

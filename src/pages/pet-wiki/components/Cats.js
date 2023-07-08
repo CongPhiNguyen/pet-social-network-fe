@@ -37,13 +37,13 @@ export default function Cats() {
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={24} md={8} lg={8} xl={6}>
-        <div style={{ display: "flex" }}>
+        <div>
           <p
             style={{
               fontWeight: 600,
               marginTop: 2,
               marginRight: 20,
-              width: 128
+              width: 300
             }}
           >
             Select breed name:
@@ -52,7 +52,7 @@ export default function Cats() {
             showSearch
             placeholder="Search by breed name"
             loading={loading}
-            style={{ width: "80%" }}
+            // style={{ width: "60%" }}
             onChange={(e) => {
               console.log(e)
               setCurrentSelectPet(e)

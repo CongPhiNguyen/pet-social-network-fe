@@ -37,7 +37,7 @@ export default function Setting() {
       <PageSection>
         <Card>
           <Row>
-            <Col span={6}>
+            <Col xl={6} md={12} sm={24}>
               <Menu
                 onClick={onClick}
                 style={{
@@ -49,7 +49,9 @@ export default function Setting() {
                 items={items}
               />
             </Col>
-            <Col span={18}>{currentSetting === "2Factor" && <TwoFactor />}</Col>
+            <Col xl={18} md={12} sm={24}>
+              {currentSetting === "2Factor" && <TwoFactor />}
+            </Col>
           </Row>
         </Card>
       </PageSection>
