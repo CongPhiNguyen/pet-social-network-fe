@@ -3,7 +3,7 @@ import Info from "./components/Info"
 import { useSelector, useDispatch } from "react-redux"
 import { getProfileUsers } from "../../redux/actions/profileAction"
 import { useParams } from "react-router-dom"
-import { Card, Col, Row, Spin, message, Result } from "antd"
+import { Card, Col, Row, Spin, message, Result, Tabs } from "antd"
 import Following from "./components/Following"
 import { getPostByUserIdApi } from "../../api/post"
 import PostCard from "../../components/PostCard"
@@ -11,6 +11,19 @@ import { getUserInfoApi } from "../../api/user"
 import "../../styles/home.css"
 import NotFoundPage from "../notFound"
 import { getPostsByLocationDispatch } from "../../redux/actions/postAction"
+import { getDataAPI } from "../../utils/fetchData"
+
+const items = [
+  {
+    key: 'Personal',
+    label: `Personal`,
+  },
+  {
+    key: 'Saved',
+    label: `Saved`,
+  },
+
+];
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -21,13 +34,14 @@ const Profile = () => {
   const [loading, setLoading] = useState(false)
   const { theme } = useSelector((state) => state)
   const { homePosts } = useSelector((state) => state)
+  const [option, setOption] = useState("Personal")
   const { posts: postList } = homePosts
   const getUserPost = async (userId) => {
     setLoading(true)
-    const response = await getPostByUserIdApi(userId)
+    const response = option === 'Personal' ? await getPostByUserIdApi(userId) : await getDataAPI(`getSavePosts`, auth.token)
     const { data, status } = response
     if (status === 200) {
-      dispatch(getPostsByLocationDispatch({ posts: data.postList || [] }))
+      dispatch(getPostsByLocationDispatch({ posts: option === 'Personal' ? data.postList : data.savePosts || [] }))
     }
     setLoading(false)
   }
@@ -48,11 +62,13 @@ const Profile = () => {
     }
     setIsGettingProfile(false)
   }
-
   useEffect(() => {
     getProfileInfo(id)
-    getUserPost(id)
   }, [id])
+
+  useEffect(() => {
+    getUserPost(id)
+  }, [id, option])
 
 
   if (isGettingProfile) {
@@ -79,6 +95,10 @@ const Profile = () => {
               )}
             </Col>
             <Col xl={16} md={24} sm={24}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Tabs defaultActiveKey="Personal" items={items} onChange={setOption} />
+              </div>
+
               {loading ? (
                 <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
               ) : postList.length === 0 ? (
