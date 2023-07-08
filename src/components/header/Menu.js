@@ -9,10 +9,11 @@ import {
   BellFilled
 } from "@ant-design/icons"
 import { Avatar } from "antd"
-import { GLOBALTYPES } from "../../redux/actions/globalTypes"
 import { logout } from "../../redux/actions/authAction"
 import NotifyModal from "../NotifyModal"
-
+import LanguageContext from "../../context/LanguageContext"
+import { useContext } from "react"
+import LanguageImg from '../../assets/images/language.png'
 const navLinks = [
   {
     label: "Home",
@@ -40,7 +41,7 @@ const Menu = () => {
   const { auth, theme, notify } = useSelector((state) => state)
   const [showArrow, setShowArrow] = useState(true)
   const [arrowAtCenter, setArrowAtCenter] = useState(false)
-
+  const { language, switchLanguage } = useContext(LanguageContext);
   const countUnreadNoti = (notify) => {
     let val = 0
     for (const noti of notify.data) {
@@ -73,27 +74,29 @@ const Menu = () => {
         className="dropdown-item"
         to={`/profile/${auth.user._id}`}
       >
-        Profile
+        {language === 'en' ? "Profile" : "Hồ sơ"}
       </Link>
-      {/* <label
-        style={{ fontWeight: "600" }}
+      <label
+        style={{ fontWeight: "600", marginBottom: 0, position: "relative" }}
         htmlFor="theme"
         className="dropdown-item"
         onClick={() =>
-          dispatch({
-            type: GLOBALTYPES.THEME,
-            payload: !theme
-          })
+          switchLanguage(language === "en" ? "vni" : "en")
         }
       >
-        {theme ? "Light mode" : "Dark mode"}
-      </label> */}
+        <img src={LanguageImg} style={{
+          position: "absolute",
+          content: "",
+          left: '-4px'
+        }} height={24} width={24} /> {language === 'en' ? "English" : "Việt Nam"}
+      </label>
       <Link
         style={{ fontWeight: "600" }}
         className="dropdown-item"
         to="/setting"
       >
-        Setting
+
+        {language === 'en' ? "Setting" : "Cài đặt"}
       </Link>
       {role === "admin" && (
         <Link
@@ -101,7 +104,7 @@ const Menu = () => {
           className="dropdown-item"
           to="/admin"
         >
-          Admin
+          {language === 'en' ? "Admin" : "Quản lý"}
         </Link>
       )}
 
@@ -113,7 +116,7 @@ const Menu = () => {
         to="/"
         onClick={() => dispatch(logout())}
       >
-        Logout
+        {language === 'en' ? "Logout" : "Đăng xuất"}
       </Link>
     </div>
   )
@@ -191,7 +194,7 @@ const Menu = () => {
               }}
               src={
                 auth.user.avatar ===
-                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                  "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                   ? null
                   : auth.user.avatar
               }
