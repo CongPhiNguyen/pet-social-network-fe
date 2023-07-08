@@ -63,24 +63,38 @@ const Info = ({ auth, profile }) => {
                     verticalAlign: "middle",
                     marginTop: -80,
                     marginLeft: 40,
-                    border: "6px solid #fff"
+                    border: "6px solid #fff",
+                    fontSize: 80
                   }}
+                  src={
+                    userInfo?.avatar ===
+                    "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                      ? null
+                      : userInfo?.avatar
+                  }
+                  size={180}
+                >
+                  {userInfo?.username
+                    ? userInfo?.username[0].toUpperCase()
+                    : ""}
+                </Avatar>
+                {/* <Avatar
                   src={
                     auth.user.avatar ===
                     "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                       ? null
-                      : auth.user.avatar
+                      : userInfo?.avatar
                   }
                   size={180}
                 >
                   <p style={{ fontSize: 92, marginTop: -10 }}>
                     {auth.user.username[0].toUpperCase()}
                   </p>
-                </Avatar>
+                </Avatar> */}
               </div>
               <div style={{ marginLeft: 60, marginTop: 20, marginBottom: 10 }}>
                 <Typography.Title level={2}>
-                  {userInfo.fullname} (@{userInfo?.username})
+                  {userInfo?.fullname} (@{userInfo?.username})
                 </Typography.Title>
                 <div>
                   {userInfo?._id === auth?.user?._id ? (
