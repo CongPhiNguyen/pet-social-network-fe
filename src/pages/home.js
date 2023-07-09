@@ -11,12 +11,15 @@ import { RiProfileLine, RiFindReplaceLine } from "react-icons/ri"
 import { AiOutlineHome, AiOutlineMessage, AiOutlineBook } from "react-icons/ai"
 import { BiBasket, BiMessage } from "react-icons/bi"
 import { getPosts } from "../redux/actions/postAction"
+import LanguageContext from "../context/LanguageContext"
+import { useContext } from "react"
 
 let scroll = 0
 
 const Home = () => {
   const dispatch = useDispatch()
   const { auth } = useSelector((state) => state)
+  const { language } = useContext(LanguageContext);
 
   const { homePosts } = useSelector((state) => state)
   useEffect(() => {
@@ -97,7 +100,7 @@ const Home = () => {
         </Col>
 
         <Col xs={0} sm={0} md={6} lg={6}>
-          <LeftNavigation />
+          <LeftNavigation language={language} />
         </Col>
         <Col xs={{ span: 0 }} md={{ span: 14 }} lg={{ span: 10 }}>
           <Status />
@@ -107,8 +110,8 @@ const Home = () => {
             <Card>
               <Result
                 status="404"
-                title="NO POST"
-                subTitle="You can follow someone or create new post!"
+                title={language === 'en' ? "NO POST" : "Không có bài viết nào"}
+                subTitle={language === 'en' ? "You can follow someone or create new post!" : "Bạn có thể theo dõi ai đó hoặc tạo bài viết!"}
               />
             </Card>
           ) : (
@@ -124,8 +127,8 @@ const Home = () => {
             <Card>
               <Result
                 status="404"
-                title="NO POST"
-                subTitle="You can follow someone or create new post!"
+                title={language === 'en' ? "NO POST" : "Không có bài viết nào"}
+                subTitle={language === 'en' ? "You can follow someone or create new post!" : "Bạn có thể theo dõi ai đó hoặc tạo bài viết!"}
               />
             </Card>
           ) : (
@@ -133,7 +136,7 @@ const Home = () => {
           )}
         </Col>
         <Col xs={0} sm={0} md={0} lg={{ span: 6, offset: 2 }}>
-          <RightSideBar />
+          <RightSideBar language={language} />
         </Col>
       </Row>
     </div>

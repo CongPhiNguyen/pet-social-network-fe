@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Image, Carousel } from "antd"
 import { ImLocation2 } from "react-icons/im"
 
-const CardBody = ({ post, theme }) => {
+const CardBody = ({ post, theme, language }) => {
   const [readMore, setReadMore] = useState(false)
   const [visible, setVisible] = useState(false)
   return (
@@ -18,12 +18,12 @@ const CardBody = ({ post, theme }) => {
           {post.content.length < 60
             ? post.content
             : readMore
-            ? post.content + " "
-            : post.content.slice(0, 60) + "....."}
+              ? post.content + " "
+              : post.content.slice(0, 60) + "....."}
         </span>
         {post.content.length > 60 && (
           <span className="readMore" onClick={() => setReadMore(!readMore)}>
-            {readMore ? "Hide away" : "See more"}
+            {readMore ? language === 'en' ? "Hide away" : "Ẩn bớt" : language === 'en' ? "See more" : "Xem thêm"}
           </span>
         )}
         <div style={{ display: "flex", marginTop: "5px" }}>

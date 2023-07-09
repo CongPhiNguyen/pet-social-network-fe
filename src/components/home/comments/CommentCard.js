@@ -13,7 +13,7 @@ import {
 import InputComment from "../InputComment"
 import { Avatar } from "antd"
 
-const CommentCard = ({ children, comment, post, commentId }) => {
+const CommentCard = ({ children, comment, post, commentId, language }) => {
   const { auth, theme } = useSelector((state) => state)
   const dispatch = useDispatch()
 
@@ -87,7 +87,7 @@ const CommentCard = ({ children, comment, post, commentId }) => {
             }}
             src={
               comment?.user?.avatar ===
-              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                 ? null
                 : auth?.user?.avatar
             }
@@ -126,8 +126,8 @@ const CommentCard = ({ children, comment, post, commentId }) => {
                 {content?.length < 100
                   ? content
                   : readMore
-                  ? content + " "
-                  : content.slice(0, 100) + "...."}
+                    ? content + " "
+                    : content.slice(0, 100) + "...."}
               </span>
               {content?.length > 100 && (
                 <span
@@ -146,24 +146,25 @@ const CommentCard = ({ children, comment, post, commentId }) => {
             </small>
 
             <small className="font-weight-bold mr-3">
-              {comment.likes.length} likes
+              {comment.likes.length} {language === 'en' ? "likes" : "thích"}
             </small>
 
             {onEdit ? (
               <>
                 <small className="font-weight-bold mr-3" onClick={handleUpdate}>
-                  update
+                  {language === 'en' ? "update" : "chỉnh sửa"}
                 </small>
                 <small
                   className="font-weight-bold mr-3"
                   onClick={() => setOnEdit(false)}
                 >
-                  cancel
+                  {language === 'en' ? "cancel" : "hủy"}
+
                 </small>
               </>
             ) : (
               <small className="font-weight-bold mr-3" onClick={handleReply}>
-                {onReply ? "cancel" : "reply"}
+                {onReply ? language === 'en' ? "cancel" : "hủy" : language === 'en' ? "reply" : "Trả lời"}
               </small>
             )}
           </div>

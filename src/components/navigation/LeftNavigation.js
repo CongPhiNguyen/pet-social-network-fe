@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { RiProfileLine, RiFindReplaceLine } from "react-icons/ri"
 import { BiBasket, BiMessage } from "react-icons/bi"
-export default function LeftNavigation() {
+export default function LeftNavigation({ language }) {
   const [currentSetting, setCurrentSetting] = useState("")
   const currentUserId = useSelector((state) => state?.auth?.user?._id)
   const onClick = (val) => {
@@ -14,17 +14,17 @@ export default function LeftNavigation() {
   }
   const items = [
     {
-      label: <Link to={`/`}>Home</Link>,
+      label: <Link to={`/`}>{language === 'en' ? "Home" : "Trang chủ"}</Link>,
       key: "home",
       icon: <AiOutlineHome size={22} />
     },
     {
-      label: <Link to={`/profile/${currentUserId}`}>Profile</Link>,
+      label: <Link to={`/profile/${currentUserId}`}>{language === 'en' ? "Profile" : "Hồ sơ"}</Link>,
       key: "profile",
       icon: <RiProfileLine size={22} />
     },
     {
-      label: <Link to={`/find-pet`}>Find losted pet</Link>,
+      label: <Link to={`/find-pet`}>{language === 'en' ? "Find losted pet" : "Tìm thú cưng"}</Link>,
       key: "find-losted",
       icon: <RiFindReplaceLine size={22} />
     },
@@ -34,7 +34,7 @@ export default function LeftNavigation() {
     //   icon: <BiBasket size={22} />
     // },
     {
-      label: <Link to={`/chat-bot`}>Chat bot</Link>,
+      label: <Link to={`/chat-bot`}>{language === 'en' ? "Chat bot" : "Tư vấn"}</Link>,
       key: "chat-bot",
       icon: <BiMessage size={22} />
     },
@@ -44,7 +44,7 @@ export default function LeftNavigation() {
           <div
             style={{ display: "flex", alignItems: "baseline", marginTop: 16 }}
           >
-            <p style={{ marginRight: 10 }}>Pet wiki</p>
+            <p style={{ marginRight: 10 }}>{language === 'en' ? "Pet wiki" : "Pet wiki"} </p>
             {/* <Badge count={10}></Badge> */}
           </div>
         </Link>

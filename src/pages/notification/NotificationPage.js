@@ -6,10 +6,13 @@ import Avatar from "../../components/Avatar"
 import moment from "moment"
 import LeftNavigation from "../../components/navigation/LeftNavigation"
 import Title from "antd/es/typography/Title"
+import LanguageContext from "../../context/LanguageContext"
+import { useContext } from "react"
 
 export default function NotificationPage() {
   const dispatch = useDispatch()
   const { auth, notify } = useSelector((state) => state)
+  const { language } = useContext(LanguageContext);
 
   return (
     <div
@@ -24,18 +27,18 @@ export default function NotificationPage() {
       <div>
         <Row>
           <Col span={8}>
-            <LeftNavigation />
+            <LeftNavigation language={language} />
           </Col>
           <Col span={16}>
             <div style={{ marginTop: 17, marginRight: 20 }}>
               <Card>
-                <Title level={3}>Notification</Title>
+                <Title level={3}>{language === 'en' ? "Notifactions" : "Thông báo"}</Title>
                 <div style={{ overflow: "auto" }}>
                   {notify?.data?.length === 0 && (
                     <Result
                       status="404"
-                      title="No Notification"
-                      subTitle="Nothing here!"
+                      title={language === 'en' ? "No Notification" : "Không có thông báo"}
+                      subTitle={language === 'en' ? "Nothing here!" : "Không có gì!"}
                     />
                   )}
                   {notify.data.map((msg, index) => (
@@ -43,7 +46,7 @@ export default function NotificationPage() {
                       <Link
                         to={`${msg.url}`}
                         style={{ display: "flex", alignItems: "center" }}
-                        onClick={() => {}}
+                        onClick={() => { }}
                       >
                         <Avatar
                           src={msg.user.avatar}

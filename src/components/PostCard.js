@@ -7,19 +7,23 @@ import Comments from "./home/Comments"
 import InputComment from "./home/InputComment"
 import { Avatar, Card } from "antd"
 import { useSelector } from "react-redux"
+import LanguageContext from "../context/LanguageContext"
+import { useContext } from "react"
 
 const PostCard = ({ post, theme }) => {
   // console.log(post)
   const { auth } = useSelector((state) => state)
+  const { language } = useContext(LanguageContext);
+
   return (
     <>
       <Card style={{ marginBottom: 20 }}>
-        <CardHeader post={post} />
-        <CardBody post={post} theme={theme} />
-        <CardFooter post={post} />
-        <Comments post={post} />
+        <CardHeader post={post} language={language} />
+        <CardBody post={post} theme={theme} language={language} />
+        <CardFooter post={post} language={language} />
+        <Comments post={post} language={language} />
         <div style={{ borderTop: "1px solid #00000038" }}>
-          <InputComment post={post}>
+          <InputComment post={post} language={language}>
             <Avatar
               style={{
                 backgroundColor: "#f56a00",
@@ -29,7 +33,7 @@ const PostCard = ({ post, theme }) => {
               }}
               src={
                 auth?.user?.avatar ===
-                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                  "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                   ? null
                   : auth?.user?.avatar
               }

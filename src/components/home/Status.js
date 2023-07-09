@@ -4,10 +4,13 @@ import { GLOBALTYPES } from "../../redux/actions/globalTypes"
 import { Avatar } from "antd"
 import { Card } from "antd"
 import StatusModal from "../StatusModal"
+import LanguageContext from "../../context/LanguageContext"
+import { useContext } from "react"
 
 const Status = () => {
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
+  const { language } = useContext(LanguageContext);
 
 
   return (
@@ -36,7 +39,7 @@ const Status = () => {
             dispatch({ type: GLOBALTYPES.STATUS, payload: true })
           }}
         >
-          {auth.user.fullname}, what are you thinking?
+          {auth.user.fullname}, {language === 'en' ? "what are you thinking?" : "bạn đang nghĩ gì?"}
         </button>
       </div>
     </Card>

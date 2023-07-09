@@ -2,6 +2,8 @@ import React from "react"
 import { Avatar } from "antd"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
+import { useContext } from "react"
+import LanguageContext from "../context/LanguageContext"
 
 const UserCard = ({
   children,
@@ -21,6 +23,7 @@ const UserCard = ({
   }
 
   const showMsg = (user) => {
+
     return (
       <>
         <div style={{ filter: theme ? "invert(1)" : "invert(0)" }}>

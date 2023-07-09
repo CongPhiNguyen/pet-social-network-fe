@@ -13,7 +13,7 @@ import ShareModal from "../../ShareModal"
 import { BASE_URL } from "../../../utils/config"
 import { Modal } from "antd"
 
-const CardFooter = ({ post }) => {
+const CardFooter = ({ post, language }) => {
   const [isLike, setIsLike] = useState(false)
   const [loadLike, setLoadLike] = useState(false)
 
@@ -50,7 +50,7 @@ const CardFooter = ({ post }) => {
 
   const openModelShare = () => {
     Modal.info({
-      title: "You can share this article with following social network",
+      title: language === 'en' ? "You can share this article with following social network" : "Bạn có thể chia sẽ với các mạng xã hội khác!",
       content: (
         <ShareModal url={`${BASE_URL}/post/${post._id}`} theme={theme} />
       ),
@@ -112,11 +112,11 @@ const CardFooter = ({ post }) => {
 
       <div className="d-flex justify-content-between">
         <h6 style={{ padding: "0 25px", cursor: "pointer" }}>
-          {post.likes.length} likes
+          {post.likes.length} {language === 'en' ? "likes" : "thích"}
         </h6>
 
         <h6 style={{ padding: "0 25px", cursor: "pointer" }}>
-          {post.comments.length} comments
+          {post.comments.length} {language === 'en' ? "comments" : "bình luận"}
         </h6>
       </div>
     </div>
