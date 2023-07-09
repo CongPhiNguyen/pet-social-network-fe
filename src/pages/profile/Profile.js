@@ -22,6 +22,7 @@ const Profile = () => {
   const { theme } = useSelector((state) => state)
   const { homePosts } = useSelector((state) => state)
   const { posts: postList } = homePosts
+
   const getUserPost = async (userId) => {
     setLoading(true)
     const response = await getPostByUserIdApi(userId)
@@ -54,7 +55,6 @@ const Profile = () => {
     getUserPost(id)
   }, [id])
 
-
   if (isGettingProfile) {
     return <Spin loading={isGettingProfile}></Spin>
   } else if (profile) {
@@ -80,7 +80,16 @@ const Profile = () => {
             </Col>
             <Col xl={16} md={24} sm={24}>
               {loading ? (
-                <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    height: 200,
+                    alignItems: "center"
+                  }}
+                >
+                  <Spin size="large" tip="Loading..." />
+                </div>
               ) : postList.length === 0 ? (
                 <Card>
                   <Result

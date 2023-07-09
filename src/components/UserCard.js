@@ -1,8 +1,7 @@
 import React from "react"
-import { Avatar } from "antd"
+import { Avatar, Card } from "antd"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
-
 const UserCard = ({
   children,
   user,
@@ -10,7 +9,8 @@ const UserCard = ({
   handleClose,
   setShowFollowers,
   setShowFollowing,
-  msg
+  msg,
+  cardType
 }) => {
   const { theme } = useSelector((state) => state)
   const handleCloseAll = () => {
@@ -38,8 +38,8 @@ const UserCard = ({
                 ? "Miss Video Phone"
                 : "Miss Phone"
               : user.call.video
-                ? "Video Phone"
-                : "Phone"}
+              ? "Video Phone"
+              : "Phone"}
           </span>
         )}
       </>
@@ -47,13 +47,21 @@ const UserCard = ({
   }
 
   return (
-    <div
+    <Card
+      style={{ display: "flex", width: "100%" }}
+      bodyStyle={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "between",
+        width: "100%",
+        padding: "4px 10px"
+      }}
       className={`d-flex p-2 align-items-center justify-content-between w-100 ${border}`}
     >
-      <div>
+      <div style={{ width: "100%" }}>
         <Link
           style={{ textDecoration: "none" }}
-          to={`/profile/${user?._id}`}
+          to={cardType === "NoClick" ? null : `/profile/${user?._id}`}
           onClick={handleCloseAll}
           className="d-flex align-items-center user-card__link"
         >
@@ -65,7 +73,7 @@ const UserCard = ({
             }}
             src={
               user.avatar ===
-                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                 ? null
                 : user.avatar
             }
@@ -92,7 +100,7 @@ const UserCard = ({
         </Link>
       </div>
       {children}
-    </div>
+    </Card>
   )
 }
 

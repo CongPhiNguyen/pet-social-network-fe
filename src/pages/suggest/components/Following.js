@@ -5,7 +5,8 @@ import { useNavigate, useParams } from "react-router-dom"
 import { getFollowingApi } from "../../../api/user"
 import UserCard from "../../../components/UserCard"
 import FollowBtn from "../../../components/FollowBtn"
-export default function Following({ userId }) {
+export default function Following() {
+  const { id } = useParams()
   const [isLoading, setIsLoading] = useState(false)
   const [followings, setFollowings] = useState([])
   const [openFollowingModel, setOpenFollowingModel] = useState(false)
@@ -14,7 +15,7 @@ export default function Following({ userId }) {
 
   const getFollowings = async () => {
     setIsLoading(true)
-    const response = await getFollowingApi(userId)
+    const response = await getFollowingApi(id)
     setIsLoading(false)
     const { data, status } = response
     if (status === 200) setFollowings(data.following)
@@ -22,7 +23,7 @@ export default function Following({ userId }) {
 
   useEffect(() => {
     getFollowings()
-  }, [userId])
+  }, [id])
 
   const handleOk = () => {
     setOpenFollowingModel(false)
