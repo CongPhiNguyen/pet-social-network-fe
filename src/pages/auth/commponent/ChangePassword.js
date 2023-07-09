@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { changePasswordApi } from "../../../api/authen"
 import Logo from "../../../images/logo.png"
 const { Title } = Typography
-export default function ChangePassword({ pattern }) {
+export default function ChangePassword({ pattern, language }) {
   const navigate = useNavigate()
   const [form] = Form.useForm()
 
@@ -50,35 +50,35 @@ export default function ChangePassword({ pattern }) {
           </Title>
         </div>
         <div style={{ textAlign: "center" }}>
-          <Title style={{ marginTop: 10, fontSize: 36 }}>Change Password</Title>
+          <Title style={{ marginTop: 10, fontSize: 36 }}>{language === 'en' ? "Change password" : "Cập nhật mật khẩu"}</Title>
         </div>
         <Form.Item
-          label="Password"
+          label={language === 'en' ? "Password" : "Mật khẩu"}
           name="password"
           rules={[
             {
               required: true,
-              message: "Please input your password!"
+              message: language === 'en' ? "Please input your password!" : "Hãy nhập mật khẩu của bạn!"
             },
             {
               min: 6,
-              message: "Password at least 6 characters!"
+              message: language === 'en' ? "Password at least 6 characters!" : "Mật khẩu ít nhất 6 ký tự"
             }
           ]}
         >
           <Input.Password />
         </Form.Item>
         <Form.Item
-          label="Confirm Password"
+          label={language === 'en' ? "Confirm Password" : "Nhập lại mật khẩu"}
           name="cf_password"
           rules={[
             {
               required: true,
-              message: "Please input your confirm password!"
+              message: language === 'en' ? "Please input your confirm password!" : "Nhập lại mật khẩu"
             },
             {
               min: 6,
-              message: "Password at least 6 characters!"
+              message: language === 'en' ? "Password at least 6 characters!" : "Mật khẩu ít nhất 6 ký tự!"
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -86,7 +86,9 @@ export default function ChangePassword({ pattern }) {
                   return Promise.resolve()
                 }
                 return Promise.reject(
-                  new Error("The two passwords that you entered do not match!")
+                  new Error(
+                    language === 'en' ? "The two passwords that you entered do not match!" : "Nhập lại mật khẩu không chính xác!"
+                  )
                 )
               }
             })
@@ -105,13 +107,17 @@ export default function ChangePassword({ pattern }) {
             type="primary"
             htmlType="submit"
           >
-            Continue
+            {
+              language === 'en' ? "Continue" : "Tiếp tục"
+            }
           </Button>
         </Form.Item>
         <p style={{ textAlign: "center" }} className="my-2">
-          You don't have an account?{" "}
+          {language === 'en' ? "You don't have an account?" : "Bạn chưa có tài khoản?"}{" "}
           <Link to="/register" style={{ color: "#f39161", fontWeight: "700" }}>
-            Register Now
+            {
+              language === 'en' ? " Register Now " : "Đăng ký ngay"
+            }
           </Link>
         </p>
       </Form>

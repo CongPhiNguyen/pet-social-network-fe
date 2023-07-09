@@ -1,7 +1,8 @@
 import { Table, message } from "antd"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { getLogsApi } from "../../../api/log"
 import moment from "moment"
+import LanguageContext from "../../../context/LanguageContext"
 
 function convertTime(timestamp) {
   const date = moment(timestamp)
@@ -11,16 +12,18 @@ function convertTime(timestamp) {
 }
 
 export default function LogTable() {
+  const { language } = useContext(LanguageContext);
+
   const [logList, setLogList] = useState([])
   const columns = [
     {
-      title: "Time",
+      title: language === 'en' ? "Time" : "Thời gian",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (val) => convertTime(val)
     },
     {
-      title: "Method",
+      title: language === 'en' ? "Method" : "Phương thức",
       dataIndex: "method",
       key: "method"
     },
@@ -30,12 +33,12 @@ export default function LogTable() {
       key: "url"
     },
     {
-      title: "Status",
+      title: language === 'en' ? "Status" : "Trạng thái",
       dataIndex: "status",
       key: "status"
     },
     {
-      title: "Response time",
+      title: language === 'en' ? "Response time" : "Phản hồi",
       dataIndex: "responseTime",
       key: "responseTime",
       render: (val) => val + " ms"
@@ -49,7 +52,6 @@ export default function LogTable() {
 
   const getLogs = async () => {
     const response = await getLogsApi()
-    console.log(response)
     const { data, status } = response
     if (status === 200) {
       setLogList(data.listLogs)

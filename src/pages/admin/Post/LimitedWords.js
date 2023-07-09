@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Input, Space, Tag, Tooltip, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { getAllLimitsWord, updateListsWord } from '../../../api/post';
-const App = () => {
+const App = ({ language }) => {
     const { token } = theme.useToken();
     const [tags, setTags] = useState([]);
     const [inputVisible, setInputVisible] = useState(false);
@@ -71,7 +71,7 @@ const App = () => {
     };
     return (
         <Space size={[0, 8]} wrap>
-            <h6 style={{ marginTop: 5, marginRight: 10 }}>Limited words:</h6>
+            <h6 style={{ marginTop: 5, marginRight: 10 }}> {language === 'en' ? "Limited words:" : "Từ ngữ giới hạn:"}</h6>
             <Space size={[0, 8]} wrap>
                 {tags.map((tag, index) => {
                     if (editInputIndex === index) {
@@ -132,7 +132,7 @@ const App = () => {
                 />
             ) : (
                 <Tag style={tagPlusStyle} onClick={showInput}>
-                    <PlusOutlined /> New Tag
+                    <PlusOutlined /> {language === "en" ? "New" : "Tạo"}
                 </Tag>
             )}
         </Space>

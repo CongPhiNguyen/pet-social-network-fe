@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react"
 import { changeRole, getAllUserApi } from "../../../api/user"
 import { FaExchangeAlt } from 'react-icons/fa'
 import { useSelector } from "react-redux"
+import { useContext } from "react"
+import LanguageContext from "../../../context/LanguageContext"
 
 const REGEX_INVALID_CHAR = new RegExp(
     /^(?!.*[\\^\\$\\*\\(\\)\\[\]<>'"\\/\\;`%+])/,
@@ -13,6 +15,7 @@ export default function OnlineTable() {
     const { socket } = useSelector(state => state)
     const [userList, setUserList] = useState([])
     const [filters, setFilters] = useState({})
+    const { language } = useContext(LanguageContext);
 
     useEffect(() => {
         socket.emit("listUserOnline")
@@ -32,7 +35,7 @@ export default function OnlineTable() {
             dataIndex: "id",
         },
         {
-            title: "Role",
+            title: language === 'en' ? "Role" : "Quyền",
             dataIndex: "role",
         },
         {
@@ -40,7 +43,7 @@ export default function OnlineTable() {
             dataIndex: "email",
         },
         {
-            title: "Fullname",
+            title: language === 'en' ? "Fullname" : "Tên đầy đủ",
             dataIndex: "fullname",
         },
         {
@@ -63,7 +66,7 @@ export default function OnlineTable() {
                             rules={[
                                 {
                                     pattern: REGEX_INVALID_CHAR,
-                                    message: 'ID string invalid',
+                                    message: language === 'en' ? 'ID string invalid' : "ID không đúng định dạng",
                                 },
                             ]}
                         >
@@ -79,7 +82,7 @@ export default function OnlineTable() {
                             rules={[
                                 {
                                     pattern: REGEX_INVALID_CHAR,
-                                    message: 'Username string invalid',
+                                    message: language === 'en' ? 'Username string invalid' : "Username không đúng định dạng",
                                 },
                             ]}
                         >
