@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { MESS_TYPES } from "../../../redux/actions/messageAction"
 import "./scss/Info.scss"
 
-const Info = ({ auth, profile }) => {
+const Info = ({ auth, profile, language }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { id } = useParams()
@@ -67,7 +67,7 @@ const Info = ({ auth, profile }) => {
                   }}
                   src={
                     auth.user.avatar ===
-                    "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                      "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                       ? null
                       : auth.user.avatar
                   }
@@ -89,11 +89,13 @@ const Info = ({ auth, profile }) => {
                         setIsEdit(true)
                       }}
                     >
-                      Edit Profile
+                      {
+                        language === 'en' ? "Edit Profile" : "Chỉnh sữa thông tin cá nhân"
+                      }
                     </Button>
                   ) : (
                     <>
-                      <FollowBtn user={userInfo} />
+                      <FollowBtn language={language} user={userInfo} />
                       <Button
                         style={{
                           width: 100,
@@ -105,7 +107,10 @@ const Info = ({ auth, profile }) => {
                           messageToProfile()
                         }}
                       >
-                        Message
+                        {
+                          language === 'en' ? "Message" : "Nhắn tin"
+                        }
+
                       </Button>
                     </>
                   )}
@@ -116,18 +121,19 @@ const Info = ({ auth, profile }) => {
                   {userInfo.story}
                 </Typography>
                 <div style={{ marginTop: 20 }}>
-                  <Follower id={id} />
+                  <Follower language={language} id={id} />
                 </div>
               </div>
             </Col>
             <Col xs={24} md={12} xl={12}>
               <div className="pet-profile-container">
-                <PetProfile userInfo={profile} />
+                <PetProfile userInfo={profile} language={language} />
               </div>
             </Col>
           </Row>
         </Card>
-        <EditProfile isEdit={isEdit} setIsEdit={setIsEdit} />
+
+        <EditProfile language={language} isEdit={isEdit} setIsEdit={setIsEdit} />
       </React.Fragment>
     </div>
   )

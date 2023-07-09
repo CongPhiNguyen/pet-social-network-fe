@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { getFollowersApi } from "../../../api/user"
 import UserCard from "../../../components/UserCard"
 import FollowBtn from "../../../components/FollowBtn"
-export default function Follower() {
+export default function Follower({ language }) {
   const { id } = useParams()
   const [followers, setFollower] = useState([])
   const [openFollowerModel, setOpenFollowerModel] = useState(false)
@@ -45,7 +45,7 @@ export default function Follower() {
           setOpenFollowerModel(true)
         }}
       >
-        Follower ({followers.length}):
+        {language === 'en' ? "Follower" : "Người theo dõi"} ({followers.length}):
       </Typography>
       <div>
         {followers && followers.length === 0 && (
@@ -70,7 +70,7 @@ export default function Follower() {
         title={
           <React.Fragment>
             <div style={{ textAlign: "center", fontWeight: 600, fontSize: 20 }}>
-              Followers
+              {language === 'en' ? "Follower" : "Người theo dõi"}
             </div>
             <Divider></Divider>
           </React.Fragment>

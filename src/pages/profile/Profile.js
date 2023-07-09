@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Info from "./components/Info"
 import { useSelector, useDispatch } from "react-redux"
 import { getProfileUsers } from "../../redux/actions/profileAction"
@@ -12,18 +12,9 @@ import "../../styles/home.css"
 import NotFoundPage from "../notFound"
 import { getPostsByLocationDispatch } from "../../redux/actions/postAction"
 import { getDataAPI } from "../../utils/fetchData"
+import LanguageContext from "../../context/LanguageContext"
 
-const items = [
-  {
-    key: 'Personal',
-    label: `Personal`,
-  },
-  {
-    key: 'Saved',
-    label: `Saved`,
-  },
 
-];
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -31,6 +22,7 @@ const Profile = () => {
   const { auth } = useSelector((state) => state)
   const [isGettingProfile, setIsGettingProfile] = useState(false)
   const [profile, setProfile] = useState({})
+  const { language } = useContext(LanguageContext);
   const [loading, setLoading] = useState(false)
   const { theme } = useSelector((state) => state)
   const { homePosts } = useSelector((state) => state)
@@ -45,7 +37,17 @@ const Profile = () => {
     }
     setLoading(false)
   }
+  const items = [
+    {
+      key: `Personal`,
+      label: 'Personal',
+    },
+    {
+      key: `Saved`,
+      label: 'Saved',
+    },
 
+  ];
   const getProfileInfo = async () => {
     setIsGettingProfile(true)
     try {
@@ -76,7 +78,7 @@ const Profile = () => {
   } else if (profile) {
     return (
       <div className="profile" style={{ marginTop: 64 }}>
-        <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />
+        <Info auth={auth} profile={profile} dispatch={dispatch} id={id} language={language} />
         <div
           style={{
             width: "100%",
@@ -90,7 +92,7 @@ const Profile = () => {
             <Col xl={8} md={24} sm={24}>
               {!profile?.loading && (
                 <Card>
-                  <Following />
+                  <Following language={language} />
                 </Card>
               )}
             </Col>
@@ -105,8 +107,8 @@ const Profile = () => {
                 <Card>
                   <Result
                     status="404"
-                    title="NO POST"
-                    subTitle="You can follow someone or create new post!"
+                    title={language === 'en' ? "NO POST" : "Không có bài viết nào!"}
+                    subTitle={language === 'en' ? "You can follow someone or create new post!" : "Hãy theo dõi ai đó hoặc tạo nhiều bài viết"}
                   />
                 </Card>
               ) : (

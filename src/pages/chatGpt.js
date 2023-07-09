@@ -18,9 +18,7 @@ export default function ChatGpt() {
         <Gpt
           setIsOpen={() => {
             setOpen()
-            message.error(
-              "ChatGPT is receive many request now. Please try again later!"
-            )
+
           }}
         ></Gpt>
       }

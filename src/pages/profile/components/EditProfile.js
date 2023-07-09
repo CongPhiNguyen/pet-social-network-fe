@@ -5,7 +5,7 @@ import { Form, Input, Radio, Select, Modal, Button, message } from "antd"
 import { AiFillCamera } from "react-icons/ai"
 import { updateProfileApi, uploadImageApi } from "../../../api/user"
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes"
-const EditProfile = ({ isEdit, setIsEdit }) => {
+const EditProfile = ({ isEdit, setIsEdit, language }) => {
   const dispatch = useDispatch()
   const userInfo = useSelector((state) => state.auth.user)
   const auth = useSelector((state) => state.auth)
@@ -30,13 +30,15 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
     // Validate các value ở đây
     if (value?.fullname?.length <= 6 || value?.fullname?.length >= 200) {
       message.error(
-        "Full name must have more than 6 characters and less than 200 characters"
+        language === 'en' ?
+          "Full name must have more than 6 characters and less than 200 characters" : "Tên phải nhiều hơn 6 ký tự và ít hơn 200 ký tự"
       )
       return
     }
     if (value?.story?.length <= 6 || value?.story?.length >= 200) {
       message.error(
-        "Story must have more than 6 characters and less than 200 characters"
+        language === 'en' ?
+          "Story must have more than 6 characters and less than 200 characters" : "Tiểu sử phải nhiều hơn 6 ký tự và ít hơn 200 ký tự"
       )
       return
     }
@@ -81,7 +83,7 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
   return (
     <div>
       <Modal
-        title="Confirm modal"
+        title={language === 'en' ? "Confirm modal" : "Xác nhận"}
         open={showConfirmCloseEditModel}
         onOk={() => {
           setShowConfirmCloseEditModal(false)
@@ -94,10 +96,13 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
         maskClosable={false}
         style={{ top: 120 }}
       >
-        Do you want to discard change ?
+        {
+          language === 'en' ? "Do you want to discard change ?" : "Bạn có muốn bỏ thay đổi?"
+        }
+
       </Modal>
       <Modal
-        title="Change user profile"
+        title={language === 'en' ? "Change user profile" : "Thay đổi thông tin"}
         open={isEdit}
         maskClosable={false}
         onOk={() => {
@@ -109,7 +114,9 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
         footer={
           <div>
             <Button onClick={() => setShowConfirmCloseEditModal(true)}>
-              Close
+              {
+                language === 'en' ? "Close" : "Đóng"
+              }
             </Button>
             <Button
               type="primary"
@@ -160,7 +167,11 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
               >
                 <label htmlFor="file_up">
                   <AiFillCamera size={20} color="#fff" />
-                  <p>Change</p>
+                  <p>
+                    {
+                      language === 'en' ? "Change" : "Thay đổi"
+                    }
+                  </p>
                 </label>
                 <input
                   style={{ display: "none" }}
@@ -189,10 +200,10 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
             <Input readOnly disabled />
           </Form.Item>
           <Form.Item
-            label="Full name"
+            label={language === 'en' ? "Full name" : "Tên đầy đủ"}
             name="fullname"
             rules={[
-              { required: true, message: "Please input your Full name!" }
+              { required: true, message: language === 'en' ? "Please input your Full name!" : "Hãy nhập tên đầy đủ của bạn" }
             ]}
             style={{ marginBottom: 10 }}
           >
@@ -207,15 +218,27 @@ const EditProfile = ({ isEdit, setIsEdit }) => {
             <Input.TextArea />
           </Form.Item>
           <Form.Item
-            label="Gender"
+            label={language === 'en' ? "Gender" : "Giới tính"}
             name="gender"
-            rules={[{ required: true, message: "Please input your gender!" }]}
+            rules={[{ required: true, message: language === 'en' ? "Please input your gender!" : "Hãy nhập giới tính của bạn!" }]}
             style={{ marginBottom: 10 }}
           >
             <Radio.Group>
-              <Radio value={"male"}>Male</Radio>
-              <Radio value={"female"}>Female</Radio>
-              <Radio value={"other"}>Other</Radio>
+              <Radio value={"male"}>{
+                language === 'en' ? "Male" : "Nam"
+              }</Radio>
+              <Radio value={"female"}>
+
+                {
+                  language === 'en' ? "Female" : "Nữ"
+                }
+              </Radio>
+              <Radio value={"other"}>
+
+                {
+                  language === 'en' ? "Orther" : "Khác"
+                }
+              </Radio>
             </Radio.Group>
             {/* <Input readOnly /> */}
           </Form.Item>

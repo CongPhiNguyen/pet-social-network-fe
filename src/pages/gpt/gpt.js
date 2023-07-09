@@ -7,13 +7,17 @@ import axios from "axios"
 import { EventSourcePolyfill } from "event-source-polyfill"
 import { useSelector } from "react-redux"
 import { BACKEND_URL } from "../../constants"
+import LanguageContext from "../../context/LanguageContext"
+import { useContext } from "react"
 
 const Gpt = ({ setIsOpen }) => {
   const chatRef = useRef(null)
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState("")
   const [isReplying, setIsReplying] = useState(false)
-  const suggestedMessages = ["Thú cưng là gì?", "Có bao nhiêu loại thú cưng?"]
+  const { language } = useContext(LanguageContext);
+  const suggestedMessages = language === 'en' ? ["Does your pet understand what you say?", `
+  Why can't pets live as long as we do?`, 'What is the price of British Shorthair cats?'] : ['Thú cưng có hiểu những gì con nói không?', 'Tại sao thú cưng không sống lâu được như chúng ta?', 'Giá của mèo anh lông ngắn?']
   const { auth } = useSelector((state) => state)
 
   const handleInputChange = (event) => {
@@ -22,10 +26,11 @@ const Gpt = ({ setIsOpen }) => {
 
   const handleSendMessage = async () => {
     if (inputValue === "") {
-      message.warning("Please input something")
+      message.warning(language === 'en' ? "Please input something" : "Hãy nhập bất cứ thứ gì")
 
       return
     }
+    if (isReplying) return
     const newMessage = {
       content: inputValue,
       role: "user"
@@ -46,17 +51,23 @@ const Gpt = ({ setIsOpen }) => {
     )
 
     sse.onmessage = (event) => {
+
+      if (event.data === '[DONE]') {
+        setIsReplying(false)
+        return
+      }
       newReplyMessage.content += event.data
       setMessages([...messages, newMessage, newReplyMessage])
     }
 
     sse.onerror = (event) => {
+
       sse.close()
       setIsReplying(false)
       setIsOpen(false)
-      message.error(
-        "ChatGPT is receive many request now. Please try again later!"
-      )
+      // message.error(
+      //   "ChatGPT is receive many request now. Please try again later!"
+      // )
     }
   }
 
@@ -124,6 +135,10 @@ const Gpt = ({ setIsOpen }) => {
     )
 
     sse.onmessage = (event) => {
+      if (event.data === '[DONE]') {
+        setIsReplying(false)
+        return
+      }
       newReplyMessage.content += event.data
       setMessages([...messages, newMessage, newReplyMessage])
     }
@@ -134,9 +149,9 @@ const Gpt = ({ setIsOpen }) => {
       sse.close()
       setIsReplying(false)
       setIsOpen(false)
-      message.error(
-        "ChatGPT is receive many request now. Please try again later!"
-      )
+      // message.error(
+      //   "ChatGPT is receive many request now. Please try again later!"
+      // )
     }
   }
 
@@ -188,7 +203,10 @@ const Gpt = ({ setIsOpen }) => {
                 margin: "20px"
               }}
             >
-              Hãy thử hỏi tôi
+              {
+                language === 'en' ? "Try asking me" : "Hãy thử hỏi tôi"
+              }
+
             </div>
             <div
               style={{
@@ -269,11 +287,13 @@ const Gpt = ({ setIsOpen }) => {
                 backgroundColor: "none",
                 border: "none"
               }}
+              onClick={() => {
+                setMessages([])
+              }}
               shape="circle"
               disabled={
                 isReplying ||
-                messages?.at(-1)?.content === "" ||
-                messages?.length === 0
+                messages.length === 0
               }
             >
               <ClearOutlined
@@ -297,7 +317,7 @@ const Gpt = ({ setIsOpen }) => {
                 value={inputValue}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                placeholder="Type a message..."
+                placeholder={language === 'en' ? "Type a message..." : "Nhập..."}
               />
               <Button
                 style={{

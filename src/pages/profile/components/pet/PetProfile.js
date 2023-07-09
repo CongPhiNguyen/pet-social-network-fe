@@ -8,7 +8,7 @@ import { useSelector } from "react-redux"
 import PetModalShowAll from "./PetModalShowAll"
 import { useParams } from "react-router-dom"
 
-export default function PetProfile({ userInfo }) {
+export default function PetProfile({ userInfo, language }) {
   const { id } = useParams()
   const currentUser = useSelector((state) => state?.auth?.user)
   const [pets, setPets] = useState([])
@@ -40,7 +40,7 @@ export default function PetProfile({ userInfo }) {
           pets.slice(0, 2).map((val, index) => (
             <Col xs={12} sm={6} key={index}>
               <div style={{ textAlign: "center" }}>
-                <PetCard {...val} key={index} isShowDelete={true} />
+                <PetCard language={language} {...val} key={index} isShowDelete={true} />
               </div>
             </Col>
           ))}
@@ -68,8 +68,8 @@ export default function PetProfile({ userInfo }) {
             cursor: "pointer"
           }}
         >
-          Bạn chưa thêm thú cưng nào. hãy ấn nút bên trên để thêm thú cưng thôi
-          nào
+          {language === 'en' ? "You have not added any pets yet. Please press the button above to add a pet" : "Bạn chưa thêm thú cưng nào. hãy ấn nút bên trên để thêm thú cưng thôi nào"}
+
         </p>
       )}
 
@@ -77,6 +77,7 @@ export default function PetProfile({ userInfo }) {
         isAddPet={isAddPet}
         setIsAddPet={setIsAddPet}
         updateListPet={updateListPet}
+        language={language}
       />
 
       {pets.length > 0 && (
