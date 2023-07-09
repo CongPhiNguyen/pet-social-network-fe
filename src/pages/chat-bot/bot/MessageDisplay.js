@@ -5,6 +5,7 @@ import { ExclamationCircleFilled } from "@ant-design/icons"
 import { FaVideo } from "react-icons/fa"
 import { IoCall } from "react-icons/io5"
 import PetCardInfo from "./PetCardInfo"
+import SickCardInfo from "./SickCardInfo"
 const { confirm } = Modal
 const MessageDisplay = ({ user, msg, theme, data }) => {
   const { auth } = useSelector((state) => state)
@@ -99,6 +100,10 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
                 style={{ maxWidth: 400 }}
               ></img>
             )}
+            {msg?.dialogflowFeature?.name === "predict_sick" &&
+              msg?.dialogflowFeature?.sickName && (
+                <SickCardInfo sickName={msg?.dialogflowFeature?.sickName} />
+              )}
             {/* {msg.media.map((item, index) => (
             <div key={index}>
               {item.url.match(/video/i)
