@@ -1,11 +1,12 @@
 import { Card } from "antd"
 import React from "react"
 import { useNavigate } from "react-router-dom"
-import { getDogMongoApi } from "../../../api/dogcat"
+import { getCatMongoApi, getDogMongoApi } from "../../../api/dogcat"
 import { useState } from "react"
 import { useEffect } from "react"
 
 export default function PetCardInfo({ info, name, type, cardType }) {
+  console.log(cardType)
   const navigate = useNavigate()
   const [petInfo, setPetInfo] = useState([])
   const getDog = async () => {
@@ -14,16 +15,28 @@ export default function PetCardInfo({ info, name, type, cardType }) {
     if (status === 200) {
       const dogInfo = data.dogList.find((val) => val.name === name)
       setPetInfo(dogInfo)
-      console.log(dogInfo)
+    }
+  }
+  const getCat = async () => {
+    const response = await getCatMongoApi()
+    const { data, status } = response
+    if (status === 200) {
+      console.log(name)
+      const catInfo = data.catList.find((val) => val.name === name)
+      setPetInfo(catInfo)
+      console.log(catInfo)
     }
   }
   useEffect(() => {
     if (cardType === "choose_dog") {
       getDog()
     }
+    if (cardType === "choose_cat") {
+      getCat()
+    }
   }, [])
 
-  if (cardType === "choose_dog") {
+  if (cardType === "choose_dog" || cardType === "choose_cat") {
     return (
       <Card
         hoverable
