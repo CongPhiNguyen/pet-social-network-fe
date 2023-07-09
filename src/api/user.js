@@ -47,3 +47,9 @@ export const loginTokenApi = (userData, token) => {
     headers: { Authorization: token }
   })
 }
+
+export const getSuggestionsApi = (userId) => {
+  return axios.get(`${API_ENDPOINT}/user-service/suggest`, {
+    params: { userId }
+  })
+}

@@ -5,7 +5,9 @@ import UserCard from "../UserCard"
 import FollowBtn from "../FollowBtn"
 import LoadIcon from "../../images/loading.gif"
 import { getSuggestions } from "../../redux/actions/suggestionsAction"
-import { Spin } from "antd"
+import { Spin, Typography } from "antd"
+import { Link } from "react-router-dom"
+const { Title } = Typography
 
 const RightSideBar = () => {
   const { auth, suggestions } = useSelector((state) => state)
@@ -16,9 +18,11 @@ const RightSideBar = () => {
       <UserCard user={auth.user} />
 
       <div className="d-flex justify-content-between align-items-center my-2">
-        <h5 className="text-danger" style={{ color: "#f07c4b" }}>
-          Suggestions for you
-        </h5>
+        <Link style={{ color: "#f07c4b", cursor: "pointer" }} to="/suggestion">
+          <Title style={{ color: "#f07c4b" }} level={4}>
+            Suggestions for you
+          </Title>
+        </Link>
         {!suggestions.loading && (
           <i
             className="fas fa-redo"
