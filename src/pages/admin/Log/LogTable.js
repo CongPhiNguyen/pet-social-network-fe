@@ -1,4 +1,4 @@
-import { Table, message } from "antd"
+import { Table, Typography, message } from "antd"
 import React, { useEffect, useState } from "react"
 import { getLogsApi } from "../../../api/log"
 import moment from "moment"
@@ -12,6 +12,10 @@ function convertTime(timestamp) {
 
 export default function LogTable() {
   const [logList, setLogList] = useState([])
+  const [pageSize, setPageSize] = useState(10)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [total, setTotal] = useState(0)
+
   const columns = [
     {
       title: "Time",
@@ -48,11 +52,16 @@ export default function LogTable() {
   ]
 
   const getLogs = async () => {
-    const response = await getLogsApi()
+    const response = await getLogsApi({
+      currentPage: currentPage,
+      pageSize: pageSize
+    })
     console.log(response)
     const { data, status } = response
     if (status === 200) {
       setLogList(data.listLogs)
+      const { total } = data.meta
+      setTotal(total)
     } else {
       message.error("Some error happended!!")
     }
@@ -60,11 +69,23 @@ export default function LogTable() {
 
   useEffect(() => {
     getLogs()
-  }, [])
+  }, [currentPage])
 
   return (
     <div style={{ margin: 20 }}>
-      <Table columns={columns} dataSource={logList} />
+      <Typography.Title level={4}>Log list</Typography.Title>
+
+      <Table
+        columns={columns}
+        dataSource={logList}
+        pagination={{
+          pageSize: pageSize,
+          current: currentPage,
+          onChange: setCurrentPage,
+          total: total,
+          showSizeChanger: false
+        }}
+      />
     </div>
   )
 }
