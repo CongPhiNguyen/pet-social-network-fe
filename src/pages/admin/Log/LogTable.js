@@ -2,8 +2,9 @@ import { Table, Typography, message } from "antd"
 import React, { useEffect, useState } from "react"
 import { getLogsApi } from "../../../api/log"
 import moment from "moment"
-import SearchLog from "./SearchLog"
-import SortableColumnTitle from "./SortableColumnTitle"
+import SearchLog from "./components/SearchLog"
+import SortableColumnTitle from "./components/SortableColumnTitle"
+import LogAccumulation from "./components/LogAccumulation"
 
 function convertTime(timestamp) {
   const date = moment(timestamp)
@@ -137,6 +138,7 @@ export default function LogTable() {
           showSizeChanger: false
         }}
       />
+      <LogAccumulation></LogAccumulation>
     </div>
   )
 }
