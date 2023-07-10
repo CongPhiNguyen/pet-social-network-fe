@@ -2,6 +2,8 @@ import { Table, Typography, message } from "antd"
 import React, { useEffect, useState } from "react"
 import { getLogsApi } from "../../../api/log"
 import moment from "moment"
+import SearchLog from "./SearchLog"
+import SortableColumnTitle from "./SortableColumnTitle"
 
 function convertTime(timestamp) {
   const date = moment(timestamp)
@@ -15,6 +17,32 @@ export default function LogTable() {
   const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(1)
   const [total, setTotal] = useState(0)
+  const [filter, setFilter] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [sortValue, setSortValue] = useState({
+    sortColumn: "",
+    sortType: "asc"
+  })
+
+  const handleSort = (value) => {
+    setIsLoading(true)
+    let sortType
+    if (sortValue.sortType === "asc") {
+      sortType = "desc"
+    } else {
+      sortType = "asc"
+    }
+    const sortColumn = value.dataIndex
+    setSortValue({ sortColumn, sortType })
+  }
+
+  function onHeaderCell(column) {
+    return {
+      onClick() {
+        handleSort(column)
+      }
+    }
+  }
 
   const columns = [
     {
@@ -39,7 +67,14 @@ export default function LogTable() {
       key: "status"
     },
     {
-      title: "Response time",
+      title: (
+        <SortableColumnTitle
+          title="Response time"
+          sorting={sortValue.sortColumn === "responseTime"}
+          sortType={sortValue.sortType}
+        />
+      ),
+      onHeaderCell: (column) => onHeaderCell(column),
       dataIndex: "responseTime",
       key: "responseTime",
       render: (val) => val + " ms"
@@ -52,11 +87,13 @@ export default function LogTable() {
   ]
 
   const getLogs = async () => {
+    setIsLoading(true)
     const response = await getLogsApi({
       currentPage: currentPage,
-      pageSize: pageSize
+      pageSize: pageSize,
+      filter: filter,
+      sortValue: sortValue
     })
-    console.log(response)
     const { data, status } = response
     if (status === 200) {
       setLogList(data.listLogs)
@@ -65,17 +102,31 @@ export default function LogTable() {
     } else {
       message.error("Some error happended!!")
     }
+    setIsLoading(false)
+  }
+
+  const searchLogs = (value) => {
+    const searchPattern = {}
+    if (value?.url && value.url.length !== 0) {
+      searchPattern["url"] = value.url
+    }
+    if (value?.method && value.method.length !== 0) {
+      searchPattern["method"] = value.method
+    }
+
+    setFilter(searchPattern)
   }
 
   useEffect(() => {
     getLogs()
-  }, [currentPage])
+  }, [currentPage, filter, sortValue])
 
   return (
     <div style={{ margin: 20 }}>
       <Typography.Title level={4}>Log list</Typography.Title>
-
+      <SearchLog onSearch={searchLogs} />
       <Table
+        loading={isLoading}
         columns={columns}
         dataSource={logList}
         pagination={{
