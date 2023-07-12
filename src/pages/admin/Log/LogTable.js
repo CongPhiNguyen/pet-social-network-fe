@@ -1,5 +1,5 @@
 import { Table, Typography, message } from "antd"
-import React, { useEffect, useState, useContext, } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { getLogsApi } from "../../../api/log"
 import moment from "moment"
 import SearchLog from "./components/SearchLog"
@@ -15,7 +15,7 @@ function convertTime(timestamp) {
 }
 
 export default function LogTable() {
-  const { language } = useContext(LanguageContext);
+  const { language } = useContext(LanguageContext)
 
   const [logList, setLogList] = useState([])
   const [pageSize, setPageSize] = useState(10)
@@ -50,13 +50,13 @@ export default function LogTable() {
 
   const columns = [
     {
-      title: language === 'en' ? "Time" : "Thời gian",
+      title: language === "en" ? "Time" : "Thời gian",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (val) => convertTime(val)
     },
     {
-      title: language === 'en' ? "Method" : "Phương thức",
+      title: language === "en" ? "Method" : "Phương thức",
       dataIndex: "method",
       key: "method"
     },
@@ -66,14 +66,14 @@ export default function LogTable() {
       key: "url"
     },
     {
-      title: language === 'en' ? "Status" : "Trạng thái",
+      title: language === "en" ? "Status" : "Trạng thái",
       dataIndex: "status",
       key: "status"
     },
     {
       title: (
         <SortableColumnTitle
-          title={language === 'en' ? "Response time" : "Phản hồi",}
+          title={language === "en" ? "Response time" : "Phản hồi"}
           sorting={sortValue.sortColumn === "responseTime"}
           sortType={sortValue.sortType}
         />
