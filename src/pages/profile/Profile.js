@@ -33,7 +33,7 @@ const Profile = () => {
     const response = option === 'Personal' ? await getPostByUserIdApi(userId) : await getDataAPI(`getSavePosts`, auth.token)
     const { data, status } = response
     if (status === 200) {
-      dispatch(getPostsByLocationDispatch({ posts: option === 'Personal' ? data.postList : data.savePosts || [] }))
+      dispatch(getPostsByLocationDispatch({ posts: option === 'Personal' ? data?.postList || [] : data?.savePosts || [] }))
     }
     setLoading(false)
   }

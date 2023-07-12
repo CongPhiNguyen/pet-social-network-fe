@@ -118,7 +118,7 @@ const CardHeader = ({ post, language }) => {
           }
           size="large"
         >
-          {post?.user?.fullname[0]?.toUpperCase()}
+          {post?.user?.fullname ? post?.user?.fullname[0]?.toUpperCase() : "Name"}
         </Avatar>
         <div className="card_name">
           <h6 className="m-0">

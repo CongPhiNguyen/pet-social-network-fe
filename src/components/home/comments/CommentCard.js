@@ -30,7 +30,7 @@ const CommentCard = ({ children, comment, post, commentId, language }) => {
     setContent(comment.content)
     setIsLike(false)
     setOnReply(false)
-    if (comment.likes.find((like) => like._id === auth.user._id)) {
+    if (comment?.likes?.find((like) => like?._id === auth?.user?._id)) {
       setIsLike(true)
     }
   }, [comment, auth.user._id])
@@ -127,7 +127,7 @@ const CommentCard = ({ children, comment, post, commentId, language }) => {
                   ? content
                   : readMore
                     ? content + " "
-                    : content.slice(0, 100) + "...."}
+                    : content?.slice(0, 100) + "...."}
               </span>
               {content?.length > 100 && (
                 <span
@@ -146,7 +146,7 @@ const CommentCard = ({ children, comment, post, commentId, language }) => {
             </small>
 
             <small className="font-weight-bold mr-3">
-              {comment.likes.length} {language === 'en' ? "likes" : "thích"}
+              {comment.likes?.length || 0} {language === 'en' ? "likes" : "thích"}
             </small>
 
             {onEdit ? (
