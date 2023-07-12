@@ -1,39 +1,46 @@
 import React, { useEffect, useState } from "react"
-import { Avatar, Typography, Card, Divider, Tooltip, Modal } from "antd"
+import { Avatar, Typography, Card, Divider, Tooltip, Modal, Spin } from "antd"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import { getFollowersApi } from "../../../api/user"
+import { getFollowingApi } from "../../../api/user"
 import UserCard from "../../../components/UserCard"
 import FollowBtn from "../../../components/FollowBtn"
-export default function Follower({ language }) {
+export default function Following() {
   const { id } = useParams()
-  const [followers, setFollower] = useState([])
-  const [openFollowerModel, setOpenFollowerModel] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [followings, setFollowings] = useState([])
+  const [openFollowingModel, setOpenFollowingModel] = useState(false)
   const { auth } = useSelector((state) => state)
   const navigate = useNavigate()
 
-  const getFollowers = async () => {
-    const response = await getFollowersApi(id)
+  const getFollowings = async () => {
+    setIsLoading(true)
+    const response = await getFollowingApi(id)
+    setIsLoading(false)
     const { data, status } = response
-    if (status == 200) setFollower(data.followers)
+    if (status === 200) setFollowings(data.following)
   }
 
   useEffect(() => {
-    getFollowers()
+    getFollowings()
   }, [id])
 
   const handleOk = () => {
-    setOpenFollowerModel(false)
+    setOpenFollowingModel(false)
   }
 
   const handleCancel = () => {
-    setOpenFollowerModel(false)
+    setOpenFollowingModel(false)
+  }
+
+  if (isLoading) {
+    return <Spin />
   }
 
   return (
     <div>
       <Typography
-        title={"Click to view all followers"}
+        title={"Click to view all followings"}
         style={{
           cursor: "pointer",
           color: "teal",
@@ -42,20 +49,19 @@ export default function Follower({ language }) {
           marginBottom: 10
         }}
         onClick={() => {
-          setOpenFollowerModel(true)
+          setOpenFollowingModel(true)
         }}
       >
-        {language === "en" ? "Follower" : "Người theo dõi"} ({followers.length}
-        ):
+        This user is following:
       </Typography>
       <div>
-        {followers && followers.length === 0 && (
-          <p>This user don't have any follower</p>
+        {followings && followings.length === 0 && (
+          <p>This user don't follow any user</p>
         )}
-        {followers &&
-          followers.map((val, index) => (
+        {followings &&
+          followings.map((val, index) => (
             <Avatar.Group key={index}>
-              <Tooltip title={val?.fullname} placement="top">
+              <Tooltip title={val.fullname} placement="top">
                 <Avatar
                   style={{
                     backgroundColor: "#f56a00",
@@ -82,19 +88,21 @@ export default function Follower({ language }) {
       <Modal
         title={
           <React.Fragment>
-            <div style={{ textAlign: "center", fontWeight: 600, fontSize: 20 }}>
-              {language === "en" ? "Follower" : "Người theo dõi"}
+            <div
+              style={{ textAlign: "centing", fontWeight: 600, fontSize: 20 }}
+            >
+              Followings
             </div>
             <Divider></Divider>
           </React.Fragment>
         }
-        open={openFollowerModel}
+        open={openFollowingModel}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
       >
-        {followers.map((user) => (
-          <UserCard key={user?._id} user={user}>
+        {followings.map((user, index) => (
+          <UserCard key={index} user={user}>
             {auth?.user?._id !== user?._id && <FollowBtn user={user} />}
           </UserCard>
         ))}

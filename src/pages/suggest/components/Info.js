@@ -12,10 +12,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { MESS_TYPES } from "../../../redux/actions/messageAction"
 import "./scss/Info.scss"
 
-const Info = ({ auth, profile, language }) => {
+const Info = ({ auth, profile, userId }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { id } = useParams()
+  const id = userId
   const [userInfo, setUserInfo] = useState({})
   const currentUser = useSelector((state) => state.auth.user)
   const [isEdit, setIsEdit] = useState(false)
@@ -41,6 +41,7 @@ const Info = ({ auth, profile, language }) => {
     })
     navigate(`/message/${userInfo._id}`)
   }
+  console.log("id nè", id)
   return (
     <div className="info">
       <React.Fragment>
@@ -78,10 +79,23 @@ const Info = ({ auth, profile, language }) => {
                     ? userInfo?.username[0].toUpperCase()
                     : ""}
                 </Avatar>
+                {/* <Avatar
+                  src={
+                    auth.user.avatar ===
+                    "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                      ? null
+                      : userInfo?.avatar
+                  }
+                  size={180}
+                >
+                  <p style={{ fontSize: 92, marginTop: -10 }}>
+                    {auth.user.username[0].toUpperCase()}
+                  </p>
+                </Avatar> */}
               </div>
               <div style={{ marginLeft: 60, marginTop: 20, marginBottom: 10 }}>
                 <Typography.Title level={2}>
-                  {userInfo.fullname} (@{userInfo?.username})
+                  {userInfo?.fullname} (@{userInfo?.username})
                 </Typography.Title>
                 <div>
                   {userInfo?._id === auth?.user?._id ? (
@@ -90,13 +104,11 @@ const Info = ({ auth, profile, language }) => {
                         setIsEdit(true)
                       }}
                     >
-                      {language === "en"
-                        ? "Edit Profile"
-                        : "Chỉnh sửa thông tin cá nhân"}
+                      Edit Profile
                     </Button>
                   ) : (
                     <>
-                      <FollowBtn language={language} user={userInfo} />
+                      <FollowBtn user={userInfo} />
                       <Button
                         style={{
                           width: 100,
@@ -108,7 +120,7 @@ const Info = ({ auth, profile, language }) => {
                           messageToProfile()
                         }}
                       >
-                        {language === "en" ? "Message" : "Nhắn tin"}
+                        Message
                       </Button>
                     </>
                   )}
@@ -119,23 +131,18 @@ const Info = ({ auth, profile, language }) => {
                   {userInfo.story}
                 </Typography>
                 <div style={{ marginTop: 20 }}>
-                  <Follower language={language} id={id} />
+                  <Follower id={id} />
                 </div>
               </div>
             </Col>
             <Col xs={24} md={12} xl={12}>
               <div className="pet-profile-container">
-                <PetProfile userInfo={profile} language={language} />
+                <PetProfile userInfo={profile} userId={userId} />
               </div>
             </Col>
           </Row>
         </Card>
-
-        <EditProfile
-          language={language}
-          isEdit={isEdit}
-          setIsEdit={setIsEdit}
-        />
+        <EditProfile isEdit={isEdit} setIsEdit={setIsEdit} />
       </React.Fragment>
     </div>
   )

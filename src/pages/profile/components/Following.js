@@ -52,17 +52,16 @@ export default function Following({ language }) {
           setOpenFollowingModel(true)
         }}
       >
-
-        {
-          language === 'en' ? "This user is following:" : "Danh sách đang theo dõi"
-        }
+        {language === "en"
+          ? `This user is following(${followings.length})`
+          : `Danh sách đang theo dõi(${followings.length})`}
       </Typography>
       <div>
         {followings && followings.length === 0 && (
           <p>
-            {
-              language === 'en' ? "This user don't follow any user" : "Bạn không theo dõi ai"
-            }
+            {language === "en"
+              ? "This user don't follow any user"
+              : "Người dùng hiện tại không theo dõi ai"}
           </p>
         )}
         {followings &&
@@ -70,12 +69,24 @@ export default function Following({ language }) {
             <Avatar.Group key={index}>
               <Tooltip title={val.fullname} placement="top">
                 <Avatar
-                  src={val.avatar}
+                  style={{
+                    backgroundColor: "#f56a00",
+                    fontSize: 28,
+                    cursor: "pointer"
+                  }}
+                  src={
+                    val?.avatar ===
+                    "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                      ? null
+                      : val?.avatar
+                  }
                   size={60}
                   onClick={() => {
-                    navigate("/profile/" + val._id)
+                    navigate("/profile/" + val?._id)
                   }}
-                />
+                >
+                  {val?.username ? val?.username[0].toUpperCase() : ""}
+                </Avatar>
               </Tooltip>
             </Avatar.Group>
           ))}
@@ -86,10 +97,7 @@ export default function Following({ language }) {
             <div
               style={{ textAlign: "centing", fontWeight: 600, fontSize: 20 }}
             >
-              {
-                language === 'en' ? "Followings" : "Theo dõi"
-              }
-
+              {language === "en" ? "Followings" : "Theo dõi"}
             </div>
             <Divider></Divider>
           </React.Fragment>

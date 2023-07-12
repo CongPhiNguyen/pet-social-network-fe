@@ -4,8 +4,8 @@ import Avatar from "../Avatar"
 import { GLOBALTYPES } from "../../redux/actions/globalTypes"
 import { addMessage } from "../../redux/actions/messageAction"
 import RingRing from "../../audio/ringring.mp3"
-import { IoCall } from 'react-icons/io5'
-import { FaVideo } from 'react-icons/fa'
+import { IoCall } from "react-icons/io5"
+import { FaVideo } from "react-icons/fa"
 import { message } from "antd"
 import LanguageContext from "../../context/LanguageContext"
 import { useContext } from "react"
@@ -13,7 +13,7 @@ import { useContext } from "react"
 const CallModal = () => {
   const { call, auth, peer, socket, theme } = useSelector((state) => state)
   const dispatch = useDispatch()
-  const { language } = useContext(LanguageContext);
+  const { language } = useContext(LanguageContext)
 
   const [hours, setHours] = useState(0)
   const [mins, setMins] = useState(0)
@@ -115,6 +115,7 @@ const CallModal = () => {
       const track = stream.getTracks()
       setTracks(track)
 
+      console.log(call.peerId, stream)
       const newCall = peer.call(call.peerId, stream)
       newCall.on("stream", function (remoteStream) {
         playStream(otherVideo.current, remoteStream)
@@ -212,9 +213,13 @@ const CallModal = () => {
           ) : (
             <div>
               {call.video ? (
-                <span>{language === 'en' ? "Calling video..." : "Cuộc gọi video"}</span>
+                <span>
+                  {language === "en" ? "Calling video..." : "Cuộc gọi video"}
+                </span>
               ) : (
-                <span>{language === 'en' ? "Calling audio..." : "Cuộc gọi thường"}</span>
+                <span>
+                  {language === "en" ? "Calling audio..." : "Cuộc gọi thường"}
+                </span>
               )}
             </div>
           )}
