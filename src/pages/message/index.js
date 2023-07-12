@@ -1,8 +1,12 @@
-import React from "react"
+import React, { useContext } from "react"
 import LeftSide from "../../components/message/LeftSide"
 import { Card, Col, Row } from "antd"
+import LanguageContext from "../../context/LanguageContext";
 
 const Message = () => {
+  const { language } = useContext(LanguageContext);
+
+
   return (
     // <div style={{ marginTop: 64 }} className="message d-flex">
 
@@ -27,7 +31,7 @@ const Message = () => {
     <Row gutter={[24, 0]} style={{ paddingTop: 128, overflow: "hidden", marginRight: 0 }} >
       <Col style={{ height: 'calc(100vh - 192px)' }} sm={20} md={6} offset={2}>
         <Card style={{ height: "100%", overflowY: "scroll" }}>
-          <LeftSide />
+          <LeftSide language={language} />
         </Card>
       </Col>
       <Col style={{ height: 'calc(100vh - 192px)' }} sm={0} md={14}>
@@ -40,7 +44,7 @@ const Message = () => {
               className="fab fa-facebook-messenger text-primary"
               style={{ fontSize: "5rem" }}
             />
-            <h4>Messenger</h4>
+            <h4>{language === 'en' ? "Messenger" : "Tin nhắn"}</h4>
           </div>
         </Card>
       </Col>

@@ -7,10 +7,13 @@ import RingRing from "../../audio/ringring.mp3"
 import { IoCall } from 'react-icons/io5'
 import { FaVideo } from 'react-icons/fa'
 import { message } from "antd"
+import LanguageContext from "../../context/LanguageContext"
+import { useContext } from "react"
 
 const CallModal = () => {
   const { call, auth, peer, socket, theme } = useSelector((state) => state)
   const dispatch = useDispatch()
+  const { language } = useContext(LanguageContext);
 
   const [hours, setHours] = useState(0)
   const [mins, setMins] = useState(0)
@@ -209,9 +212,9 @@ const CallModal = () => {
           ) : (
             <div>
               {call.video ? (
-                <span>calling video...</span>
+                <span>{language === 'en' ? "Calling video..." : "Cuộc gọi video"}</span>
               ) : (
-                <span>calling audio...</span>
+                <span>{language === 'en' ? "Calling audio..." : "Cuộc gọi thường"}</span>
               )}
             </div>
           )}

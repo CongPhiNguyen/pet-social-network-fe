@@ -8,6 +8,8 @@ import { Button, Modal, Divider, Card, message, Avatar, Row, Col } from "antd"
 import { FaLocationArrow } from "react-icons/fa"
 import axios from "axios"
 import { AiFillDelete } from "react-icons/ai"
+import { useContext } from "react"
+import LanguageContext from "../context/LanguageContext"
 
 const StatusModal = () => {
   const { auth, theme, status, socket } = useSelector((state) => state)
@@ -19,6 +21,8 @@ const StatusModal = () => {
   const videoRef = useRef()
   const refCanvas = useRef()
   const [tracks, setTracks] = useState("")
+  const { language } = useContext(LanguageContext);
+
 
   const handleChangeImages = (e) => {
     const files = [...e.target.files]
@@ -143,7 +147,7 @@ const StatusModal = () => {
 
   return (
     <Modal
-      title={`${status.onEdit ? "Edit" : "Create"} Post`}
+      title={`${status.onEdit ? language === 'en' ? "Edit Post" : "Chỉnh sửa bài viết" : language === 'en' ? "Create Post" : "Tạo bài viết"} `}
       open={status}
       onOk={handleOk}
       footer={[]}
@@ -191,7 +195,7 @@ const StatusModal = () => {
           <textarea
             name="content"
             value={content}
-            placeholder={`${auth?.user?.username}, what are you thinking?`}
+            placeholder={`${auth?.user?.username},${language === 'en' ? "what are you thinking?" : "bạn đang nghĩ gì?"}`}
             onChange={(e) => setContent(e.target.value)}
             style={{
               filter: theme ? "invert(1)" : "invert(0)",
@@ -290,7 +294,7 @@ const StatusModal = () => {
             type="primary"
             onClick={handleOk}
           >
-            {`${status.onEdit ? "SAVE" : "POST"}`}
+            {`${status.onEdit ? language === 'en' ? "SAVE" : "LƯU" : language === 'en' ? "POST" : "TẠO"}`}
           </Button>
         </div>
       </form>

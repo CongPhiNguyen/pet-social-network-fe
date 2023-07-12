@@ -17,10 +17,13 @@ import {
 import { logInGoogleApi, loginApi } from "../api/authen"
 import { GLOBALTYPES } from "../redux/actions/globalTypes"
 import { setRefreshToken } from "../utils/cookies"
+import LanguageContext from "../context/LanguageContext"
+import { useContext } from "react"
 
 const { Title } = Typography
 
 const Login = () => {
+  const { language } = useContext(LanguageContext);
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -135,12 +138,12 @@ const Login = () => {
             </div>
             <div style={{ textAlign: "center" }}>
               <Title style={{ marginTop: 10, fontSize: 36 }}>
-                Login to discover!
+                {language === 'en' ? "Login to discover!" : "Đăng nhập để khám phá nào!"}
               </Title>
             </div>
 
             <Form.Item
-              label={"Email or username"}
+              label={language === 'en' ? "Email or username" : "Email hoặc username"}
               name="pattern"
               style={{
                 width: "100%",
@@ -149,7 +152,7 @@ const Login = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your mail!"
+                  message: language === 'en' ? "Please input your mail!" : "Hãy nhập mail của bạn!"
                 }
               ]}
             >
@@ -161,16 +164,16 @@ const Login = () => {
               />
             </Form.Item>
             <Form.Item
-              label="Password"
+              label={language === 'en' ? "Password" : "Mật khẩu"}
               name="password"
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!"
+                  message: language === 'en' ? "Please input your password!" : "Hãy nhập mật khẩu"
                 },
                 {
                   min: 6,
-                  message: "Password at least 6 characters!"
+                  message: language === 'en' ? "Password at least 6 characters!" : "Mật khẩu tối thiếu 6 ký tự!"
                 }
               ]}
               style={{ marginTop: -20 }}
@@ -184,7 +187,7 @@ const Login = () => {
                 className="forgot-password"
                 style={{ color: "#f39161", fontWeight: "700" }}
               >
-                Forgot your password?
+                {language === 'en' ? "Forgot your password?" : "Tìm lại mật khẩu?"}
               </Link>
             </p>
             {userOTPEnable && (
@@ -212,16 +215,16 @@ const Login = () => {
                   borderColor: "#f39161"
                 }}
               >
-                Login
+                {language === 'en' ? "Login" : "Đăng nhập"}
               </Button>
             </Form.Item>
             <p style={{ textAlign: "center", marginTop: -20 }} className="my-2">
-              You don't have an account?{" "}
+              {language === 'en' ? "You don't have an account?" : "Bạn chưa có tài khoản?"}
               <Link
                 to="/register"
                 style={{ color: "#f39161", fontWeight: "700" }}
               >
-                Register Now
+                {language === 'en' ? " Register Now" : " Đăng ký ngay nào"}
               </Link>
             </p>
             {/* <div

@@ -2,6 +2,8 @@ import { Table, Input, Col, Button, Form, Row, Select, Space } from "antd"
 import React, { useEffect, useState } from "react"
 import { changeRole, getAllUserApi } from "../../../api/user"
 import { FaExchangeAlt } from 'react-icons/fa'
+import LanguageContext from "../../../context/LanguageContext"
+import { useContext } from "react"
 
 const REGEX_INVALID_CHAR = new RegExp(
   /^(?!.*[\\^\\$\\*\\(\\)\\[\]<>'"\\/\\;`%+])/,
@@ -12,6 +14,7 @@ const { Item } = Form
 export default function TableUser() {
   const [userList, setUserList] = useState([])
   const [filters, setFilters] = useState({})
+  const { language } = useContext(LanguageContext);
   const [loading, setLoading] = useState(false)
   const getAllUser = async () => {
     setLoading(true)
@@ -26,12 +29,12 @@ export default function TableUser() {
 
   const columns = [
     {
-      title: "User Id",
+      title: language === 'en' ? "User Id" : "ID",
       dataIndex: "_id",
       key: "_id"
     },
     {
-      title: "Full Name",
+      title: language === 'en' ? "Full Name" : "Tên đầy đủ",
       dataIndex: "fullname",
       key: "fullname"
     },
@@ -46,17 +49,17 @@ export default function TableUser() {
       key: "email"
     },
     {
-      title: "Role",
+      title: language === 'en' ? "Role" : "Quyền",
       dataIndex: "role",
       key: "role"
     },
     {
-      title: "Gender",
+      title: language === 'en' ? "Gender" : "Giới tính",
       dataIndex: "gender",
       key: "gender"
     },
     {
-      title: 'Action',
+      title: language === 'en' ? 'Action' : "Thao tác",
       dataIndex: 'action',
       render: (_, record) => (
         <Space size="middle">
@@ -87,7 +90,7 @@ export default function TableUser() {
               rules={[
                 {
                   pattern: REGEX_INVALID_CHAR,
-                  message: 'ID string invalid',
+                  message: language === 'en' ? 'ID string invalid' : "ID không đúng định dạng",
                 },
               ]}
             >
@@ -103,7 +106,7 @@ export default function TableUser() {
               rules={[
                 {
                   pattern: REGEX_INVALID_CHAR,
-                  message: 'Username string invalid',
+                  message: language === 'en' ? 'Username string invalid' : "Username không đúng định dạng",
                 },
               ]}
             >
@@ -144,7 +147,9 @@ export default function TableUser() {
                 id="segment-button-search"
                 htmlType="submit"
               >
-                Search
+                {
+                  language === 'en' ? "Search" : "Tìm kiêm"
+                }
               </Button>
             </Item>
           </Col>

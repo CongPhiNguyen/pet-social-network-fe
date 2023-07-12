@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Info from "./components/Info"
 import { useSelector, useDispatch } from "react-redux"
 import { getProfileUsers } from "../../redux/actions/profileAction"
 import { useParams } from "react-router-dom"
-import { Card, Col, Row, Spin, message, Result } from "antd"
+import { Card, Col, Row, Spin, message, Result, Tabs } from "antd"
 import Following from "./components/Following"
 import { getPostByUserIdApi } from "../../api/post"
 import PostCard from "../../components/PostCard"
@@ -11,6 +11,8 @@ import { getUserInfoApi } from "../../api/user"
 import "../../styles/home.css"
 import NotFoundPage from "../notFound"
 import { getPostsByLocationDispatch } from "../../redux/actions/postAction"
+import { getDataAPI } from "../../utils/fetchData"
+import LanguageContext from "../../context/LanguageContext"
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -18,21 +20,39 @@ const Profile = () => {
   const { auth } = useSelector((state) => state)
   const [isGettingProfile, setIsGettingProfile] = useState(false)
   const [profile, setProfile] = useState({})
+  const { language } = useContext(LanguageContext)
   const [loading, setLoading] = useState(false)
   const { theme } = useSelector((state) => state)
   const { homePosts } = useSelector((state) => state)
+  const [option, setOption] = useState("Personal")
   const { posts: postList } = homePosts
 
   const getUserPost = async (userId) => {
     setLoading(true)
-    const response = await getPostByUserIdApi(userId)
+    const response =
+      option === "Personal"
+        ? await getPostByUserIdApi(userId)
+        : await getDataAPI(`getSavePosts`, auth.token)
     const { data, status } = response
     if (status === 200) {
-      dispatch(getPostsByLocationDispatch({ posts: data.postList || [] }))
+      dispatch(
+        getPostsByLocationDispatch({
+          posts: option === "Personal" ? data.postList : data.savePosts || []
+        })
+      )
     }
     setLoading(false)
   }
-
+  const items = [
+    {
+      key: `Personal`,
+      label: "Personal"
+    },
+    {
+      key: `Saved`,
+      label: "Saved"
+    }
+  ]
   const getProfileInfo = async () => {
     setIsGettingProfile(true)
     try {
@@ -49,18 +69,26 @@ const Profile = () => {
     }
     setIsGettingProfile(false)
   }
-
   useEffect(() => {
     getProfileInfo(id)
-    getUserPost(id)
   }, [id])
+
+  useEffect(() => {
+    getUserPost(id)
+  }, [id, option])
 
   if (isGettingProfile) {
     return <Spin loading={isGettingProfile}></Spin>
   } else if (profile) {
     return (
       <div className="profile" style={{ marginTop: 64 }}>
-        <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />
+        <Info
+          auth={auth}
+          profile={profile}
+          dispatch={dispatch}
+          id={id}
+          language={language}
+        />
         <div
           style={{
             width: "100%",
@@ -74,11 +102,19 @@ const Profile = () => {
             <Col xl={8} md={24} sm={24}>
               {!profile?.loading && (
                 <Card>
-                  <Following />
+                  <Following language={language} />
                 </Card>
               )}
             </Col>
             <Col xl={16} md={24} sm={24}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Tabs
+                  defaultActiveKey="Personal"
+                  items={items}
+                  onChange={setOption}
+                />
+              </div>
+
               {loading ? (
                 <div
                   style={{
@@ -94,8 +130,14 @@ const Profile = () => {
                 <Card>
                   <Result
                     status="404"
-                    title="NO POST"
-                    subTitle="You can follow someone or create new post!"
+                    title={
+                      language === "en" ? "NO POST" : "Không có bài viết nào!"
+                    }
+                    subTitle={
+                      language === "en"
+                        ? "You can follow someone or create new post!"
+                        : "Hãy theo dõi ai đó hoặc tạo nhiều bài viết"
+                    }
                   />
                 </Card>
               ) : (

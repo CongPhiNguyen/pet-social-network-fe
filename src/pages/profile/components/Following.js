@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { getFollowingApi } from "../../../api/user"
 import UserCard from "../../../components/UserCard"
 import FollowBtn from "../../../components/FollowBtn"
-export default function Following({ userId }) {
+export default function Following({ userId, language }) {
   const [isLoading, setIsLoading] = useState(false)
   const [followings, setFollowings] = useState([])
   const [openFollowingModel, setOpenFollowingModel] = useState(false)
@@ -51,11 +51,17 @@ export default function Following({ userId }) {
           setOpenFollowingModel(true)
         }}
       >
-        This user is following:
+        {language === "en"
+          ? "This user is following:"
+          : "Danh sách đang theo dõi"}
       </Typography>
       <div>
         {followings && followings.length === 0 && (
-          <p>This user don't follow any user</p>
+          <p>
+            {language === "en"
+              ? "This user don't follow any user"
+              : "Bạn không theo dõi ai"}
+          </p>
         )}
         {followings &&
           followings.map((val, index) => (
@@ -90,7 +96,7 @@ export default function Following({ userId }) {
             <div
               style={{ textAlign: "centing", fontWeight: 600, fontSize: 20 }}
             >
-              Followings
+              {language === "en" ? "Followings" : "Theo dõi"}
             </div>
             <Divider></Divider>
           </React.Fragment>

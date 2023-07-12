@@ -8,7 +8,8 @@ export default function PetCard({
   name,
   description,
   isShowDelete,
-  _id
+  _id,
+  language
 }) {
   const navigate = useNavigate()
   return (

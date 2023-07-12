@@ -2,6 +2,9 @@ import React from "react"
 import { Avatar, Card } from "antd"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
+import { useContext } from "react"
+import LanguageContext from "../context/LanguageContext"
+
 const UserCard = ({
   children,
   user,
@@ -10,7 +13,8 @@ const UserCard = ({
   setShowFollowers,
   setShowFollowing,
   msg,
-  cardType
+  cardType,
+  language
 }) => {
   const { theme } = useSelector((state) => state)
   const handleCloseAll = () => {
@@ -35,11 +39,19 @@ const UserCard = ({
           <span className="material-icons">
             {user.call.times === 0
               ? user.call.video
-                ? "Miss Video Phone"
-                : "Miss Phone"
+                ? language === "en"
+                  ? "Miss Video Phone"
+                  : "Lỡ cuộc gọi video"
+                : language === "en"
+                ? "Miss Phone"
+                : "Lỡ cuộc gọi"
               : user.call.video
-              ? "Video Phone"
-              : "Phone"}
+              ? language === "en"
+                ? "Video Phone"
+                : "Cuộc gọi video"
+              : language === "en"
+              ? "Phone"
+              : "Cuộc gọi"}
           </span>
         )}
       </>

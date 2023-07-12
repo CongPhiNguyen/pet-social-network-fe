@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 import { getSuggestionsApi } from "../../api/user"
 const { Title } = Typography
 
-const RightSideBar = () => {
+const RightSideBar = ({ language }) => {
   const dispatch = useDispatch()
   const { auth } = useSelector((state) => state)
   const { user } = useSelector((state) => state.auth)
@@ -34,7 +34,7 @@ const RightSideBar = () => {
       <div className="d-flex justify-content-between align-items-center my-2">
         <Link style={{ color: "#f07c4b", cursor: "pointer" }} to="/suggestion">
           <Title style={{ color: "#f07c4b" }} level={4}>
-            Suggestions for you
+            {language === "en" ? "Suggestions for you" : "Gợi ý cho bạn"}
           </Title>
         </Link>
         {!suggestions.loading && (
@@ -55,7 +55,9 @@ const RightSideBar = () => {
       </div>
       <div style={{ opacity: 0.5 }} className="my-2">
         <small className="d-block">
-          Welcome to our social media "PET LOVE"
+          {language === "en"
+            ? `Welcome to our social media "PET LOVE"`
+            : 'Chào mừng đến với mạng xã "PET LOVE"'}
         </small>
 
         <small>&copy; 2023 UIT FROM 19522006 & 19522055</small>

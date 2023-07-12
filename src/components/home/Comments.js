@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CommentDisplay from './comments/CommentDisplay'
 
-const Comments = ({ post }) => {
+const Comments = ({ post, language }) => {
     const [comments, setComments] = useState([])
     const [showComments, setShowComments] = useState([])
     const [next, setNext] = useState(2)
@@ -23,24 +23,24 @@ const Comments = ({ post }) => {
         <div className="comments">
             {
                 showComments.map((comment, index) => (
-                    <CommentDisplay key={index} comment={comment} post={post}
+                    <CommentDisplay language={language} key={index} comment={comment} post={post}
                         replyCm={replyComments.filter(item => item.reply === comment._id)} />
                 ))
             }
-
             {
                 comments.length - next > 0
                     ? <div
                         className='readMore'
                         onClick={() => setNext(next + 10)}>
-                        See more comments...
+                        {language === 'en' ? "See more comments..." : "Xem thêm"}
                     </div>
 
                     : comments.length > 2 &&
                     <div
                         className='readMore'
                         onClick={() => setNext(2)}>
-                        Hide comments...
+                        {language === 'en' ? "Hide comments..." : "Ẩn bớt"}
+
                     </div>
             }
         </div>

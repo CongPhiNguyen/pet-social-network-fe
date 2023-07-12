@@ -18,7 +18,8 @@ import { addPetApi } from "../../../../api/pet"
 export default function PetModalAddUpdate({
   isAddPet,
   setIsAddPet,
-  updateListPet
+  updateListPet,
+  language
 }) {
   const [form] = Form.useForm()
   const userInfo = useSelector((state) => state.auth.user)
@@ -73,7 +74,7 @@ export default function PetModalAddUpdate({
   return (
     <div>
       <Modal
-        title="Confirm Modal"
+        title={language === 'en' ? "Confirm Modal" : "Xác nhận"}
         open={showconfirmDiscard}
         onOk={() => {
           setShowConfirmDiscard(false)
@@ -89,11 +90,13 @@ export default function PetModalAddUpdate({
         maskClosable={false}
         style={{ top: 120 }}
       >
-        Do you want to discard change ?
+        {
+          language === 'en' ? "Do you want to discard change ?" : "Bạn có muốn bỏ thay đổi?"
+        }
       </Modal>
       <Modal
         open={isAddPet}
-        title={"Adding pet profile"}
+        title={language === 'en' ? "Adding pet profile" : "Thêm thú cưng"}
         maskClosable={false}
         onOk={() => {
           setAvatar("")
@@ -106,11 +109,13 @@ export default function PetModalAddUpdate({
         }}
         footer={
           <div>
-            <Button onClick={() => setShowConfirmDiscard(true)}>Close</Button>
+            <Button onClick={() => setShowConfirmDiscard(true)}>{
+              language === 'en' ? "Close" : "Đóng"
+            }</Button>
             <Button
               type="primary"
               onClick={() => form.submit()}
-              // loading={isSendingEditInfo}
+            // loading={isSendingEditInfo}
             >
               OK
             </Button>
@@ -127,19 +132,31 @@ export default function PetModalAddUpdate({
           }}
         >
           <Form.Item
-            label="Choose type:"
+            label={language === 'en' ? "Choose type:" : "Loại"}
             name="petType"
-            rules={[{ required: true, message: "Please input your pet type!" }]}
+            rules={[{ required: true, message: language === 'en' ? "Please input your pet type!" : "Hãy chọn loại thú cưng của bạn!" }]}
             style={{ marginBottom: 10 }}
           >
             <Radio.Group>
-              <Radio value={"dog"}>Dog</Radio>
-              <Radio value={"cat"}>Cat</Radio>
-              <Radio value={"other"}>Other</Radio>
+              <Radio value={"dog"}>
+                {
+                  language === 'en' ? "Dog" : "Chó"
+                }
+              </Radio>
+              <Radio value={"cat"}>
+                {
+                  language === 'en' ? "Cat" : "Mèo"
+                }
+              </Radio>
+              <Radio value={"other"}>
+                {
+                  language === 'en' ? "Orther" : "Khác"
+                }
+              </Radio>
             </Radio.Group>
             {/* <Input readOnly /> */}
           </Form.Item>
-          <Form.Item label="Image">
+          <Form.Item label={language === 'en' ? "Image:" : "Hình ảnh:"}>
             <div
               style={{
                 width: 150,
@@ -176,7 +193,11 @@ export default function PetModalAddUpdate({
                 >
                   <label htmlFor="file_up">
                     <AiFillCamera size={20} color="#fff" />
-                    <p>Change</p>
+                    <p>
+                      {
+                        language === 'en' ? "Change" : "Thay đổi"
+                      }
+                    </p>
                   </label>
                   <input
                     style={{ display: "none" }}
@@ -192,32 +213,32 @@ export default function PetModalAddUpdate({
           </Form.Item>
 
           <Form.Item
-            label="Name"
+            label={language === 'en' ? "Name" : "Tên"}
             name="name"
             style={{ marginBottom: 5 }}
             rules={[
-              { required: true, message: "Please input your pet's name!" }
+              { required: true, message: language === 'en' ? "Please input your pet's name!" : "Hãy nhập tên thú cưng của bạn!" }
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             style={{ marginBottom: 10 }}
-            label="Description"
+            label={language === 'en' ? "Description" : "Mô tả"}
             name="description"
             rules={[
               {
                 required: true,
-                message: "Please input your pet's description!"
+                message: language === 'en' ? "Please input your pet's description!" : "Hãy nhập mô tả thú cưng của bạn!"
               }
             ]}
           >
             <Input.TextArea />
           </Form.Item>
           <Form.Item
-            label="Date of birth"
+            label={language === 'en' ? "Date of birth" : "Ngày sinh"}
             name="dateOfBirth"
-            rules={[{ required: true, message: "Please input your pet's DOB" }]}
+            rules={[{ required: true, message: language === 'en' ? "Please input your pet's DOB" : "Hãy nhập ngày sinh của thú cưng bạn" }]}
             style={{ marginBottom: 0 }}
           >
             <DatePicker
@@ -227,17 +248,17 @@ export default function PetModalAddUpdate({
             />
           </Form.Item>
           <Form.Item
-            label="Weight"
+            label={language === 'en' ? "Weight" : "Cân nặng"}
             name="weight"
             style={{ marginBottom: 10 }}
             rules={[
-              { required: true, message: "Please input your pet's weight!" }
+              { required: true, message: language === 'en' ? "Please input your pet's weight!" : "Hãy nhập cân nặng của thú cưng bạn!" }
             ]}
           >
             <InputNumber style={{ width: "50%" }} />
           </Form.Item>
         </Form>
       </Modal>
-    </div>
+    </div >
   )
 }

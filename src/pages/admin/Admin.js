@@ -13,12 +13,15 @@ import { useNavigate } from "react-router-dom"
 import LogTable from "./Log/LogTable"
 import OnlineTable from "./Online/OnlineTable"
 import PostTable from "./Post/PostTable"
+import { useContext } from "react"
+import LanguageContext from "../../context/LanguageContext"
 const { Header, Sider, Content } = Layout
 
 export default function Admin() {
   const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
   const [key, setCurrentKey] = useState("1")
+  const { language } = useContext(LanguageContext);
 
   const pageNavigate = (key) => {
     if (key === "1") {
@@ -49,7 +52,9 @@ export default function Admin() {
     <Layout style={{ height: "800px" }}>
       <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
         <div style={{ margin: "20px" }}>
-          <Typography.Title level={3}>Admin page</Typography.Title>
+          <Typography.Title level={3}>{
+            language === 'en' ? "Admin page" : "Trang admin"
+          }</Typography.Title>
         </div>
         <Menu
           theme="light"
@@ -86,7 +91,9 @@ export default function Admin() {
             navigate(-1)
           }}
         >
-          Back
+          {
+            language === 'en' ? "Back" : "Trở lại"
+          }
         </Button>
       </Sider>
       <Layout className="site-layout" theme="light">

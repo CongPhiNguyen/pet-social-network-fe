@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import LeftSide from "../../components/message/LeftSide"
 import RightSide from "../../components/message/RightSide"
 import { useParams } from "react-router"
@@ -7,8 +7,11 @@ import { useNavigate } from "react-router-dom"
 import { DownloadOutlined } from "@ant-design/icons"
 import { Button } from "antd"
 import { MdArrowBack } from "react-icons/md"
+import LanguageContext from "../../context/LanguageContext"
 
 const Conversation = () => {
+  const { language } = useContext(LanguageContext);
+
   const navigate = useNavigate()
   const param = useParams()
   const { id } = param
@@ -19,7 +22,7 @@ const Conversation = () => {
     >
       <Col style={{ height: "calc(100vh - 192px)" }} xs={0} md={6} offset={2}>
         <Card style={{ height: "100%", overflowY: "scroll" }}>
-          <LeftSide />
+          <LeftSide language={language} />
         </Card>
       </Col>
       <Col
@@ -48,7 +51,7 @@ const Conversation = () => {
             width: "100%"
           }}
         >
-          <RightSide />
+          <RightSide language={language} />
         </Card>
       </Col>
     </Row>

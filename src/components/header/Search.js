@@ -7,6 +7,8 @@ import UserCard from "../UserCard"
 import LoadIcon from "../../images/loading.gif"
 import { message } from "antd"
 import { useLocation, useNavigate } from "react-router-dom"
+import { useContext } from "react"
+import LanguageContext from "../../context/LanguageContext"
 
 const { Search } = Input
 
@@ -16,6 +18,7 @@ const SearchComponent = () => {
   const [users, setUsers] = useState([])
   const [open, setOpen] = useState(false)
   const { auth } = useSelector((state) => state)
+  const { language } = useContext(LanguageContext);
   const [load, setLoad] = useState(false)
   const navigate = useNavigate()
   useEffect(async () => {
@@ -84,7 +87,7 @@ const SearchComponent = () => {
         </div>
       )}
       {!load && users.length === 0 && (
-        <Result status="404" title="User not found!" />
+        <Result status="404" title={language === 'en' ? "User not found!" : "Không tìm thấy user"} />
       )}
     </div>
   )
@@ -96,7 +99,7 @@ const SearchComponent = () => {
 
         onChange={handleChange}
         onSearch={handleSearch}
-        placeholder="Search in petlove"
+        placeholder={language === 'en' ? "Search in petlove" : "Tìm kiếm..."}
         loading={load}
       />
       <Popover

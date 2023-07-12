@@ -2,6 +2,8 @@ import { Table, Input, Col, Button, Form, Row, Select, Space, Tag } from "antd"
 import React, { useEffect, useState } from "react"
 import { getAllPostApi } from "../../../api/post"
 import LimitedWords from './LimitedWords'
+import LanguageContext from "../../../context/LanguageContext"
+import { useContext } from "react"
 const REGEX_INVALID_CHAR = new RegExp(
     /^(?!.*[\\^\\$\\*\\(\\)\\[\]<>'"\\/\\;`%+])/,
 )
@@ -9,6 +11,7 @@ const { Item } = Form
 
 
 export default function PostTable() {
+    const { language } = useContext(LanguageContext);
     const [userList, setUserList] = useState([])
     const [filters, setFilters] = useState({})
     const [loading, setLoading] = useState(false)
@@ -25,12 +28,12 @@ export default function PostTable() {
 
     const columns = [
         {
-            title: "Post Id",
+            title: language === 'en' ? "Post Id" : "ID",
             dataIndex: "_id",
             key: "_id"
         },
         {
-            title: "Full Name",
+            title: language === 'en' ? "Full Name" : "Tên đầy đủ",
             dataIndex: "fullname",
             key: "fullname",
             render: (_, record) => {
@@ -46,12 +49,12 @@ export default function PostTable() {
             }
         },
         {
-            title: "Content",
+            title: language === 'en' ? "Content" : "Nội dung",
             dataIndex: "content",
             key: "content",
         },
         {
-            title: "Created At",
+            title: language === 'en' ? "Created At" : "Thời gian tạo",
             dataIndex: "created",
             key: "created",
             render: (_, record) => {
@@ -68,7 +71,7 @@ export default function PostTable() {
 
     return (
         <div style={{ margin: 20 }}>
-            <LimitedWords></LimitedWords>
+            <LimitedWords language={language}></LimitedWords>
             <Form style={{ marginTop: "30px" }} onFinish={handleSearch}>
 
                 <Row gutter={20}>
@@ -78,7 +81,7 @@ export default function PostTable() {
                             rules={[
                                 {
                                     pattern: REGEX_INVALID_CHAR,
-                                    message: 'Username string invalid',
+                                    message: language === 'en' ? 'Username string invalid' : "Username không đúng định dạng",
                                 },
                             ]}
                         >
@@ -92,7 +95,7 @@ export default function PostTable() {
                                 id="segment-button-search"
                                 htmlType="submit"
                             >
-                                Search
+                                {language === 'en' ? "Search" : "Tìm kiếm"}
                             </Button>
                         </Item>
                     </Col>

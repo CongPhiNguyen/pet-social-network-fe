@@ -11,10 +11,18 @@ import { Dropdown } from "antd"
 import { CopyOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import { Modal } from "antd"
 import { DeleteFilled } from "@ant-design/icons"
-
+import 'moment/locale/vi';
+import 'moment/locale/en-gb'
 const { confirm } = Modal
 
-const CardHeader = ({ post }) => {
+const CardHeader = ({ post, language }) => {
+  useEffect(() => {
+    if (language === 'en') {
+      moment.locale('en-gb');
+    } else {
+      moment.locale('vi');
+    }
+  }, [language])
   const { auth, socket } = useSelector((state) => state)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -28,7 +36,7 @@ const CardHeader = ({ post }) => {
   }
   const handleDeletePost = () => {
     confirm({
-      title: "Are you sure want to delete this post?",
+      title: language === 'en' ? "Are you sure want to delete this post?" : "Bạn có chắc chắn muốn xóa bài đăng này?",
       icon: <DeleteFilled />,
       onOk() {
         dispatch(deletePost({ post, auth, socket }))
@@ -49,7 +57,7 @@ const CardHeader = ({ post }) => {
               <EditOutlined
                 style={{ marginRight: "6px" }}
               />{" "}
-              <span style={{ fontWeight: "600" }}>Edit</span>
+              <span style={{ fontWeight: "600" }}>{language === 'en' ? "Edit" : "Chỉnh sửa"}</span>
             </div>
           )
         },
@@ -60,7 +68,7 @@ const CardHeader = ({ post }) => {
               <DeleteOutlined
                 style={{ marginRight: "6px" }}
               />{" "}
-              <span style={{ fontWeight: "600" }}>Delete</span>
+              <span style={{ fontWeight: "600" }}>{language === 'en' ? "Delete" : "Xóa"}</span>
             </div>
           )
         },
@@ -71,7 +79,7 @@ const CardHeader = ({ post }) => {
               <CopyOutlined
                 style={{ marginRight: "6px" }}
               />{" "}
-              <span style={{ fontWeight: "600" }}>Copy</span>
+              <span style={{ fontWeight: "600" }}>{language === 'en' ? "Copy" : "Sao chép"}</span>
             </div>
           )
         }
@@ -85,7 +93,7 @@ const CardHeader = ({ post }) => {
               <CopyOutlined
                 style={{ transform: "translateY(-4px)", marginRight: "6px" }}
               />{" "}
-              <span style={{ fontWeight: "600" }}>Copy</span>
+              <span style={{ fontWeight: "600" }}>{language === 'en' ? "Copy" : "Sao chép"}</span>
             </div>
           )
         }

@@ -20,7 +20,7 @@ import { Modal, message } from "antd"
 
 const { confirm } = Modal
 
-const RightSide = () => {
+const RightSide = ({ language }) => {
   const { auth, message, theme, socket, peer } = useSelector((state) => state)
   const dispatch = useDispatch()
 
@@ -158,14 +158,14 @@ const RightSide = () => {
   const handleDeleteConversation = () => {
     confirm({
       icon: <ExclamationCircleFilled />,
-      title: "Do you want to this conversation?",
+      title: language === 'en' ? "Do you want to this conversation?" : "Bạn có muốn xóa cuộc hội thoại này?",
       onOk() {
         dispatch(deleteConversation({ auth, id }))
         return history("/message")
       },
       onCancel() {
         console.log("Cancel")
-      }
+      },
     })
   }
 
@@ -254,13 +254,17 @@ const RightSide = () => {
             <div key={index}>
               {msg.sender !== auth?.user?._id && (
                 <div className="chat_row other_message">
-                  <MsgDisplay user={user} msg={msg} theme={theme} />
+                  <MsgDisplay
+                    language={language}
+                    user={user} msg={msg} theme={theme} />
                 </div>
               )}
 
               {msg.sender === auth?.user?._id && (
                 <div className="chat_row you_message">
                   <MsgDisplay
+
+                    language={language}
                     user={auth?.user}
                     msg={msg}
                     theme={theme}
@@ -296,7 +300,7 @@ const RightSide = () => {
       <form className="chat_input" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Enter you message..."
+          placeholder={language === 'en' ? "Enter you message..." : "Nhập tin nhắn ở đây..."}
           value={text}
           onChange={(e) => setText(e?.target?.value)}
           style={{
@@ -329,7 +333,7 @@ const RightSide = () => {
           type="primary"
           htmlType="submit"
         >
-          Send
+          {language === 'en' ? "Send" : "Gửi"}
         </Button>
       </form>
     </>

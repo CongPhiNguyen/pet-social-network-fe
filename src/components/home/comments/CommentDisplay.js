@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CommentCard from './CommentCard'
 
-const CommentDisplay = ({ comment, post, replyCm }) => {
+const CommentDisplay = ({ comment, post, replyCm, language }) => {
     const [showRep, setShowRep] = useState([])
     const [next, setNext] = useState(1)
 
@@ -11,7 +11,7 @@ const CommentDisplay = ({ comment, post, replyCm }) => {
 
     return (
         <div className="comment_display">
-            <CommentCard comment={comment} post={post} commentId={comment._id} >
+            <CommentCard language={language} comment={comment} post={post} commentId={comment._id} >
                 <div className="pl-4">
                     {
                         showRep.map((item, index) => (
@@ -30,13 +30,14 @@ const CommentDisplay = ({ comment, post, replyCm }) => {
                             ? <div className='readMore'
                                 style={{ margin: '10px 5px' }}
                                 onClick={() => setNext(next + 10)}>
-                                See more comments...
+                                {language === 'en' ? "See more comments..." : "Xem thêm"}
                             </div>
                             : replyCm.length > 1 &&
                             <div className='readMore'
                                 style={{ margin: '10px 5px' }}
-                                onClick={() => setNext(1)}>
-                                Hide comments...
+                                onClick={() => setNext(1)}>\
+                                {language === 'en' ? "Hide comments..." : "Ẩn bớt"}
+
                             </div>
                     }
                 </div>

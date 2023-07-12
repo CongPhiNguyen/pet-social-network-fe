@@ -4,12 +4,15 @@ import { useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { registerApi } from "../api/authen"
 import Logo from "../images/logo.png"
+import LanguageContext from "../context/LanguageContext"
+import { useContext } from "react"
 const { Title } = Typography
 
 const Register = () => {
   const { auth } = useSelector((state) => state)
   const navigate = useNavigate()
   const [form] = Form.useForm()
+  const { language } = useContext(LanguageContext);
 
   // Init
   useEffect(() => {
@@ -79,7 +82,10 @@ const Register = () => {
             </div>
             <div style={{ textAlign: "center" }}>
               <Title style={{ marginTop: 10, fontSize: 36 }}>
-                Register to join PetLove
+                {
+                  language === 'en' ? "Register to join PetLove" : "Đăng ký để tham gia PetLove"
+                }
+
               </Title>
             </div>
 
@@ -88,11 +94,11 @@ const Register = () => {
               style={{
                 width: "100%"
               }}
-              label="Fullname"
+              label={language === 'en' ? "Fullname" : "Tên đẩy đù"}
               rules={[
                 {
                   required: true,
-                  message: "Please input your name!"
+                  message: language === 'en' ? "Please input your name!" : "Hãy nhập tên của bạn!"
                 }
               ]}
             >
@@ -105,59 +111,59 @@ const Register = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your name!"
+                  message: language === 'en' ? "Please input your name!" : "Hãy nhập username của bạn!"
                 }
               ]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label="Email address"
+              label="Email"
               name="email"
               style={{ marginTop: -20, width: "100%" }}
               rules={[
                 {
                   required: true,
-                  message: "Please input your mail!"
+                  message: language === 'en' ? "Please input your mail!" : "Hãy nhập mail của bạn!"
                 },
                 {
                   // eslint-disable-next-line
                   pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Your mail is not invalid"
+                  message: language === 'en' ? "Your mail is not invalid" : "Mail không đúng định dạng"
                 }
               ]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label="Password"
+              label={language === 'en' ? "Password" : "Mật khẩu"}
               name="password"
               style={{ marginTop: -20 }}
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!"
+                  message: language === 'en' ? "Please input your password!" : "Hãy nhập mật khẩu của bạn!"
                 },
                 {
                   min: 6,
-                  message: "Password at least 6 characters!"
+                  message: language === 'en' ? "Password at least 6 characters!" : "Mật khẩu ít nhất 6 ký tự"
                 }
               ]}
             >
               <Input.Password />
             </Form.Item>
             <Form.Item
-              label="Confirm Password"
+              label={language === 'en' ? "Confirm Password" : "Nhập lại mật khẩu"}
               name="cf_password"
               style={{ marginTop: -20 }}
               rules={[
                 {
                   required: true,
-                  message: "Please input your confirm password!"
+                  message: language === 'en' ? "Please input your confirm password!" : "Nhập lại mật khẩu"
                 },
                 {
                   min: 6,
-                  message: "Password at least 6 characters!"
+                  message: language === 'en' ? "Password at least 6 characters!" : "Mật khẩu ít nhất 6 ký tự!"
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
@@ -166,7 +172,7 @@ const Register = () => {
                     }
                     return Promise.reject(
                       new Error(
-                        "The two passwords that you entered do not match!"
+                        language === 'en' ? "The two passwords that you entered do not match!" : "Nhập lại mật khẩu không chính xác!"
                       )
                     )
                   }
@@ -176,10 +182,10 @@ const Register = () => {
               <Input.Password />
             </Form.Item>
             <Form.Item style={{ marginTop: -20 }} name="gender">
-              <Radio.Group onChange={() => {}}>
-                <Radio value={"male"}>Male</Radio>
-                <Radio value={"female"}>Female</Radio>
-                <Radio value={"other"}>Other</Radio>
+              <Radio.Group onChange={() => { }}>
+                <Radio value={"male"}>{language === 'en' ? "Male" : "Nam"}</Radio>
+                <Radio value={"female"}>{language === 'en' ? "Female" : "Nữ"}</Radio>
+                <Radio value={"other"}>{language === 'en' ? "Orther" : "Khác"}</Radio>
               </Radio.Group>
             </Form.Item>
 
@@ -205,13 +211,14 @@ const Register = () => {
                   borderColor: "#f39161"
                 }}
               >
-                Register
+                {language === 'en' ? "Register" : "Đăng ký"}
+
               </Button>
             </Form.Item>
             <p style={{ textAlign: "center", marginTop: -12 }}>
-              Have an account?{" "}
+              {language === 'en' ? "Có tài khoản rồi?" : "Have an account?"}{" "}
               <Link to="/" style={{ color: "#f39161", fontWeight: "700" }}>
-                Login
+                {language === 'en' ? "Login" : "Đăng nhập"}
               </Link>
             </p>
           </Form>

@@ -5,14 +5,20 @@ import "./styles/scss/main.scss"
 import "./styles/antd.less"
 import CustomRouters from "./routers"
 import { BrowserRouter } from "react-router-dom"
+import { LanguageProvider } from "./context/LanguageContext"
+
+
 function App() {
   console.log("process.env", process.env)
+
   return (
     <React.Fragment>
       <React.Suspense>
-        <BrowserRouter>
-          <CustomRouters />
-        </BrowserRouter>
+        <LanguageProvider>
+          <BrowserRouter>
+            <CustomRouters />
+          </BrowserRouter>
+        </LanguageProvider>
       </React.Suspense>
     </React.Fragment>
   )

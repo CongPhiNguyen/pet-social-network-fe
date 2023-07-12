@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { follow, unfollow } from "../redux/actions/profileAction"
 
-const FollowBtn = ({ user }) => {
+const FollowBtn = ({ user, language }) => {
   const [followed, setFollowed] = useState(false)
 
   const { auth, profile, socket } = useSelector((state) => state)
@@ -39,11 +39,15 @@ const FollowBtn = ({ user }) => {
     <>
       {followed ? (
         <button className="btn btn-outline-danger" onClick={handleUnFollow}>
-          UnFollow
+          {
+            language === 'en' ? "UnFollow" : "Bỏ theo dõi"
+          }
         </button>
       ) : (
         <button className="btn btn-outline-info" onClick={handleFollow}>
-          Follow
+          {
+            language === 'en' ? "Follow" : "Theo dõi"
+          }
         </button>
       )}
     </>
