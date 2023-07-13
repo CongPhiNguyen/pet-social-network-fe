@@ -65,7 +65,7 @@ export default function Following({ language }) {
           </p>
         )}
         {followings &&
-          followings.map((val, index) => (
+          followings.slice(0, 4).map((val, index) => (
             <Avatar.Group key={index}>
               <Tooltip title={val.fullname} placement="top">
                 <Avatar
@@ -90,6 +90,27 @@ export default function Following({ language }) {
               </Tooltip>
             </Avatar.Group>
           ))}
+        {followings.length && followings.length > 4 && (
+          <Avatar.Group key={"plus"}>
+            <Tooltip title={""} placement="top">
+              <Avatar
+                style={{
+                  backgroundColor: "#c9c9c9",
+                  fontSize: 24,
+                  cursor: "pointer",
+                  border: "1px solid #333"
+                }}
+                src={null}
+                size={60}
+                // onClick={() => {
+                //   navigate("/profile/" + val?._id)
+                // }}
+              >
+                <p style={{ marginTop: -4 }}>+{followings.length - 4}</p>
+              </Avatar>
+            </Tooltip>
+          </Avatar.Group>
+        )}
       </div>
       <Modal
         title={

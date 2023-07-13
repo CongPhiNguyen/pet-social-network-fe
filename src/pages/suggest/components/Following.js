@@ -5,20 +5,23 @@ import { useNavigate, useParams } from "react-router-dom"
 import { getFollowingApi } from "../../../api/user"
 import UserCard from "../../../components/UserCard"
 import FollowBtn from "../../../components/FollowBtn"
-export default function Following() {
-  const { id } = useParams()
+export default function Following({ id }) {
   const [isLoading, setIsLoading] = useState(false)
   const [followings, setFollowings] = useState([])
   const [openFollowingModel, setOpenFollowingModel] = useState(false)
   const { auth } = useSelector((state) => state)
   const navigate = useNavigate()
 
+  console.log("id following", id)
+
   const getFollowings = async () => {
     setIsLoading(true)
-    const response = await getFollowingApi(id)
+    try {
+      const response = await getFollowingApi(id)
+      const { data, status } = response
+      if (status === 200) setFollowings(data?.following)
+    } catch (err) {}
     setIsLoading(false)
-    const { data, status } = response
-    if (status === 200) setFollowings(data.following)
   }
 
   useEffect(() => {
@@ -59,7 +62,7 @@ export default function Following() {
           <p>This user don't follow any user</p>
         )}
         {followings &&
-          followings.map((val, index) => (
+          followings.slice(0, 4).map((val, index) => (
             <Avatar.Group key={index}>
               <Tooltip title={val.fullname} placement="top">
                 <Avatar
@@ -84,6 +87,27 @@ export default function Following() {
               </Tooltip>
             </Avatar.Group>
           ))}
+        {followings.length && followings.length > 4 && (
+          <Avatar.Group key={"plus"}>
+            <Tooltip title={""} placement="top">
+              <Avatar
+                style={{
+                  backgroundColor: "#c9c9c9",
+                  fontSize: 24,
+                  cursor: "pointer",
+                  border: "1px solid #333"
+                }}
+                src={null}
+                size={60}
+                // onClick={() => {
+                //   navigate("/profile/" + val?._id)
+                // }}
+              >
+                <p style={{ marginTop: -4 }}>+{followings.length - 4}</p>
+              </Avatar>
+            </Tooltip>
+          </Avatar.Group>
+        )}
       </div>
       <Modal
         title={

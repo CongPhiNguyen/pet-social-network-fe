@@ -41,7 +41,6 @@ const Info = ({ auth, profile, userId }) => {
     })
     navigate(`/message/${userInfo._id}`)
   }
-  console.log("id nè", id)
   return (
     <div className="info">
       <React.Fragment>

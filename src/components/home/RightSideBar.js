@@ -14,19 +14,23 @@ const { Title } = Typography
 const RightSideBar = ({ language }) => {
   const { auth } = useSelector((state) => state)
   const { user } = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
   const [suggestions, setSuggestion] = useState([])
+  const [loadSuggestion, setIsLoadSuggestion] = useState(false)
+
   const getSuggestion = async () => {
+    setIsLoadSuggestion(false)
     const response = await getSuggestionsApi(user._id)
     const { data, status } = response
     if (status === 200) {
       const suggestion = data.suggestion
       setSuggestion(suggestion)
     }
+    setIsLoadSuggestion(true)
   }
   useEffect(() => {
     getSuggestion()
   }, [])
+
   return (
     <div className="mt-3">
       <UserCard user={auth.user} />
@@ -37,20 +41,35 @@ const RightSideBar = ({ language }) => {
             {language === "en" ? "Suggestions for you" : "Gợi ý cho bạn"}
           </Title>
         </Link>
-        {!suggestions.loading && (
+        {loadSuggestion && (
           <i
             className="fas fa-redo"
             style={{ cursor: "pointer" }}
-            onClick={() => dispatch(getSuggestions(auth.token))}
+            onClick={() => {
+              getSuggestion()
+            }}
           />
         )}
       </div>
 
-      {suggestions.map((user, index) => (
-        <UserCard key={index} user={user?.userInfo} cardType={"NoClick"}>
-          <FollowBtn user={user?.userInfo} />
-        </UserCard>
-      ))}
+      {!loadSuggestion ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            height: 200,
+            alignItems: "center"
+          }}
+        >
+          <Spin size="large" tip="Loading..." />
+        </div>
+      ) : (
+        suggestions.map((user, index) => (
+          <UserCard key={index} user={user?.userInfo}>
+            <FollowBtn user={user?.userInfo} />
+          </UserCard>
+        ))
+      )}
 
       <div style={{ opacity: 0.5 }} className="my-2">
         <small className="d-block">

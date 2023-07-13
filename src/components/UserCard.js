@@ -13,7 +13,8 @@ const UserCard = ({
   setShowFollowers,
   setShowFollowing,
   msg,
-  language
+  language,
+  cardType
 }) => {
   const { theme } = useSelector((state) => state)
   const handleCloseAll = () => {
@@ -23,7 +24,6 @@ const UserCard = ({
   }
 
   const showMsg = (user) => {
-
     return (
       <>
         <div style={{ filter: theme ? "invert(1)" : "invert(0)" }}>
@@ -39,11 +39,19 @@ const UserCard = ({
           <span className="material-icons">
             {user.call.times === 0
               ? user.call.video
-                ? language === 'en' ? "Miss Video Phone" : "Lỡ cuộc gọi video"
-                : language === 'en' ? "Miss Phone" : "Lỡ cuộc gọi"
+                ? language === "en"
+                  ? "Miss Video Phone"
+                  : "Lỡ cuộc gọi video"
+                : language === "en"
+                ? "Miss Phone"
+                : "Lỡ cuộc gọi"
               : user.call.video
-                ? language === 'en' ? "Video Phone" : "Cuộc gọi video"
-                : language === 'en' ? "Phone" : "Cuộc gọi"}
+              ? language === "en"
+                ? "Video Phone"
+                : "Cuộc gọi video"
+              : language === "en"
+              ? "Phone"
+              : "Cuộc gọi"}
           </span>
         )}
       </>
@@ -57,7 +65,7 @@ const UserCard = ({
       <div>
         <Link
           style={{ textDecoration: "none" }}
-          to={`/profile/${user?._id}`}
+          to={cardType === "NoClick" ? null : `/profile/${user?._id}`}
           onClick={handleCloseAll}
           className="d-flex align-items-center user-card__link"
         >
@@ -69,7 +77,7 @@ const UserCard = ({
             }}
             src={
               user.avatar ===
-                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                 ? null
                 : user.avatar
             }

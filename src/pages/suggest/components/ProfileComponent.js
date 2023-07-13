@@ -6,7 +6,7 @@ import { message } from "antd"
 import { getPostByUserIdApi } from "../../../api/post"
 import { getPostsByLocationDispatch } from "../../../redux/actions/postAction"
 import { Col, Row, Card, Spin, Result } from "antd"
-import Following from "../../profile/components/Following"
+import Following from "./Following"
 import PostCard from "../../../components/PostCard"
 export default function ProfileComponent({ userId }) {
   const dispatch = useDispatch()
@@ -64,11 +64,9 @@ export default function ProfileComponent({ userId }) {
       >
         <Row gutter={[16, 16]}>
           <Col xl={8} md={24} sm={24}>
-            {!profile?.loading && (
-              <Card>
-                <Following userId={userId} />
-              </Card>
-            )}
+            <Card>
+              <Following id={userId} />
+            </Card>
           </Col>
           <Col xl={16} md={24} sm={24}>
             {loading ? (
