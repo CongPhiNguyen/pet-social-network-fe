@@ -22,6 +22,8 @@ import { Spin, message } from "antd"
 import Notify from "../components/alert/Alert"
 
 // import { setCurrentUserInfo, handleLogin } from "../features/authen/authenSlice"
+const SOCKET_ENDPOINT =
+  process.env.REACT_APP_SOCKET_URL || "http://localhost:5000/"
 const CustomRouters = () => {
   const { auth, call } = useSelector((state) => state)
   const role = useSelector((state) => state.auth?.user?.role)
@@ -49,7 +51,6 @@ const CustomRouters = () => {
       setLoading(false)
     } catch (err) {
       setLoading(false)
-
     }
 
     // setRefreshToken(res.data.refresh_token)
@@ -59,7 +60,7 @@ const CustomRouters = () => {
     // dispatch(refreshToken())
     // Get access token
     getRefreshTokenFunction()
-    const socket = io("http://localhost:5000/", {
+    const socket = io(SOCKET_ENDPOINT, {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttemps: 10,
@@ -112,9 +113,18 @@ const CustomRouters = () => {
   // }, [dispatch])
 
   if (loading)
-    return <div style={{ display: "flex", height: "100vh", justifyContent: "center", alignItems: "center" }}>
-      <Spin></Spin>
-    </div>
+    return (
+      <div
+        style={{
+          display: "flex",
+          height: "100vh",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <Spin></Spin>
+      </div>
+    )
 
   return (
     <>
