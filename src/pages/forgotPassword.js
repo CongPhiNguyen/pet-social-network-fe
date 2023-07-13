@@ -17,7 +17,7 @@ const { Title } = Typography
 export default function ForgotPassword() {
   const navigate = useNavigate()
   const [form] = Form.useForm()
-  const { language } = useContext(LanguageContext);
+  const { language } = useContext(LanguageContext)
 
   const [disableCode, setDisableCode] = useState(true)
   const [disableSendCode, setDisableSendCode] = useState(false)
@@ -78,7 +78,7 @@ export default function ForgotPassword() {
         setDisableSendCode(true)
         setIsCounting(true)
       }
-      message.info("Verification code is 123456 😋😊😋", 12)
+      // message.info("Verification code is 123456 😋😊😋", 12)
     } catch (err) {
       message.error(err?.response?.data?.message || "Unexpected error")
     }
@@ -124,13 +124,11 @@ export default function ForgotPassword() {
               </div>
               <div style={{ textAlign: "center" }}>
                 <Title style={{ marginTop: 10, fontSize: 36 }}>
-                  {
-                    language === 'en' ? "Forgot Password" : "Quên mật khẩu"
-                  }
+                  {language === "en" ? "Forgot Password" : "Quên mật khẩu"}
                 </Title>
               </div>
               <Form.Item
-                label={`Email ${language === 'en' ? "or" : "hoặc"} username`}
+                label={`Email ${language === "en" ? "or" : "hoặc"} username`}
                 name="pattern"
                 style={{
                   width: "100%"
@@ -138,7 +136,10 @@ export default function ForgotPassword() {
                 rules={[
                   {
                     required: true,
-                    message: language === 'en' ? "Please input your email or username!" : "Hãy nhập email hoặc username!"
+                    message:
+                      language === "en"
+                        ? "Please input your email or username!"
+                        : "Hãy nhập email hoặc username!"
                   }
                 ]}
               >
@@ -150,23 +151,24 @@ export default function ForgotPassword() {
                       sendCodeVerify()
                     }}
                   >
-                    {
-                      language === 'en' ? "Send code" : "Lấy mã"
-                    }
-
+                    {language === "en" ? "Send code" : "Lấy mã"}
                   </Button>
                 </div>
               </Form.Item>
               {isCounting && (
-                <p style={{ marginTop: -20 }}>{language === 'en' ? "Code avaiable in" : "Mã có hạn trong"}: {count}</p>
+                <p style={{ marginTop: -20 }}>
+                  {language === "en" ? "Code avaiable in" : "Mã có hạn trong"}:{" "}
+                  {count}
+                </p>
               )}
               <Form.Item
-                label={language === 'en' ? "Verify Code" : "Xác thực"}
+                label={language === "en" ? "Verify Code" : "Xác thực"}
                 name="code"
                 rules={[
                   {
                     required: true,
-                    message: language === 'en' ? "Please input code!" : "Nhập mã!"
+                    message:
+                      language === "en" ? "Please input code!" : "Nhập mã!"
                   }
                 ]}
                 style={{ marginTop: -20 }}
@@ -179,9 +181,7 @@ export default function ForgotPassword() {
                   to="/register"
                   style={{ fontSize: 14, color: "#f39161", fontWeight: 600 }}
                 >
-                  {
-                    language === 'en' ? "Register?" : "Đăng ký?"
-                  }
+                  {language === "en" ? "Register?" : "Đăng ký?"}
                 </Link>
               </p>
               <Form.Item>
@@ -194,27 +194,25 @@ export default function ForgotPassword() {
                   type="primary"
                   htmlType="submit"
                 >
-                  {
-                    language === 'en' ? "Continue" : "Tiếp tục"
-                  }
-
+                  {language === "en" ? "Continue" : "Tiếp tục"}
                 </Button>
               </Form.Item>
               <p style={{ textAlign: "center" }} className="my-2">
-                {language === 'en' ? "You don't have an account?" : "Bạn chưa có tài khoản?"}   {" "}
+                {language === "en"
+                  ? "You don't have an account?"
+                  : "Bạn chưa có tài khoản?"}{" "}
                 <Link
                   to="/register"
                   style={{ color: "#f39161", fontWeight: "700" }}
                 >
-                  {
-                    language === 'en' ? " Register Now " : "Đăng ký ngay"
-                  }
-
+                  {language === "en" ? " Register Now " : "Đăng ký ngay"}
                 </Link>
               </p>
             </Form>
           )}
-          {isChangePassword && <ChangePassword language={language} pattern={pattern} />}
+          {isChangePassword && (
+            <ChangePassword language={language} pattern={pattern} />
+          )}
         </Col>
       </Row>
     </>

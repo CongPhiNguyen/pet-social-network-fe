@@ -81,7 +81,7 @@ export default function Verify() {
         setDisableSendCode(true)
         setIsCounting(true)
       }
-      message.info("Verification code is 123456 😋😊😋", 12)
+      // message.info("Verification code is 123456 😋😊😋", 12)
     } catch (err) {
       message.error(err?.response?.data?.message || "Unexpected error")
     }
