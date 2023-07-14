@@ -87,9 +87,9 @@ const CommentCard = ({ children, comment, post, commentId, language }) => {
             }}
             src={
               comment?.user?.avatar ===
-                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                 ? null
-                : auth?.user?.avatar
+                : comment?.user?.avatar
             }
             size="small"
           >
@@ -126,8 +126,8 @@ const CommentCard = ({ children, comment, post, commentId, language }) => {
                 {content?.length < 100
                   ? content
                   : readMore
-                    ? content + " "
-                    : content?.slice(0, 100) + "...."}
+                  ? content + " "
+                  : content?.slice(0, 100) + "...."}
               </span>
               {content?.length > 100 && (
                 <span
@@ -146,25 +146,31 @@ const CommentCard = ({ children, comment, post, commentId, language }) => {
             </small>
 
             <small className="font-weight-bold mr-3">
-              {comment.likes?.length || 0} {language === 'en' ? "likes" : "thích"}
+              {comment.likes?.length || 0}{" "}
+              {language === "en" ? "likes" : "thích"}
             </small>
 
             {onEdit ? (
               <>
                 <small className="font-weight-bold mr-3" onClick={handleUpdate}>
-                  {language === 'en' ? "update" : "chỉnh sửa"}
+                  {language === "en" ? "update" : "chỉnh sửa"}
                 </small>
                 <small
                   className="font-weight-bold mr-3"
                   onClick={() => setOnEdit(false)}
                 >
-                  {language === 'en' ? "cancel" : "hủy"}
-
+                  {language === "en" ? "cancel" : "hủy"}
                 </small>
               </>
             ) : (
               <small className="font-weight-bold mr-3" onClick={handleReply}>
-                {onReply ? language === 'en' ? "cancel" : "hủy" : language === 'en' ? "reply" : "Trả lời"}
+                {onReply
+                  ? language === "en"
+                    ? "cancel"
+                    : "hủy"
+                  : language === "en"
+                  ? "reply"
+                  : "Trả lời"}
               </small>
             )}
           </div>

@@ -21,11 +21,11 @@ export default function ChatBotPage() {
       name: "Dialogflow",
       key: "dialogflow"
     },
-    {
-      img: "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
-      name: "Dummy",
-      key: "dummy"
-    },
+    // {
+    //   img: "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
+    //   name: "Dummy",
+    //   key: "dummy"
+    // },
     {
       img: "https://toquoc.mediacdn.vn/280518851207290880/2021/11/17/co9-16371265918121873152617-1637131220338-1637131220738965031106.jpg",
       name: "Gossip",

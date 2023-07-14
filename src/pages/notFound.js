@@ -40,7 +40,7 @@ export default function NotFoundPage() {
           >
             Go to main page
           </Button>
-          <Button type="">Report to admin</Button>
+          {/* <Button type="">Report to admin</Button> */}
         </div>
       </div>
     </div>
