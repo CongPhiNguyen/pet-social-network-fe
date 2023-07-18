@@ -15,7 +15,7 @@ export default function Follower({ language }) {
   const getFollowers = async () => {
     const response = await getFollowersApi(id)
     const { data, status } = response
-    if (status == 200) setFollower(data.followers)
+    if (status === 200) setFollower(data.followers.reverse())
   }
 
   useEffect(() => {
@@ -53,34 +53,31 @@ export default function Follower({ language }) {
           <p>This user don't have any follower</p>
         )}
         {followers &&
-          followers
-            .reverse()
-            .slice(0, 4)
-            .map((val, index) => (
-              <Avatar.Group key={index}>
-                <Tooltip title={val?.fullname} placement="top">
-                  <Avatar
-                    style={{
-                      backgroundColor: "#f56a00",
-                      fontSize: 28,
-                      cursor: "pointer"
-                    }}
-                    src={
-                      val?.avatar ===
-                      "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
-                        ? null
-                        : val?.avatar
-                    }
-                    size={60}
-                    onClick={() => {
-                      navigate("/profile/" + val?._id)
-                    }}
-                  >
-                    {val?.username ? val?.username[0].toUpperCase() : ""}
-                  </Avatar>
-                </Tooltip>
-              </Avatar.Group>
-            ))}
+          followers.slice(0, 4).map((val, index) => (
+            <Avatar.Group key={index}>
+              <Tooltip title={val?.fullname} placement="top">
+                <Avatar
+                  style={{
+                    backgroundColor: "#f56a00",
+                    fontSize: 28,
+                    cursor: "pointer"
+                  }}
+                  src={
+                    val?.avatar ===
+                    "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+                      ? null
+                      : val?.avatar
+                  }
+                  size={60}
+                  onClick={() => {
+                    navigate("/profile/" + val?._id)
+                  }}
+                >
+                  {val?.username ? val?.username[0].toUpperCase() : ""}
+                </Avatar>
+              </Tooltip>
+            </Avatar.Group>
+          ))}
         {followers.length && followers.length > 4 && (
           <Avatar.Group key={"plus"}>
             <Tooltip title={""} placement="top">

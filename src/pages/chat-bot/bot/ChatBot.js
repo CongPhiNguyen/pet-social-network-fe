@@ -5,12 +5,31 @@ import "./Chat.css"
 import { message, Col, Row, Card, Typography, Form, Input, Button } from "antd"
 import MessageDisplay from "./MessageDisplay"
 import {
+  addBotGreetMessageApi,
   getBotMessageApi,
   sendDialogflowMessageApi,
   sendDummyMessageApi,
   sendGossipMessageApi
 } from "../../../api/chatbot"
 import { useEffect } from "react"
+
+const isValidDate = (dateString) => {
+  const date = new Date(dateString)
+  return date instanceof Date && !isNaN(date)
+}
+
+function getTimeOfDay() {
+  const current = new Date()
+  const currentHour = current.getHours()
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return "buổi sáng"
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return "buổi chiều"
+  } else {
+    return "buổi tối"
+  }
+}
 
 export default function ChatBot({ currentBot }) {
   const [form] = Form.useForm()
@@ -32,6 +51,23 @@ export default function ChatBot({ currentBot }) {
 
   const { auth } = useSelector((state) => state)
 
+  const addGreetMessage = async () => {
+    console.log("Call this function")
+    const response = await addBotGreetMessageApi({
+      userId: auth?.user?._id,
+      botName: currentBot.key,
+      messageList: [
+        `Chào ${getTimeOfDay()} bạn, chúc bạn 1 ngày tốt lành`,
+        `Tôi có thể giúp gì cho bạn nào?`
+      ]
+    })
+    const { data, status } = response
+    if (status === 200) {
+      setBotMessage(data.messageList || [])
+      setTriggerScroll((prev) => !prev)
+    }
+  }
+
   const getBotMessage = async (botName) => {
     try {
       const response = await getBotMessageApi({
@@ -39,13 +75,25 @@ export default function ChatBot({ currentBot }) {
         botName: botName
       })
       const { data, status } = response
+      console.log(data.lastGreetTime)
       if (status === 200) {
+        if (!isValidDate(data.lastGreetTime)) {
+          addGreetMessage()
+        }
+        // Lớn hơn 3 tiếng thì chào tiếp
+        if (
+          new Date().getTime() - new Date(data.lastGreetTime).getTime() >
+          3 * 1000 * 60 * 60
+        ) {
+          addGreetMessage()
+        }
         setBotMessage(data.messageList || [])
         setTriggerScroll((prev) => !prev)
       }
       // message.success("Verify user and TOTP ok")
       // navigate("/set-password?")
     } catch (err) {
+      console.log(err)
       message.error(err?.response?.data?.message || "Unexpected Error")
     }
   }

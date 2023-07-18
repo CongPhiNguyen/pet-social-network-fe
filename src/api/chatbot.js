@@ -18,3 +18,7 @@ export const getBotMessageApi = (params) => {
     params: params
   })
 }
+
+export const addBotGreetMessageApi = (body) => {
+  return axios.post(`${API_ENDPOINT}/add-greet-message`, body)
+}

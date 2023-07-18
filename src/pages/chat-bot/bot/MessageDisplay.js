@@ -24,7 +24,7 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
   //     }
   //   })
   // }
-  console.log(msg)
+  // console.log(msg)
 
   return (
     <>

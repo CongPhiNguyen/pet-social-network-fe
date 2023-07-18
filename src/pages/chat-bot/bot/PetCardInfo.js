@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom"
 
 export default function PetCardInfo({ info, name, type }) {
   const navigate = useNavigate()
-  console.log(info)
   if (!info) {
     return (
       <Card
