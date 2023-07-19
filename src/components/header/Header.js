@@ -34,18 +34,25 @@ const HeaderLayout = () => {
           </Link>
         </Col>
         <Col
-          style={{
+
+          xs={0}
+          sm={8}
+          lg={8}
+          md={8}
+
+        >
+          <div style={{
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
-          }}
-          xs={14}
-          sm={14}
-          lg={10}
-        >
-          <Search />
+            alignItems: "center",
+            height: "100%"
+          }}>
+            <Search />
+          </div>
+
+
         </Col>
-        <Col xs={{ span: 7 }} sm={8} lg={12}>
+        <Col style={{ marginLeft: "auto" }} xs={{ span: 7 }} sm={8} lg={12}>
           <Menu />
         </Col>
       </Row>
