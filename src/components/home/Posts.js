@@ -36,7 +36,18 @@ const Posts = () => {
         <PostCard key={post._id} post={post} theme={theme} />
       ))}
 
-      {load && <div style={{ display: "flex", justifyContent: "center", height: 200, alignItems: "center" }}><Spin size="large" tip="Loading..." /></div>}
+      {load && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            height: 200,
+            alignItems: "center"
+          }}
+        >
+          <Spin size="large" tip="Loading..." />
+        </div>
+      )}
 
       <LoadMoreBtn
         result={homePosts.result}

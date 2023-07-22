@@ -9,15 +9,19 @@ const PostListDisplay = ({ postList, hashTagList, setPostList }) => {
   const [currentHashtag, setCurrentHashTag] = useState(null)
   const [isOpenModal, setIsOpenModal] = useState(false)
 
-  // const getPostFeed = async () => {
-  //   const response = await getPostFeedApi()
-  //   const { data, status } = response
-  //   if (status === 200) {
-  //     setPostList(data?.posts)
-  //     // setHashTagList(data?.hashTagList)
-  //     console.log(data)
-  //   }
-  // }
+  const getPostFeed = async () => {
+    const response = await getPostFeedApi(currentHashtag)
+    const { data, status } = response
+    if (status === 200) {
+      setPostList(data?.posts)
+      // setHashTagList(data?.hashTagList)
+      console.log(data)
+    }
+  }
+
+  useEffect(() => {
+    getPostFeed()
+  }, [currentHashtag])
 
   return (
     <div>

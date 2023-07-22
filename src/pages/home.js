@@ -198,7 +198,11 @@ const Home = () => {
             </div>
           )}
           {option === "forYou" && (
-            <PostListDisplay postList={postList} hashTagList={hashTagList} />
+            <PostListDisplay
+              postList={postList}
+              hashTagList={hashTagList}
+              setPostList={setPostList}
+            />
           )}
         </Col>
 
