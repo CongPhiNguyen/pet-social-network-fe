@@ -6,6 +6,8 @@ import { Link } from "react-router-dom"
 import ChatBot from "./bot/ChatBot"
 import { MdArrowBack } from "react-icons/md"
 import "./bot/Chat.css"
+import ChatBotImg from "../../assets/images/logo-chat.jpg"
+import ChatChitImg from "../../assets/images/chat-chit.png"
 
 const { Title } = Typography
 
@@ -17,8 +19,8 @@ export default function ChatBotPage() {
   })
   const [chatBotList, setChatBotList] = useState([
     {
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsK1MOGA1qihG3A-dzf9jV2aYAhJOKb3-gontQdDKjLtqnBhGVd55zsulTS3Zx4JJbE-A&usqp=CAU",
-      name: "Dialogflow",
+      img: ChatBotImg,
+      name: "Petlove chat",
       key: "dialogflow"
     },
     // {
@@ -27,8 +29,8 @@ export default function ChatBotPage() {
     //   key: "dummy"
     // },
     {
-      img: "https://toquoc.mediacdn.vn/280518851207290880/2021/11/17/co9-16371265918121873152617-1637131220338-1637131220738965031106.jpg",
-      name: "Gossip",
+      img: ChatChitImg,
+      name: "Petlove chitchat",
       key: "gossip"
     }
   ])

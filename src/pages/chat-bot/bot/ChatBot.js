@@ -38,6 +38,11 @@ export default function ChatBot({ currentBot }) {
   const myDivRef = useRef(null)
   const [triggerScroll, setTriggerScroll] = useState(false)
   const [botMessage, setBotMessage] = useState([])
+  const [isShowAdvise, setIsShowAdvise] = useState(false)
+  const [suggestMessage, setSuggestMessage] = useState([
+    "Dự đoán bệnh cho thú cưng",
+    "Chọn thú cưng phù hợp"
+  ])
 
   useEffect(() => {
     try {
@@ -52,7 +57,6 @@ export default function ChatBot({ currentBot }) {
   const { auth } = useSelector((state) => state)
 
   const addGreetMessage = async () => {
-    console.log("Call this function")
     const response = await addBotGreetMessageApi({
       userId: auth?.user?._id,
       botName: currentBot.key,
@@ -68,6 +72,8 @@ export default function ChatBot({ currentBot }) {
     }
   }
 
+  const showAdvise = () => {}
+
   const getBotMessage = async (botName) => {
     try {
       const response = await getBotMessageApi({
@@ -75,14 +81,14 @@ export default function ChatBot({ currentBot }) {
         botName: botName
       })
       const { data, status } = response
-      console.log(data.lastGreetTime)
       if (status === 200) {
-        if (!isValidDate(data.lastGreetTime)) {
+        if (!isValidDate(data.updatedAt) || data?.messageList?.length === 0) {
           addGreetMessage()
+          // Then it is ok to show to add the advision
         }
         // Lớn hơn 3 tiếng thì chào tiếp
         if (
-          new Date().getTime() - new Date(data.lastGreetTime).getTime() >
+          new Date().getTime() - new Date(data.updatedAt).getTime() >
           3 * 1000 * 60 * 60
         ) {
           addGreetMessage()
@@ -108,6 +114,7 @@ export default function ChatBot({ currentBot }) {
   }, [currentBot.key])
 
   const sendMessage = async (value) => {
+    setIsShowAdvise(false)
     setBotMessage((prevBotMessage) => [
       ...prevBotMessage,
       { text: value.message, sender: auth?.user?._id, createdAt: Date.now() }
@@ -116,12 +123,15 @@ export default function ChatBot({ currentBot }) {
     messageInputRef.current.focus()
     setTriggerScroll((prev) => !prev)
     try {
-      if (currentBot.name === "Dialogflow") {
+      if (currentBot.key === "dialogflow") {
         const response = await sendDialogflowMessageApi({
           ...value,
           userId: auth.user._id
         })
         const { text, sender, time, dialogflowFeature } = response.data
+        if (dialogflowFeature?.name === "ask.probality") {
+          setIsShowAdvise(true)
+        }
         // Add the bot's response to the chat
         setBotMessage((prevBotMessage) => [
           ...prevBotMessage,
@@ -132,6 +142,7 @@ export default function ChatBot({ currentBot }) {
             dialogflowFeature: dialogflowFeature
           }
         ])
+
         setTriggerScroll((prev) => !prev)
       } else if (currentBot.name === "Dummy") {
         const response = await sendDummyMessageApi({
@@ -148,7 +159,7 @@ export default function ChatBot({ currentBot }) {
           }
         ])
         setTriggerScroll((prev) => !prev)
-      } else if (currentBot.name === "Gossip") {
+      } else if (currentBot.key === "gossip") {
         const response = await sendGossipMessageApi({
           ...value,
           userId: auth.user._id
@@ -250,6 +261,22 @@ export default function ChatBot({ currentBot }) {
                 )}
               </div>
             ))}
+            {isShowAdvise && (
+              <div style={{ textAlign: "center", margin: "0 20px 20px " }}>
+                {suggestMessage.map((val) => (
+                  <div style={{ marginBottom: 10 }}>
+                    <Button
+                      style={{ backgroundColor: "#fff" }}
+                      onClick={() => {
+                        sendMessage({ message: val })
+                      }}
+                    >
+                      {val}
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div ref={myDivRef}></div>
           </div>

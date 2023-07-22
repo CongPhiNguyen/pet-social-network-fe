@@ -78,7 +78,7 @@ export default function Follower({ language }) {
               </Tooltip>
             </Avatar.Group>
           ))}
-        {followers.length && followers.length > 4 && (
+        {followers.length !== 0 && followers.length > 4 && (
           <Avatar.Group key={"plus"}>
             <Tooltip title={""} placement="top">
               <Avatar

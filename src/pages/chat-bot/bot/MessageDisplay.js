@@ -51,7 +51,10 @@ const MessageDisplay = ({ user, msg, theme, data }) => {
                 className="chat_text"
                 style={{ filter: theme ? "invert(1)" : "invert(0)" }}
               >
-                <p style={{ margin: 0, padding: 0 }}>{msg.text}</p>
+                {msg?.text?.split("\n").map((val) => (
+                  <p style={{ margin: 0, padding: 0 }}>{val}</p>
+                ))}
+
                 <p style={{ margin: 0, padding: 0, fontWeight: 600 }}>
                   {msg?.dialogflowFeature?.name === "ask_pet-fact" &&
                     msg?.dialogflowFeature?.fact}
