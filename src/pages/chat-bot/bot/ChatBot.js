@@ -41,7 +41,8 @@ export default function ChatBot({ currentBot }) {
   const [isShowAdvise, setIsShowAdvise] = useState(false)
   const [suggestMessage, setSuggestMessage] = useState([
     "Dự đoán bệnh cho thú cưng",
-    "Chọn thú cưng phù hợp"
+    "Chọn thú cưng phù hợp",
+    "Tìm kiếm thông tin chó mèo"
   ])
 
   useEffect(() => {
@@ -94,6 +95,10 @@ export default function ChatBot({ currentBot }) {
           addGreetMessage()
         }
         setBotMessage(data.messageList || [])
+        const lastMessage = data.messageList[data.messageList.length - 1]
+        if (lastMessage?.dialogflowFeature?.name === "ask.probality") {
+          setIsShowAdvise(true)
+        }
         setTriggerScroll((prev) => !prev)
       }
       // message.success("Verify user and TOTP ok")

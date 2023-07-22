@@ -15,16 +15,50 @@ const CardBody = ({ post, theme, language }) => {
         }}
       >
         <span>
-          {post.content.length < 60
-            ? post.content
-            : readMore
-              ? post.content + " "
-              : post.content.slice(0, 60) + "....."}
+          {post.content.length < 60 ? (
+            post.content
+              .split("\n")
+              .map((val) => (
+                <p style={{ marginTop: 0, marginBottom: 4 }}>{val}</p>
+              ))
+          ) : readMore ? (
+            post.content
+              .split("\n")
+              .map((val) => (
+                <p style={{ marginTop: 0, marginBottom: 4 }}>{val}</p>
+              ))
+          ) : (
+            <div>
+              {post.content
+                .slice(0, 60)
+                .split("\n")
+                .map((text) => {
+                  return <p style={{ marginTop: 0, marginBottom: 4 }}>{text}</p>
+                })}
+              <p>.....</p>
+            </div>
+          )}
         </span>
-        {post.content.length > 60 && (
+        {post.content.replace("\n", "<br/>").length > 60 && (
           <span className="readMore" onClick={() => setReadMore(!readMore)}>
-            {readMore ? language === 'en' ? "Hide away" : "Ẩn bớt" : language === 'en' ? "See more" : "Xem thêm"}
+            {readMore
+              ? language === "en"
+                ? "Hide away"
+                : "Ẩn bớt"
+              : language === "en"
+              ? "See more"
+              : "Xem thêm"}
           </span>
+        )}
+        {post?.hashtag && (
+          <p style={{ fontSize: 12, marginTop: 10 }}>
+            Hashtag:{" "}
+            {(post?.hashtag || []).map((val) => (
+              <span
+                style={{ color: "#f07c4b", cursor: "pointer" }}
+              >{`#${val} `}</span>
+            ))}
+          </p>
         )}
         <div style={{ display: "flex", marginTop: "5px" }}>
           <div style={{ width: "20px" }}>

@@ -25,3 +25,7 @@ export const updateListsWord = (words) => {
 export const searchInPageSearch = (search) => {
   return axios.get(`${API_ENDPOINT}/search-in-page${search}`)
 }
+
+export const getPostFeedApi = (userId) => {
+  return axios.get(`${API_ENDPOINT}/get-post/feed/`, { params: userId })
+}

@@ -20,7 +20,7 @@ export const POST_TYPES = {
 }
 
 export const createPost =
-  ({ content, location, images, auth, socket }) =>
+  ({ content, location, images, auth, socket, hashtag }) =>
   async (dispatch) => {
     let media = []
     try {
@@ -29,7 +29,7 @@ export const createPost =
 
       const res = await postDataAPI(
         "posts",
-        { content, location, images: media },
+        { content, location, images: media, hashtag: hashtag },
         auth.token
       )
 
@@ -95,8 +95,9 @@ export const getPostsByLocationDispatch = (data) => async (dispatch) => {
 }
 
 export const updatePost =
-  ({ content, images, auth, status, location }) =>
+  ({ content, images, auth, status, location, hashtag }) =>
   async (dispatch) => {
+    console.log("alo")
     let media = []
     const imgNewUrl = images.filter((img) => !img.url)
     const imgOldUrl = images.filter((img) => img.url)
@@ -104,9 +105,12 @@ export const updatePost =
     if (
       status.content === content &&
       imgNewUrl.length === 0 &&
-      imgOldUrl.length === status.images.length
-    )
+      imgOldUrl.length === status.images.length &&
+      status.hashtag == hashtag
+    ) {
+      console.log("turndowwn")
       return
+    }
 
     try {
       if (imgNewUrl.length > 0) media = await imageUpload(imgNewUrl)
@@ -121,7 +125,8 @@ export const updatePost =
         {
           content,
           location,
-          images: [...imgOldUrl, ...media]
+          images: [...imgOldUrl, ...media],
+          hashtag: hashtag
         },
         auth.token
       )

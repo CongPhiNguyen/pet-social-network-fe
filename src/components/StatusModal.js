@@ -10,6 +10,7 @@ import axios from "axios"
 import { AiFillDelete } from "react-icons/ai"
 import { useContext } from "react"
 import LanguageContext from "../context/LanguageContext"
+import HashTagInput from "./HashTagInput"
 
 const StatusModal = () => {
   const { auth, theme, status, socket } = useSelector((state) => state)
@@ -21,8 +22,8 @@ const StatusModal = () => {
   const videoRef = useRef()
   const refCanvas = useRef()
   const [tracks, setTracks] = useState("")
-  const { language } = useContext(LanguageContext);
-
+  const { language } = useContext(LanguageContext)
+  const [tags, setTags] = useState([])
 
   const handleChangeImages = (e) => {
     const files = [...e.target.files]
@@ -38,7 +39,6 @@ const StatusModal = () => {
 
       return newImages.push(file)
     })
-
 
     // if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
     if (err) message.error(err)
@@ -90,17 +90,32 @@ const StatusModal = () => {
     if (images.length === 0) return message.warning("Please add your photo.")
     if (status.onEdit) {
       dispatch(
-        updatePost({ content: newContent, location, images, auth, status })
+        updatePost({
+          content: newContent,
+          location,
+          images,
+          auth,
+          status,
+          hashtag: tags
+        })
       )
     } else {
       dispatch(
-        createPost({ content: newContent, location, images, auth, socket })
+        createPost({
+          content: newContent,
+          location,
+          images,
+          auth,
+          socket,
+          hashtag: tags
+        })
       )
     }
 
     setLocation("")
     setContent("")
     setImages([])
+    console.log("aaa")
     if (tracks) tracks.stop()
     dispatch({ type: GLOBALTYPES.STATUS, payload: false })
   }
@@ -110,6 +125,7 @@ const StatusModal = () => {
       setContent(status.content)
       setImages(status.images)
       setLocation(status.location)
+      setTags(status?.hashtag || [])
     }
   }, [status])
   const handleOk = () => {
@@ -119,6 +135,7 @@ const StatusModal = () => {
     setLocation("")
     setContent("")
     setImages([])
+    setTags([])
     dispatch({ type: GLOBALTYPES.STATUS, payload: false })
   }
   const handleGetLocation = () => {
@@ -147,7 +164,15 @@ const StatusModal = () => {
 
   return (
     <Modal
-      title={`${status.onEdit ? language === 'en' ? "Edit Post" : "Chỉnh sửa bài viết" : language === 'en' ? "Create Post" : "Tạo bài viết"} `}
+      title={`${
+        status.onEdit
+          ? language === "en"
+            ? "Edit Post"
+            : "Chỉnh sửa bài viết"
+          : language === "en"
+          ? "Create Post"
+          : "Tạo bài viết"
+      } `}
       open={status}
       onOk={handleOk}
       footer={[]}
@@ -170,7 +195,7 @@ const StatusModal = () => {
             }}
             src={
               auth?.user?.avatar ===
-                "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+              "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
                 ? null
                 : auth?.user?.avatar
             }
@@ -195,7 +220,9 @@ const StatusModal = () => {
           <textarea
             name="content"
             value={content}
-            placeholder={`${auth?.user?.username},${language === 'en' ? "what are you thinking?" : "bạn đang nghĩ gì?"}`}
+            placeholder={`${auth?.user?.username},${
+              language === "en" ? "what are you thinking?" : "bạn đang nghĩ gì?"
+            }`}
             onChange={(e) => setContent(e.target.value)}
             style={{
               filter: theme ? "invert(1)" : "invert(0)",
@@ -230,6 +257,7 @@ const StatusModal = () => {
               </Col>
             ))}
           </Row>
+          <HashTagInput language={language} tags={tags} setTags={setTags} />
           <Divider />
           {stream && (
             <div className="stream position-relative">
@@ -248,7 +276,6 @@ const StatusModal = () => {
               <canvas ref={refCanvas} style={{ display: "none" }} />
             </div>
           )}
-
           <Card style={{ width: "100%", padding: "0" }}>
             <div className="input_images">
               {stream ? (
@@ -294,7 +321,15 @@ const StatusModal = () => {
             type="primary"
             onClick={handleOk}
           >
-            {`${status.onEdit ? language === 'en' ? "SAVE" : "LƯU" : language === 'en' ? "POST" : "TẠO"}`}
+            {`${
+              status.onEdit
+                ? language === "en"
+                  ? "SAVE"
+                  : "LƯU"
+                : language === "en"
+                ? "POST"
+                : "TẠO"
+            }`}
           </Button>
         </div>
       </form>

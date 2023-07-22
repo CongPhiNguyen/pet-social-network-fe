@@ -1,10 +1,9 @@
 import { PlusOutlined } from "@ant-design/icons"
 import { Input, Space, Tag, Tooltip, theme } from "antd"
 import { useEffect, useRef, useState } from "react"
-import { getAllLimitsWord, updateListsWord } from "../../../api/post"
-const App = ({ language }) => {
+const HashTagInput = ({ language, tags, setTags }) => {
   const { token } = theme.useToken()
-  const [tags, setTags] = useState([])
+
   const [inputVisible, setInputVisible] = useState(false)
   const [inputValue, setInputValue] = useState("")
   const [editInputIndex, setEditInputIndex] = useState(-1)
@@ -13,9 +12,9 @@ const App = ({ language }) => {
   const editInputRef = useRef(null)
 
   const fetchData = async () => {
-    const response = await getAllLimitsWord()
-    const { data } = response.data
-    setTags(data)
+    // const response = await getAllLimitsWord()
+    // const { data } = response.data
+    // setTags(data)
   }
 
   useEffect(() => {
@@ -33,7 +32,7 @@ const App = ({ language }) => {
   const handleClose = (removedTag) => {
     const newTags = tags.filter((tag) => tag !== removedTag)
     setTags(newTags)
-    updateListsWord(newTags)
+    // updateListsWord(newTags)
   }
   const showInput = () => {
     setInputVisible(true)
@@ -44,7 +43,7 @@ const App = ({ language }) => {
   const handleInputConfirm = () => {
     if (inputValue && tags.indexOf(inputValue) === -1) {
       setTags([...tags, inputValue])
-      updateListsWord([...tags, inputValue])
+      // updateListsWord([...tags, inputValue])
     }
     setInputVisible(false)
     setInputValue("")
@@ -72,7 +71,7 @@ const App = ({ language }) => {
     <Space size={[0, 8]} wrap>
       <h6 style={{ marginTop: 5, marginRight: 10 }}>
         {" "}
-        {language === "en" ? "Limited words:" : "Từ ngữ giới hạn:"}
+        {language === "en" ? "Hashtag:" : "Thẻ bài viết:"}
       </h6>
       <Space size={[0, 8]} wrap>
         {tags.map((tag, index) => {
@@ -98,7 +97,7 @@ const App = ({ language }) => {
               style={{
                 userSelect: "none"
               }}
-              color="volcano"
+              // color="volcano"
               onClose={() => handleClose(tag)}
             >
               <span
@@ -140,4 +139,4 @@ const App = ({ language }) => {
     </Space>
   )
 }
-export default App
+export default HashTagInput
